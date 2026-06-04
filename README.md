@@ -1,7 +1,11 @@
-# DataFlow
+<div align="center">
+  <img src="./assets/icon.png" alt="DataFlow Logo" width="120" height="120" />
 
-### Profiling, limpeza, evidência estatística e governança responsável para dados tabulares.
-*Responsible data profiling, cleaning and statistical evidence for tabular datasets.*
+  <h1>DataFlow</h1>
+
+  <p><strong>Profiling, limpeza, evidência estatística e governança responsável para dados tabulares.</strong></p>
+  <p><strong>Responsible data profiling, cleaning and statistical evidence for tabular datasets.</strong></p>
+</div>
 
 [![Next.js 15](https://img.shields.io/badge/Next.js-15.5-000000?style=for-the-badge&logo=nextdotjs)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
@@ -10,6 +14,10 @@
 [![SciPy](https://img.shields.io/badge/SciPy-1.12+-8CAAE6?style=for-the-badge&logo=scipy)](https://scipy.org/)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind%20CSS-v4.0-38BDF8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 [![LGPD-Aware](https://img.shields.io/badge/LGPD-Protected-06B6D4?style=for-the-badge)](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
+
+<p align="center">
+  <img src="./assets/hero-cover.png" alt="DataFlow product overview" width="100%" />
+</p>
 
 ---
 
@@ -21,12 +29,48 @@ O sistema aborda um problema clássico de mercado: dados que chegam de formulár
 
 ---
 
+## ✨ Product Preview
+
+<p align="center">
+  <img src="./assets/screenshots/01-hero-executive-briefing.png" alt="DataFlow Executive Briefing" width="100%" />
+</p>
+
+O DataFlow apresenta uma experiência dark premium focada em diagnóstico executivo: Health Score, alertas controlados, LGPD ativo, recomendações acionáveis e navegação por seções analíticas.
+
+---
+
 ## 2. Por que este projeto importa? / Why this project matters
 
 * **Planilhas são a realidade:** A maioria dos processos de negócios consome dados tabulares imperfeitos. Saber higienizar, monitorar a completude e estruturar pipelines locais é uma habilidade fundamental.
 * **Estatística sem contexto gera decisões ruins:** O DataFlow não apenas gera estatísticas descritivas básicas, mas calcula hipóteses inferenciais robustas mitigando riscos de falsos positivos (aplicando **Correção de Bonferroni**).
 * **IA e Ética de Dados (Responsible Analytics):** Ele foi desenhado sob preceitos rígidos de governança. O DataFlow audita processos e calibragem, **nunca decide ou ranqueia pessoas**. Todas as informações demográficas ou sensíveis são protegidas.
 * **Masterpiece de Engenharia:** Ele substitui os tradicionais scripts estáticos de notebooks por uma solução digital real, interativa e completa.
+
+---
+
+## 🧠 O diferencial do DataFlow / What makes DataFlow different
+
+### Português
+O DataFlow não é apenas um dashboard. Ele combina qualidade de dados, evidência estatística e governança responsável em uma experiência rastreável.
+
+Ele mostra não apenas o que os dados indicam, mas também:
+- quão confiável a base está;
+- o que foi limpo ou sinalizado;
+- quais problemas merecem ação;
+- quais sinais estatísticos são exploratórios;
+- onde a interpretação precisa ser limitada;
+- como dados pessoais são protegidos.
+
+### English
+DataFlow is not just a dashboard. It combines data quality, statistical evidence and responsible analytics into one traceable experience.
+
+It shows not only what the data says, but also:
+- how reliable the dataset is;
+- what was cleaned or flagged;
+- which issues deserve action;
+- which statistical signals are exploratory;
+- where interpretation must be limited;
+- how personal data is protected.
 
 ---
 
@@ -42,6 +86,73 @@ O sistema aborda um problema clássico de mercado: dados que chegam de formulár
 - **Outlier Boxplot (IQR):** Visualizador estatístico de quartis e outliers (expectativa salarial, anos de experiência) baseado na regra de amplitude interquartil.
 - **Statistical Evidence Center:** Hypothesis testing (Welch t-test, ANOVA de uma via, Qui-Quadrado de Pearson) interpretados em linguagem executiva com badges de múltiplas comparações (Bonferroni) e alertas de falso positivo dinâmicos.
 - **Relatório PDF Executivo de 9 Páginas:** Design para impressão A4 que suprime localhost e URLs de navegador via regras `@page` e divide perfeitamente o relatório em seções executivas contendo todos os gráficos e o dicionário de 17 colunas.
+
+---
+
+## 📸 Screenshots
+
+<table>
+  <tr>
+    <td width="50%">
+      <img src="./assets/screenshots/02-quality-cockpit.png" alt="Data Quality Cockpit" />
+      <br />
+      <sub><strong>Data Quality Cockpit</strong> — Health Score, missingness matrix, KPIs and explainable data quality.</sub>
+    </td>
+    <td width="50%">
+      <img src="./assets/screenshots/03-quality-issues-register.png" alt="Quality Issues Register" />
+      <br />
+      <sub><strong>Quality Issues Register</strong> — prioritized issues with severity, impact and recommended action.</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <img src="./assets/screenshots/04-funnel-and-channels.png" alt="Funnel and Channel Analytics" />
+      <br />
+      <sub><strong>Funnel & Channels</strong> — operational funnel, source efficiency, time series and score distribution.</sub>
+    </td>
+    <td width="50%">
+      <img src="./assets/screenshots/05-statistical-evidence.png" alt="Statistical Evidence Center" />
+      <br />
+      <sub><strong>Statistical Evidence</strong> — p-values, effect sizes, Bonferroni-aware conclusions and responsible interpretation.</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <img src="./assets/screenshots/06-responsible-analytics.png" alt="Responsible Analytics Center" />
+      <br />
+      <sub><strong>Responsible Analytics</strong> — permitted uses, prohibited uses, sensitive columns and LGPD-aware governance.</sub>
+    </td>
+    <td width="50%">
+      <img src="./assets/screenshots/07-records-auditability-table.png" alt="Records Auditability Table" />
+      <br />
+      <sub><strong>Records & Auditability</strong> — masked records, filters, exports and inspection-ready audit table.</sub>
+    </td>
+  </tr>
+</table>
+
+---
+
+## 📄 Executive Report
+
+<p align="center">
+  <img src="./assets/screenshots/08-pdf-executive-report.png" alt="DataFlow Executive PDF Report" width="70%" />
+</p>
+
+O relatório executivo consolida Health Score, KPIs, auditoria de limpeza, evidência estatística, Responsible Analytics, metodologia e dicionário de dados em um artefato pronto para apresentação.
+
+---
+
+## 📌 Estudo de Caso / Case Study
+
+### 📌 Estudo de Caso: Pipeline Sintético de Recrutamento
+O dataset demo simula um pipeline de recrutamento com 305 registros ingeridos, 300 registros válidos após limpeza e 17 colunas mapeadas. O DataFlow faz profiling da base, sinaliza e-mails inválidos, identifica duplicatas e outliers, aplica mascaramento de PII e calcula um Health Score explicável.
+
+A camada estatística avalia sinais exploratórios usando testes de Welch, qui-quadrado, ANOVA, tamanhos de efeito e interpretação com correção de Bonferroni. Os resultados são apresentados como evidência de processo, nunca como decisão individual automatizada.
+
+### 📌 Case Study: Synthetic Recruitment Pipeline
+The demo dataset simulates a recruitment pipeline with 305 ingested records, 300 valid records after cleaning and 17 mapped columns. DataFlow profiles the dataset, flags invalid emails, identifies duplicates and outliers, applies PII masking and computes an explainable Health Score.
+
+The statistical layer evaluates exploratory signals using Welch t-tests, chi-square tests, ANOVA, effect sizes and Bonferroni-aware interpretation. Results are presented as process-level evidence, never as automated individual decisions.
 
 ---
 
@@ -74,6 +185,16 @@ DataFlow/
 ├── start.bat                        # Script de inicialização integrada Windows
 └── README.md                        # Esta documentação
 ```
+
+---
+
+## 🧱 Visual Architecture
+
+<p align="center">
+  <img src="./assets/architecture-pipeline.png" alt="DataFlow visual architecture" width="100%" />
+</p>
+
+DataFlow follows a traceable analytical flow: raw CSV or demo dataset enters the pipeline, gets parsed, validated, cleaned, profiled, scored, interpreted and exported as dashboard insights or executive reports.
 
 ---
 
@@ -187,6 +308,44 @@ O DataFlow foi desenhado com foco em **Ética de Dados**:
 * [Portfolio Pitch (docs/portfolio_pitch.md)](file:///C:/dev/DataFlow/docs/portfolio_pitch.md): Roteiros de apresentação de 30s, 60s, LinkedIn posts e respostas para perguntas difíceis em entrevistas.
 * [Final Release Audit (docs/final_release_audit.md)](file:///C:/dev/DataFlow/docs/final_release_audit.md): Auditoria técnica completa de stack, regras de score e release.
 * [Upgrade Summary V2 (docs/upgrade_summary_v2.md)](file:///C:/dev/DataFlow/docs/upgrade_summary_v2.md): Registro das evoluções da versão V1.3.
+
+---
+
+## 🖼️ GitHub Social Preview
+
+A social preview image is available at:
+```txt
+assets/social-preview.png
+```
+Recommended usage: GitHub repository settings → Social preview → Upload `assets/social-preview.png`.
+
+---
+
+## 🔖 GitHub Repository Metadata
+
+Suggested description:
+```txt
+Responsible data profiling, cleaning, statistical evidence and LGPD-aware analytics for tabular datasets.
+```
+
+Suggested topics:
+```txt
+data-quality
+analytics-engineering
+data-profiling
+statistics
+fastapi
+nextjs
+typescript
+python
+scipy
+responsible-ai
+lgpd
+dashboard
+portfolio-project
+data-visualization
+csv-processing
+```
 
 ---
 
