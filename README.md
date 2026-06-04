@@ -5,15 +5,26 @@
 
   <p><strong>Profiling, limpeza, evidência estatística e governança responsável para dados tabulares.</strong></p>
   <p><strong>Responsible data profiling, cleaning and statistical evidence for tabular datasets.</strong></p>
-</div>
 
-[![Next.js 15](https://img.shields.io/badge/Next.js-15.5-000000?style=for-the-badge&logo=nextdotjs)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
-[![SciPy](https://img.shields.io/badge/SciPy-1.12+-8CAAE6?style=for-the-badge&logo=scipy)](https://scipy.org/)
-[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind%20CSS-v4.0-38BDF8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
-[![LGPD-Aware](https://img.shields.io/badge/LGPD-Protected-06B6D4?style=for-the-badge)](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
+  <p>
+    <a href="#-visão-geral--overview">PT-BR / English Overview</a> •
+    <a href="#-product-preview">Preview</a> •
+    <a href="#-screenshots">Screenshots</a> •
+    <a href="#-stack--tecnologias">Stack</a> •
+    <a href="#-arquitetura--architecture">Architecture</a> •
+    <a href="#-quick-start--início-rápido">Quick Start</a> •
+    <a href="#-autor--author">Author</a>
+  </p>
+
+  <p>
+    <img alt="Next.js" src="https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=nextdotjs" />
+    <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-React-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+    <img alt="Python" src="https://img.shields.io/badge/Python-Analytics-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+    <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-API-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
+    <img alt="SciPy" src="https://img.shields.io/badge/SciPy-Statistical%20Evidence-8CAAE6?style=for-the-badge&logo=scipy&logoColor=white" />
+    <img alt="LGPD Aware" src="https://img.shields.io/badge/LGPD--Aware-Responsible%20Analytics-22C55E?style=for-the-badge" />
+  </p>
+</div>
 
 <p align="center">
   <img src="./assets/hero-cover.png" alt="DataFlow product overview" width="100%" />
@@ -23,9 +34,14 @@
 
 ## 1. Visão Geral / Overview
 
-O **DataFlow** é um projeto de portfólio completo para *Analytics Engineering*, *Data Science* e *Data Engineering*. Ele automatiza o ciclo completo de ingestão de dados tabulares (CSV), convertendo planilhas brutas de recrutamento em um diagnóstico executivo confiável, painéis interativos premium e relatórios estruturados em PDF para tomada de decisão fundamentada.
+O **DataFlow** é um produto de dados criado para transformar bases tabulares imperfeitas em um diagnóstico executivo confiável. 
 
-O sistema aborda um problema clássico de mercado: dados que chegam de formulários públicos com cabeçalhos incoerentes, registros duplicados, e-mails inválidos, outliers discrepantes e nulos abundantes. O DataFlow atua como um validador de integridade local-first que normaliza esses dados, executa testes estatísticos inferenciais de processo na API do Python (**SciPy**) e aplica regras rígidas de proteção à privacidade de dados pessoais em conformidade com a **LGPD** (Lei Geral de Proteção de Dados).
+Ele automatiza um fluxo completo de **ingestão, validação, limpeza, profiling, pontuação de qualidade, análise estatística, mascaramento de dados sensíveis e geração de relatório executivo**. Em vez de tratar arquivos CSV como planilhas isoladas, o DataFlow os converte em um pipeline analítico rastreável, com evidências, limitações e recomendações.
+
+O projeto foi desenvolvido por **Felipe Alirio Baruja** como uma peça âncora de portfólio, combinando engenharia de software full-stack e ciência de dados aplicada à tomada de decisão de negócios.
+
+> **Responsible Analytics Notice**  
+> O DataFlow foi criado para diagnóstico agregado, auditoria de qualidade e análise de processo. Ele **não deve** ser usado para ranquear, aprovar, reprovar ou tomar decisões automatizadas sobre indivíduos.
 
 ---
 
@@ -74,18 +90,46 @@ It shows not only what the data says, but also:
 
 ---
 
-## 3. Principais Funcionalidades / Key Features
+## 🎯 Problema que resolve / The problem it solves
 
-- **Executive Data Briefing (Hero Premium):** Diagnóstico instantâneo e pontuação de integridade explicável em menos de 5 segundos.
-- **Data Quality Score (Health Score):** Pontuação de 0 a 100 com waterfall interativa de penalidades calculadas na API.
-- **Before/After Cleaning Audit:** Grade comparativa mostrando o saneamento estrutural de volumes, nulos, e-mails e categorias.
-- **Modo Raw vs Cleaned na Tabela:** Tabela de auditoria interativa baseada em TanStack Table v8, permitindo alternar visualmente entre dados saneados e brutos com tooltips descritivos das transformações de limpeza aplicadas.
-- **Context Drawer por Coluna:** Clique nos cabeçalhos da tabela para abrir um drawer lateral com metadados semânticos, tipo inferido, taxas de completude, distribuição local, impactos no Health Score e ações de engenharia recomendadas.
-- **Funil Operacional SVG Customizado:** Gráfico de funil proporcional ao volume absoluto com taxas de drop-off e nota metodológica integrada.
-- **Matriz de Correlação Spearman 4x4:** Mapa de calor interativo que calcula coeficientes ordinais de Spearman client-side, sendo robusto contra outliers.
-- **Outlier Boxplot (IQR):** Visualizador estatístico de quartis e outliers (expectativa salarial, anos de experiência) baseado na regra de amplitude interquartil.
-- **Statistical Evidence Center:** Hypothesis testing (Welch t-test, ANOVA de uma via, Qui-Quadrado de Pearson) interpretados em linguagem executiva com badges de múltiplas comparações (Bonferroni) e alertas de falso positivo dinâmicos.
-- **Relatório PDF Executivo de 9 Páginas:** Design para impressão A4 que suprime localhost e URLs de navegador via regras `@page` e divide perfeitamente o relatório em seções executivas contendo todos os gráficos e o dicionário de 17 colunas.
+Em fluxos reais de negócio, bases tabulares costumam chegar com problemas como:
+- cabeçalhos inconsistentes e formatos desregulados;
+- registros duplicados;
+- e-mails inválidos;
+- campos ausentes (nulos);
+- valores discrepantes (outliers);
+- datas e categorias em formatos diferentes;
+- baixa rastreabilidade do que foi limpo ou alterado;
+- relatórios que exibem números sem explicar incertezas estatísticas;
+- risco de uso indevido de dados pessoais ou sensíveis.
+
+O **DataFlow** cria uma camada organizada e auditável entre o dado bruto e a decisão analítica final.
+
+---
+
+## 🧩 Proposta / Analytical Pipeline
+
+O DataFlow processa dados tabulares e entrega uma visão estruturada da qualidade da base, dos principais problemas, dos sinais estatísticos e dos limites de interpretação:
+
+```txt
+CSV Upload / Demo Dataset
+  ↓
+Parsing e mapeamento de colunas
+  ↓
+Validação de estrutura e tipos
+  ↓
+Limpeza, normalização e padronização
+  ↓
+Profiling de completude, duplicidade e outliers
+  ↓
+Health Score explicável
+  ↓
+Evidência estatística inferencial (SciPy)
+  ↓
+Mascaramento LGPD / PII
+  ↓
+Dashboard executivo & Relatório PDF de 9 Páginas
+```
 
 ---
 
@@ -145,44 +189,100 @@ O relatório executivo consolida Health Score, KPIs, auditoria de limpeza, evid�
 ## 📌 Estudo de Caso / Case Study
 
 ### 📌 Estudo de Caso: Pipeline Sintético de Recrutamento
-O dataset demo simula um pipeline de recrutamento com 305 registros ingeridos, 300 registros válidos após limpeza e 17 colunas mapeadas. O DataFlow faz profiling da base, sinaliza e-mails inválidos, identifica duplicatas e outliers, aplica mascaramento de PII e calcula um Health Score explicável.
+O dataset demo simula um pipeline de recrutamento com 305 registros ingeridos, 300 registros válidos após limpeza e 17 colunas mapeadas. O DataFlow faz profiling da base, sinaliza e-mails inválidos, identifica duplicatas e outliers, aplica mascaramento de PII e calcula um Health Score explicável de **82/100**.
 
 A camada estatística avalia sinais exploratórios usando testes de Welch, qui-quadrado, ANOVA, tamanhos de efeito e interpretação com correção de Bonferroni. Os resultados são apresentados como evidência de processo, nunca como decisão individual automatizada.
 
 ### 📌 Case Study: Synthetic Recruitment Pipeline
-The demo dataset simulates a recruitment pipeline with 305 ingested records, 300 valid records after cleaning and 17 mapped columns. DataFlow profiles the dataset, flags invalid emails, identifies duplicates and outliers, applies PII masking and computes an explainable Health Score.
+The demo dataset simulates a recruitment pipeline with 305 ingested records, 300 valid records after cleaning and 17 mapped columns. DataFlow profiles the dataset, flags invalid emails, identifies duplicates and outliers, applies PII masking and computes an explainable Health Score of **82/100**.
 
 The statistical layer evaluates exploratory signals using Welch t-tests, chi-square tests, ANOVA, effect sizes and Bonferroni-aware interpretation. Results are presented as process-level evidence, never as automated individual decisions.
 
 ---
 
-## 4. Arquitetura do Projeto / Project Architecture
+## 🧭 Visual Story / Jornada Analítica
+
+A experiência do DataFlow foi pensada como uma jornada analítica guiada:
+```txt
+1. Importar CSV bruto ou carregar a base de demonstração (Processo Seletivo)
+2. Analisar o Briefing Executivo inicial no cockpit
+3. Avaliar as deduções de integridade no gráfico do Health Score
+4. Investigar vulnerabilidades listadas no Quality Issues Register
+5. Analisar o Funil Operacional SVG e eficiência de canais
+6. Avaliar sinais e p-valores do Statistical Evidence Center
+7. Conferir regras de uso de IA no Responsible Analytics Center
+8. Auditar ou exportar os registros mascarados na tabela de dados
+9. Exportar o Relatório Executivo PDF de 9 páginas sem artefatos
+```
+
+---
+
+## ⚙️ Funcionalidades Principais / Core Features
+
+### Executive Data Briefing
+Um painel inicial para leitura rápida do dataset: Health Score, volume ingerido, registros válidos, colunas mapeadas, status geral da base e badges de governança corporativa.
+
+### Data Quality Score
+Pontuação de qualidade de dados com cálculo explicável. O score parte de 100 e aplica penalizações proporcionais por nulos relevantes, duplicatas, formatos inválidos, outliers e colunas constantes.
+
+### Quality Issues Register
+Registro estruturado de inconsistências na base com severidade, tipo de falha, impacto analítico, ação de tratamento recomendada e status.
+
+### Before/After Cleaning Audit
+Grade comparativa mostrando o saneamento estrutural do pipeline local-first de limpeza de dados.
+
+### LGPD / PII Masking
+Privacidade e proteção de dados pessoais ativa por padrão no dashboard e nos arquivos exportados:
+* **Nomes:** Exibidos como `Candidato CANXXXX`.
+* **E-mails:** Mascarados como `g***@example.com`.
+
+---
+
+## 🛠️ Stack / Tecnologias
+
+### Frontend
+- **Framework:** Next.js 15 (App Router) & React 19
+- **Linguagem:** TypeScript
+- **Estilização:** Tailwind CSS v4
+- **Componentização & Gráficos:** Recharts & Reative Custom SVG
+- **Grade de Dados:** TanStack Table v8
+- **Ícones:** Lucide Icons
+
+### Backend
+- **Framework API:** FastAPI & Uvicorn (Python 3.12)
+- **Modelagem & Validação:** Pydantic v2
+- **Processamento de Dados:** Pandas
+- **Engine Analítica:** SciPy (Estatística Inferencial)
+- **Suite de Testes:** Pytest
+
+---
+
+## 🧱 Arquitetura / Architecture
 
 O projeto adota uma arquitetura monorepo simplificada e desacoplada:
 
 ```text
 DataFlow/
 ├── apps/
-│   ├── web/                         # Frontend em Next.js 15 (App Router)
-│   │   ├── app/                     # Rotas e páginas (/demo, /showcase, /methodology)
-│   │   ├── components/              # Componentes de interface do painel e PDF
-│   │   │   ├── charts/              # Funil SVG, Correlação, Boxplot, Waterfall
-│   │   │   ├── dashboard/           # Heros, KPICards, Sidebar, Responsible Analytics
-│   │   │   ├── report/              # ReportView (Impressão do PDF)
-│   │   │   └── table/               # DataTable (Grade interativa + Drawer)
-│   │   └── lib/                     # Utilitários (masking, conclusions, api)
-│   └── api/                         # Backend em FastAPI/Python 3.12
-│       ├── app/                     # Código fonte da API REST
-│       │   ├── api/                 # Endpoints (/health, /demo, /analyze)
-│       │   ├── models/              # Modelos de validação Pydantic
-│       │   └── services/            # Engine de processamento (profiler, cleaner, inference)
-│       └── tests/                   # Testes unitários baseados em pytest
+│   ├── web/                         # Frontend Next.js (App Router)
+│   │   ├── app/                     # Páginas (/demo, /showcase, /methodology)
+│   │   ├── components/              # UI (charts, dashboard, report, table)
+│   │   ├── lib/                     # API client, masking, insights helpers
+│   │   └── types/                   # Definições estritas de tipos TypeScript
+│   │
+│   └── api/                         # Backend FastAPI
+│       ├── app/
+│       │   ├── api/                 # Endpoints REST (/analyze, /health, /demo)
+│       │   ├── models/              # Schemas de validação Pydantic
+│       │   └── services/            # Processadores (profiler, cleaner, inference)
+│       └── tests/                   # Testes unitários do pipeline (pytest)
+│
 ├── data/
-│   └── seed/                        # Base sintética (processo_seletivo_demo.csv)
+│   └── seed/                        # Base de teste sintética (processo_seletivo_demo.csv)
+│
 ├── docs/                            # Documentação técnica e de portfólio
-├── assets/
-│   └── screenshots/                 # Imagens ilustrativas do produto
-├── start.bat                        # Script de inicialização integrada Windows
+├── assets/                          # Imagens, previews e ícones
+├── start.bat                        # Inicializador integrado Windows
 └── README.md                        # Esta documentação
 ```
 
@@ -198,77 +298,72 @@ DataFlow follows a traceable analytical flow: raw CSV or demo dataset enters the
 
 ---
 
-## 5. Pipeline de Dados / Data Pipeline
+## 🔁 Data Flow Pipeline
 
-```text
-CSV Upload / Demo
-  ➜ Parser de Encodings e Delimitadores
-  ➜ Wizard de Mapeamento de Cabeçalhos
-  ➜ Normalização Casing & Formatos de Data
-  ➜ Exclusão de Duplicados & Outliers (Cleaning)
-  ➜ Profiling de Completude & Health Scoring
-  ➜ Testes Estatísticos Inferidos (SciPy)
-  ➜ Mascaramento Ativo de PII (LGPD)
-  ➜ Apresentação (Dashboard & PDF de 9 Páginas)
+```txt
+Raw Input
+  ↓
+Encoding / Delimiter Parsing
+  ↓
+Header Mapping (Wizard Client-side)
+  ↓
+Schema Validation
+  ↓
+Cleaning & Normalization (Casing, Trim, Formats)
+  ↓
+Profiling & Outlier Detection (IQR limits)
+  ↓
+Quality Scoring (Health Score deductions)
+  ↓
+Statistical Evidence (Welch, ANOVA, Chi-Square in SciPy)
+  ↓
+Responsible Analytics Layer (PII Masking & Ethical Warnings)
+  ↓
+Dashboard Interface / PDF Report / CSV-JSON Export
 ```
 
 ---
 
-## 6. Primeiros Passos / Getting Started
+## 🚀 Quick Start / Início Rápido
 
 ### Pré-requisitos
 - **Node.js** v20 ou superior.
-- **Python** 3.10 ou superior (preferencialmente Python 3.12).
+- **Python** v3.10 ou superior (preferencialmente Python 3.12).
+- **Git**
 
-### Execução Integrada (Windows)
-Se você estiver no Windows, basta dar dois cliques no arquivo `start.bat` na raiz do projeto. Ele inicializará automaticamente o ambiente virtual Python, instalará as dependências do backend, rodará o frontend e abrirá a aplicação em seu navegador padrão.
+### Opção 1 — Execução integrada no Windows
+Na pasta raiz do projeto, dê dois cliques ou execute no console:
+```bash
+start.bat
+```
+Este script inicializa automaticamente o ambiente virtual Python (`.venv`), instala as dependências, inicia o backend FastAPI na porta `8000`, o frontend Next.js na porta `3000` e abre a aplicação no navegador padrão.
 
----
-
-### Execução Manual por Componente
+### Opção 2 — Execução manual
 
 #### 1. Backend FastAPI (`apps/api`)
-1. Acesse o diretório:
-   ```bash
-   cd apps/api
-   ```
-2. Crie e ative o ambiente virtual:
-   ```bash
-   python -m venv .venv
-   .venv\Scripts\activate   # Windows
-   source .venv/bin/activate # Linux/macOS
-   ```
-3. Instale as dependências:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. Inicie o servidor:
-   ```bash
-   uvicorn app.main:app --reload --port 8000
-   ```
-   *O backend FastAPI estará ativo em [http://127.0.0.1:8000](http://127.0.0.1:8000). A documentação interativa fica em `/docs`.*
+```bash
+cd apps/api
+python -m venv .venv
+.venv\Scripts\activate            # Windows
+source .venv/bin/activate          # Linux/macOS
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000
+```
+*API ativa em [http://127.0.0.1:8000](http://127.0.0.1:8000). Docs interativos em `/docs`.*
 
 #### 2. Frontend Next.js (`apps/web`)
-1. Acesse o diretório em um novo terminal:
-   ```bash
-   cd apps/web
-   ```
-2. Instale as dependências:
-   ```bash
-   npm install
-   ```
-3. Inicie o servidor em desenvolvimento com Turbopack:
-   ```bash
-   npm run dev
-   ```
-   *O frontend estará disponível em [http://localhost:3000](http://localhost:3000).*
+```bash
+cd apps/web
+npm install
+npm run dev
+```
+*Frontend ativo em [http://localhost:3000](http://localhost:3000).*
 
 ---
 
-## 7. Scripts e Testes / Scripts and Testing
+## 🧪 Scripts e Testes / Scripts and Testing
 
 ### Rodar Testes de Backend (FastAPI/Pytest)
-A API conta com testes unitários para validar a lógica analítica do pipeline.
 ```bash
 cd apps/api
 .venv\Scripts\python -m pytest
@@ -277,58 +372,82 @@ cd apps/api
 ### Validações de Frontend (Next.js)
 ```bash
 cd apps/web
-npm run lint         # Verificação de linter (0 avisos tolerados)
-npm run typecheck    # Verificação estrita de tipos
-npm run build        # Compilação estática de produção
+npm run lint         # Verificação de lint
+npm run typecheck    # Verificação estrita de TypeScript
+npm run build        # Compilação de produção
 ```
 
 ---
 
-## 8. Responsible Analytics & Diretrizes LGPD
+## 📊 Metodologia Estatística / Statistical Methodology
 
-O DataFlow foi desenhado com foco em **Ética de Dados**:
-* **Mascaramento Nativo:** Os nomes e e-mails são anonimizados do lado do cliente (Nome &rarr; Candidato CANXXXX | E-mail &rarr; f***@example.com).
-* **Auditoria de Processos:** Os testes estatísticos não determinam aprovação individual, mas validam se o processo global apresenta vieses estatísticos sistêmicos.
-* **Veto a Decisões Automatizadas:** É vedado o uso deste sistema para ranqueamento direto ou descarte automático de candidatos com base em scores estatísticos. A decisão humana estruturada é obrigatória.
-
----
-
-## 9. Metodologia Estatística
-
-- **Welch t-test:** Avaliação de diferenças de médias em testes práticos, adequado para variâncias populacionais e tamanhos amostrais distintos.
-- **Chi-Square Association:** Teste qui-quadrado de independência para avaliar associação categórica de escolaridade versus status de aprovação.
-- **ANOVA de Uma Via:** Compara médias de notas entre múltiplos grupos (cargos, escolaridade) para avaliar dispersões.
-- **Bonferroni Correction:** Dividimos $\alpha = 0.05$ por 6 comparações ($\alpha_{adj} \approx 0.0083$) para anular a inflação de erros do Tipo I ao rodar múltiplos testes.
-- **outlier IQR limits:** Quartis calculados localmente. Valores discrepantes sofrem penalizações no Health Score e são sinalizados.
+O DataFlow utiliza estatística inferencial clássica com foco em transparência e governança:
+* **Welch t-test:** Usado para comparar médias de notas entre grupos aprovados vs demais (não assume homogeneidade de variâncias).
+* **Qui-Quadrado ($\chi^2$):** Usado para testar dependência entre variáveis categóricas (como escolaridade vs status de aprovação).
+* **ANOVA de Uma Via:** Analisa dispersão de notas técnicas entre múltiplos grupos.
+* **Correção de Bonferroni:** Ajusta o nível de significância de testes simultâneos para mitigar o Erro Tipo I ($\alpha_{Bonferroni} = \alpha / m \approx 0.0083$ para 6 testes).
+* **Dispersão & IQR:** Critério de Tukey ($Q3 + 1.5 \times IQR$) para isolar outliers numéricos de salário e experiência.
+* **Correlação de Spearman:** Coeficiente ordinal client-side robusto a outliers numéricos.
 
 ---
 
-## 10. Documentação de Portfólio Complementar
+## 🛡️ Segurança, LGPD e Boas Práticas
 
-* [Portfolio Pitch (docs/portfolio_pitch.md)](file:///C:/dev/DataFlow/docs/portfolio_pitch.md): Roteiros de apresentação de 30s, 60s, LinkedIn posts e respostas para perguntas difíceis em entrevistas.
-* [Final Release Audit (docs/final_release_audit.md)](file:///C:/dev/DataFlow/docs/final_release_audit.md): Auditoria técnica completa de stack, regras de score e release.
-* [Upgrade Summary V2 (docs/upgrade_summary_v2.md)](file:///C:/dev/DataFlow/docs/upgrade_summary_v2.md): Registro das evoluções da versão V1.3.
+* **Mascaramento no Client:** Garante que informações confidenciais de candidatos nunca cheguem sem proteção à tela ou logs.
+* **Separação de Insights:** Foco em indicadores agregados do pipeline, barrando inferências pessoais.
+* **Veto a ML de Seleção:** Exclusão de qualquer modelo de pontuação preditiva de talentos ou recomendação automática de candidatos para evitar reprodução de vieses históricos.
+
+---
+
+## 🧭 Roadmap do Produto
+
+* **Fase 0 — Ingestão Local:** Parser CSV, Wizard de Schema e dashboard básico.
+* **Fase 1 — Profiling & Score:** Estruturação do Health Score e waterfall de integridade.
+* **Fase 2 — Data Quality:** Issues Register e comparativo Before/After.
+* **Fase 3 — Estatística:** Integração com SciPy, testes de hipóteses e Bonferroni.
+* **Fase 4 — UX Premium:** Visualizações dinâmicas (Funil SVG, Spearman Heatmap, Boxplots) e DataTable reativo.
+* **Fase 5 — Relatório PDF:** Print stylesheet otimizado para orçamento exato de 9 páginas sem localhost.
+* **Próximas Evoluções:** Virtualização de tabelas (100k+ linhas), persistência relacional com PostgreSQL e suporte a XLSX.
+
+---
+
+## 💼 Valor para Portfólio / Portfolio Value
+
+O DataFlow demonstra competências críticas para funções de **Analytics Engineering, Data Science e Data Engineering**:
+- **Design de Produto de Dados:** Tradução de necessidades de negócios em recursos interativos premium.
+- **Rigor Analítico:** Aplicação consciente de estatística sem falsos positivos.
+- **Governança Ética:** Conformidade ativa com LGPD e design de IA responsável.
+- **Arquitetura Full-Stack:** Comunicação limpa entre Next.js 15 e FastAPI em monorepo.
+
+---
+
+## 📚 Documentação Complementar
+
+- [docs/portfolio_pitch.md](file:///C:/dev/DataFlow/docs/portfolio_pitch.md) — roteiros de entrevista, LinkedIn e guia de apresentação.
+- [docs/final_release_audit.md](file:///C:/dev/DataFlow/docs/final_release_audit.md) — auditoria detalhada de código, schemas e testes.
+- [docs/technical_methodology.md](file:///C:/dev/DataFlow/docs/technical_methodology.md) — documentação aprofundada da lógica matemática.
+- [docs/release_notes_v1.3.md](file:///C:/dev/DataFlow/docs/release_notes_v1.3.md) — evolução histórica da versão.
 
 ---
 
 ## 🖼️ GitHub Social Preview
 
-A social preview image is available at:
+Uma imagem para visualização social está disponível em:
 ```txt
 assets/social-preview.png
 ```
-Recommended usage: GitHub repository settings → Social preview → Upload `assets/social-preview.png`.
+*Dimensão recomendada: 1280x640, <1MB. Faça upload em: Repository Settings → Social Preview.*
 
 ---
 
 ## 🔖 GitHub Repository Metadata
 
-Suggested description:
+### About sugerido
 ```txt
 Responsible data profiling, cleaning, statistical evidence and LGPD-aware analytics for tabular datasets.
 ```
 
-Suggested topics:
+### Topics sugeridos
 ```txt
 data-quality
 analytics-engineering
@@ -339,7 +458,7 @@ nextjs
 typescript
 python
 scipy
-responsible-ai
+responsible-analytics
 lgpd
 dashboard
 portfolio-project
@@ -349,11 +468,17 @@ csv-processing
 
 ---
 
-## 🤝 Créditos
+## 👤 Autor / Author
 
-Este projeto foi construído por **Felipe Alirio Baruja** como projeto de portfólio profissional âncora, combinando engenharia de software full-stack e ciência de dados responsável.
-* GitHub: [BarujaFe1](https://github.com/BarujaFe1)
-* Repositório Oficial: [DataFlow](https://github.com/BarujaFe1/DataFlow)
-* E-mail: felipe.baruja@example.com (sintético/portfólio)
+Desenvolvido por **Felipe Alirio Baruja**.
+
+- **Portfolio:** [barujafe.vercel.app](https://barujafe.vercel.app/)
+- **GitHub:** [@BarujaFe1](https://github.com/BarujaFe1)
+- **LinkedIn:** [Gustavo Felipe Alirio Baruja](https://www.linkedin.com/in/barujafe/)
+
+---
+
+## 📄 Licença / License
 
 MIT License. Copyright (c) 2026 Felipe Alirio Baruja.
+O código está disponível sob a licença MIT caso o arquivo `LICENSE` esteja presente no repositório.
