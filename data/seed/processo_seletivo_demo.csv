@@ -1,0 +1,306 @@
+candidate_id,timestamp,name,email,city,state,education_level,experience_years,source_channel,role_applied,stage,score_test,score_interview,final_status,salary_expectation,availability,remote_preference
+CAN0001,2026-05-21T03:01:00Z,Gustavo Pereira,gustavo.pereira@example.com,Rio de Janeiro,RJ,DOUTORADO,1,Indeed,Analista de Business Intelligence,Triagem,75,62,Em Processo,9873,Imediata,Presencial
+CAN0002,23/05/2026 13:21,Gabriel Alves,gabriel.alves@example.com,Campinas,SP,MESTRADO,8,Glassdoor,Analista de Dados Júnior,Entrevista Técnica,45,85,Em Processo,8925,Imediata,Híbrido
+CAN0003,2026-05-03 07:55:00,Bruno Lima,bruno.lima@example.com,Campinas,SP,Pós-Graduação,8,Glassdoor,Analista de Business Intelligence,Aprovado,50,84,Aprovado,9216,30 dias,Totalmente Remoto
+CAN0004,2026-05-11 01:14:00,Rodrigo Martins,rodrigo.martins@example.com,Porto Alegre,RS,Doutorado,10,Gupy,Engenheiro de Dados Júnior,Teste Técnico,56,58,Em Processo,7304,30 dias,Presencial
+CAN0005,2026-05-05 16:31:00,Mariana Souza,mariana.souza@example.com,Belo Horizonte,MG,Mestrado,12,Gupy,Analista de Business Intelligence,Reprovado,100,50,Reprovado,11797,15 dias,
+CAN0006,2026-05-14 05:29:00,Gustavo Ferreira,gustavo.ferreira@example.com,Rio de Janeiro,RJ,Pós-Graduação,6,Indeed,Analista de Business Intelligence,Triagem,78,70,Em Processo,8947,15 dias,
+CAN0007,2026-05-08 18:05:00,Isabela Oliveira,isabela.oliveira@example.com,Belo Horizonte,MG,Mestrado,5,Site Institucional,Analista de Dados Pleno,Proposta,88,96,Aprovado,9537,15 dias,Híbrido
+CAN0008,2026-05-04 07:14:00,Rodrigo Silva,rodrigo.silva@example.com,Porto Alegre,RS,Ensino medio,1,LinkedIn,Analista de Dados Júnior,Proposta,55,67,Aprovado,5167,30 dias,Híbrido
+CAN0009,2026-05-26 13:12:00,Beatriz Carvalho,beatriz.carvalho@example.com,Recife,PE,Ensino Médio,3,Glassdoor,Analista de Dados Júnior,Teste Técnico,52,62,Em Processo,6006,,Híbrido
+CAN0010,2026-05-26 17:06:00,Felipe Oliveira,felipe.oliveira@example.com,Porto Alegre,RS,Mestrado,12,Indeed,Engenheiro de Dados Júnior,Entrevista RH,99,100,Em Processo,14412,30 dias,Híbrido
+CAN0011,2026-05-05 06:18:00,Mariana Santos,mariana.santos@example.com,São Paulo,SP,Mestrado,5,SITE INSTITUCIONAL,Analista de Dados Júnior,Proposta,44,93,Aprovado,12333,30 dias,
+CAN0012,2026-05-22T18:36:00Z,Rodrigo Lima,rodrigo.lima@example.com,Campinas,SP,Mestrado,9,LINKEDIN,Analista de Dados Júnior,Proposta,53,82,Aprovado,4127,Imediata,Totalmente Remoto
+CAN0013,2026-05-23T09:39:00Z,Felipe Gomes,felipe.gomes@example.com,Rio de Janeiro,RJ,Ensino Superior,3,Indeed,Analista de Business Intelligence,Teste Técnico,85,71,Em Processo,7325,,Presencial
+CAN0014,03/05/2026 20:27,Mariana Silva,mariana.silva@example.com,Belo Horizonte,MG,PÓS-GRADUAÇÃO,13,LINKEDIN,Analista de Business Intelligence,Triagem,93,73,Em Processo,5088,Imediata,Presencial
+CAN0015,2026-05-22 07:42:00,Amanda Carvalho,amanda.carvalho@example.com,Belo Horizonte,MG,Ensino Superior,5,LinkedIn,Cientista de Dados Júnior,Reprovado,99,76,Reprovado,7065,Imediata,Presencial
+CAN0016,2026-05-28 15:14:00,Matheus Ribeiro,matheus.ribeiro@example.com,Porto Alegre,RS,Ensino Superior,8,Indicação,Analista de Business Intelligence,Entrevista Técnica,83,,Em Processo,7279,15 dias,
+CAN0017,2026-05-20T13:22:00Z,Rodrigo Carvalho,rodrigo.carvalho@example.com,Rio de Janeiro,RJ,doutorado,-2,Glassdoor,Analista de Dados Pleno,Entrevista RH,67,54,Em Processo,13209,30 dias,Totalmente Remoto
+CAN0018,10/05/2026 21:26,Bruno Gomes,bruno.gomes@example.com,Porto Alegre,RS,Mestrado,5,Indicação,Analista de Dados Júnior,Entrevista RH,58,63,Em Processo,13726,30 dias,
+CAN0019,2026-05-16T23:10:00Z,Lucas Gomes,lucas.gomes@example.com,Campinas,SP,Ensino Superior,7,INDEED,Engenheiro de Dados Júnior,Proposta,,99,Aprovado,13318,15 dias,Presencial
+CAN0020,2026-05-05 20:44:00,Beatriz Carvalho,beatriz.carvalho@example.com,Salvador,BA,Ensino Superior,3,Gupy,Analista de Business Intelligence,Proposta,60,98,Aprovado,14784,30 dias,Presencial
+CAN0021,24/05/2026 15:28,Larissa Lima,larissa.lima@example.com,Salvador,BA,Pós-Graduação,9,Indicação,Analista de Business Intelligence,Triagem,48,59,Em Processo,14573,15 dias,Híbrido
+CAN0022,02/05/2026 06:53,Bruno Silva,bruno.silva@example.com,Recife,PE,Pós-Graduação,12,Gupy,Analista de Business Intelligence,Reprovado,78,64,Reprovado,150000,15 dias,Híbrido
+CAN0023,2026-05-30T04:39:00Z,Felipe Martins,felipe.martins@example.com,São Paulo,SP,MESTRADO,5,Gupy,Engenheiro de Dados Júnior,Entrevista RH,61,98,Em Processo,9906,,
+CAN0024,2026-05-18 01:22:00,Lucas Santos,lucas.santos@example.com,Porto Alegre,RS,Ensino Médio,7,GLASSDOOR,Engenheiro de Dados Júnior,Aprovado,56,99,Aprovado,14769,15 dias,
+CAN0025,2026-05-01T09:36:00Z,Bruno Martins,bruno.martins@example.com,Porto Alegre,RS,ENSINO SUPERIOR,3,Site Institucional,Cientista de Dados Júnior,Proposta,67,92,Aprovado,150000,Imediata,Híbrido
+CAN0026,2026-05-21 14:45:00,Sofia Ferreira,sofia.ferreira@example.com,Curitiba,PR,Doutorado,14,Glassdoor,Cientista de Dados Júnior,Reprovado,55,55,Reprovado,10613,15 dias,
+CAN0027,28/05/2026 10:11,Thiago Ribeiro,thiago.ribeiro@example.com,Campinas,SP,Doutorado,8,Site Institucional,Analista de Dados Júnior,Teste Técnico,86,76,Em Processo,14314,15 dias,Presencial
+CAN0028,2026-05-10T07:25:00Z,Larissa Gomes,larissa.gomes@example.com,Campinas,SP,Doutorado,10,Gupy,Cientista de Dados Júnior,Teste Técnico,47,96,Em Processo,11779,Imediata,
+CAN0029,2026-05-16T08:46:00Z,Camila Souza,camila.souza@example.com,Curitiba,PR,Ensino Superior,4,LinkedIn,Analista de Dados Pleno,Aprovado,95,98,Aprovado,12405,15 dias,
+CAN0030,02/05/2026 08:55,Beatriz Oliveira,beatriz.oliveira@example.com,Rio de Janeiro,RJ,Ensino medio,9,indeed,Analista de Business Intelligence,Proposta,90,89,Aprovado,10381,,Híbrido
+CAN0031,2026-05-10 18:39:00,Beatriz Alves,beatriz.alves@example.com,Curitiba,PR,Ensino Superior,2,Gupy,Analista de Business Intelligence,Entrevista Técnica,58,52,Em Processo,14517,,
+CAN0032,2026-05-09T20:37:00Z,Thiago Carvalho,thiago.carvalho@example.com,Porto Alegre,RS,Pós-Graduação,2,Indicação,Analista de Business Intelligence,Entrevista RH,68,57,Em Processo,9594,15 dias,Totalmente Remoto
+CAN0033,02/05/2026 13:47,Gustavo Silva,gustavo.silva@example.com,São Paulo,SP,Pós-Graduação,5,Glassdoor,Cientista de Dados Júnior,Teste Técnico,77,77,Em Processo,4494,15 dias,Presencial
+CAN0034,11/05/2026 13:44,Camila Martins,camila.martins@example.com,São Paulo,SP,Pós-Graduação,3,Gupy,Analista de Dados Júnior,Aprovado,95,,Aprovado,11494,30 dias,Presencial
+CAN0035,2026-05-07 08:35:00,Camila Almeida,camila.almeida@example.com,Salvador,BA,Doutorado,5,LinkedIn,Analista de Dados Júnior,Teste Técnico,93,57,Em Processo,5522,30 dias,Híbrido
+CAN0036,2026-05-27 15:30:00,Matheus Rodrigues,matheus.rodrigues@example.com,Belo Horizonte,MG,Pós-Graduação,13,Site Institucional,Analista de Dados Júnior,Entrevista RH,86,69,Em Processo,13812,,Híbrido
+CAN0037,2026-05-11T17:48:00Z,Bruno Almeida,bruno.almeida@example.com,Porto Alegre,RS,Ensino Superior,7,gupy,Engenheiro de Dados Júnior,Entrevista Técnica,82,100,Em Processo,11115,,Híbrido
+CAN0038,28/05/2026 03:55,Beatriz Almeida,beatriz.almeidaexample.com,Recife,PE,ENSINO SUPERIOR,10,Gupy,Cientista de Dados Júnior,Reprovado,83,84,Reprovado,14775,30 dias,
+CAN0039,2026-05-03T07:40:00Z,Camila Pereira,camila.pereira@example.com,Recife,PE,Ensino Médio,9,LinkedIn,Analista de Dados Júnior,Entrevista RH,62,73,Em Processo,9751,Imediata,
+CAN0040,2026-05-20T12:39:00Z,Larissa Lopes,larissa.lopes@example.com,Belo Horizonte,MG,Pós-Graduação,0,Gupy,Analista de Business Intelligence,Teste Técnico,44,78,Em Processo,7901,15 dias,Híbrido
+CAN0041,07/05/2026 12:54,Beatriz Pereira,beatriz.pereira@example.com,Campinas,SP,Pós-graduacao,12,Site Institucional,Analista de Dados Júnior,Proposta,87,81,Aprovado,6770,30 dias,
+CAN0042,2026-05-09T21:48:00Z,Gabriel Souza,gabriel.souza@example.com,São Paulo,SP,MESTRADO,4,Indicação,Engenheiro de Dados Júnior,Teste Técnico,52,58,Em Processo,8994,Imediata,Híbrido
+CAN0043,31/05/2026 09:47,Beatriz Almeida,beatriz.almeida@example.com,Belo Horizonte,MG,Ensino Superior,12,Site Institucional,Engenheiro de Dados Júnior,Triagem,56,84,Em Processo,14015,30 dias,Presencial
+CAN0044,2026-05-22 07:30:00,Rodrigo Pereira,rodrigo.pereira@example.com,Salvador,BA,Pós-Graduação,3,LinkedIn,Engenheiro de Dados Júnior,Triagem,46,65,Em Processo,10432,30 dias,Híbrido
+CAN0045,2026-05-19 23:46:00,Sofia Souza,sofia.souza@example.com,Recife,PE,PÓS-GRADUAÇÃO,6,Indeed,Analista de Dados Júnior,Aprovado,63,84,Aprovado,3992,,
+CAN0046,2026-05-28T14:05:00Z,Thiago Silva,thiago.silva@example.com,Campinas,SP,Ensino Superior,6,Site Institucional,Analista de Dados Pleno,Reprovado,95,64,Reprovado,80000,30 dias,Presencial
+CAN0047,2026-05-04 21:55:00,Gabriel Silva,gabriel.silva@example.com,Porto Alegre,RS,ensino médio,4,SITE INSTITUCIONAL,Engenheiro de Dados Júnior,Entrevista Técnica,89,73,Em Processo,11254,30 dias,Totalmente Remoto
+CAN0048,2026-05-17T09:29:00Z,Felipe Santos,felipe.santos@example.com,Recife,PE,Ensino Médio,14,LinkedIn,Analista de Dados Pleno,Triagem,48,67,Em Processo,14667,30 dias,Totalmente Remoto
+CAN0049,2026-05-20T13:06:00Z,Beatriz Alves,beatriz.alves@example.com,Porto Alegre,RS,Mestrado,3,Indicação,Cientista de Dados Júnior,Teste Técnico,,80,Em Processo,4527,15 dias,Totalmente Remoto
+CAN0050,2026-05-02T18:35:00Z,Rodrigo Souza,rodrigo.souza@example.com,Recife,PE,Ensino Médio,9,Site Institucional,Analista de Dados Pleno,Aprovado,70,64,Aprovado,12113,30 dias,
+CAN0051,2026-05-14T17:49:00Z,Felipe Lima,,Curitiba,PR,pós-graduação,12,Glassdoor,Analista de Dados Júnior,Triagem,87,83,Em Processo,8585,15 dias,Totalmente Remoto
+CAN0052,2026-05-20 02:56:00,Gabriel Ferreira,gabriel.ferreira@example.com,São Paulo,SP,Pós-Graduação,13,Gupy,Analista de Dados Pleno,Reprovado,72,57,Reprovado,14111,30 dias,Presencial
+CAN0053,2026-05-13 19:03:00,Thiago Gomes,thiago.gomes@example.com,Belo Horizonte,MG,Pós-Graduação,0,Gupy,Engenheiro de Dados Júnior,Proposta,85,64,Aprovado,8802,Imediata,Híbrido
+CAN0054,30/05/2026 02:55,Sofia Martins,sofia.martins@example.com,Recife,PE,MESTRADO,5,Site Institucional,Cientista de Dados Júnior,Triagem,67,56,Em Processo,11584,30 dias,Híbrido
+CAN0055,2026-05-25T05:04:00Z,Beatriz Alves,beatriz.alves@example.com,Campinas,SP,Ensino Superior,4,Indeed,Analista de Dados Júnior,Teste Técnico,100,99,Em Processo,12236,30 dias,Totalmente Remoto
+CAN0056,2026-05-11 20:20:00,Matheus Oliveira,matheus.oliveira@example.com,Curitiba,PR,Doutorado,2,gupy,Cientista de Dados Júnior,Triagem,81,55,Em Processo,10581,30 dias,Híbrido
+CAN0057,2026-05-30 18:41:00,Rodrigo Lopes,rodrigo.lopes@example.com,São Paulo,SP,Pós-Graduação,2,indeed,Engenheiro de Dados Júnior,Proposta,73,89,Aprovado,7634,30 dias,Totalmente Remoto
+CAN0058,21/05/2026 10:04,Beatriz Martins,beatriz.martins@example.com,Belo Horizonte,MG,Doutorado,11,Glassdoor,Engenheiro de Dados Júnior,Teste Técnico,78,95,Em Processo,9171,Imediata,Totalmente Remoto
+CAN0059,2026-05-22T16:05:00Z,Sofia Ribeiro,,Belo Horizonte,MG,Pós-Graduação,15,Indeed,Cientista de Dados Júnior,Reprovado,90,56,Reprovado,11626,30 dias,
+CAN0060,2026-05-13 04:10:00,Julia Almeida,,Porto Alegre,RS,Doutorado,14,Indeed,Engenheiro de Dados Júnior,Reprovado,52,73,Reprovado,10218,,Totalmente Remoto
+CAN0061,2026-05-14 05:52:00,Gabriel Lima,gabriel.lima@example.com,Salvador,BA,Doutorado,3,Indeed,Analista de Business Intelligence,Teste Técnico,,77,Em Processo,10391,15 dias,
+CAN0062,17/05/2026 11:15,Lucas Ribeiro,lucas.ribeiro@example.com,Campinas,SP,Pós-Graduação,4,Gupy,Analista de Dados Pleno,Reprovado,85,,Reprovado,80000,30 dias,Totalmente Remoto
+CAN0063,17/05/2026 13:07,Larissa Gomes,larissa.gomes@example.com,Porto Alegre,RS,Doutorado,3,Gupy,Analista de Dados Júnior,Aprovado,72,86,Aprovado,150000,,Totalmente Remoto
+CAN0064,22/05/2026 02:33,Lucas Silva,lucas.silva@example.com,,,Mestrado,8,Indicação,Cientista de Dados Júnior,Teste Técnico,86,92,Em Processo,8447,15 dias,Presencial
+CAN0065,2026-05-27T21:29:00Z,Isabela Ferreira,isabela.ferreira@example.com,Rio de Janeiro,RJ,mestrado,1,LinkedIn,Cientista de Dados Júnior,Proposta,65,,Aprovado,13598,Imediata,Híbrido
+CAN0066,09/05/2026 03:51,Sofia Martins,sofia.martins@example.com,Recife,PE,Ensino Superior,15,Site Institucional,Analista de Dados Júnior,Aprovado,67,55,Aprovado,5956,Imediata,Híbrido
+CAN0067,2026-05-10T14:38:00Z,Sofia Ferreira,sofia.ferreira@example.com,Campinas,SP,Pós-Graduação,13,linkedin,Cientista de Dados Júnior,Proposta,91,97,Aprovado,5339,15 dias,
+CAN0068,2026-05-03T07:49:00Z,Amanda Ribeiro,amanda.ribeiro@example.com,São Paulo,SP,Mestrado,11,LinkedIn,Analista de Business Intelligence,Entrevista RH,65,70,Em Processo,80000,15 dias,Presencial
+CAN0069,09/05/2026 08:45,Thiago Gomes,thiago.gomes@example.com,Salvador,BA,Ensino Superior,14,Glassdoor,Analista de Dados Júnior,Reprovado,83,70,Reprovado,12011,Imediata,Totalmente Remoto
+CAN0070,21/05/2026 05:50,Larissa Souza,larissa.souza@example.com,Belo Horizonte,MG,Mestrado,11,SITE INSTITUCIONAL,Analista de Dados Júnior,Entrevista RH,65,95,Em Processo,9708,,Totalmente Remoto
+CAN0071,2026-05-03T14:29:00Z,Amanda Rodrigues,amanda.rodrigues@example.com,Belo Horizonte,MG,Ensino Superior,1,Site Institucional,Analista de Dados Pleno,Teste Técnico,60,95,Em Processo,11501,15 dias,
+CAN0072,2026-05-31 17:17:00,Camila Oliveira,camila.oliveira@example.com,Belo Horizonte,MG,Doutorado,10,SITE INSTITUCIONAL,Analista de Dados Júnior,Triagem,100,91,Em Processo,6453,30 dias,
+CAN0073,29/05/2026 20:34,Camila Lopes,camila.lopes@example.com,Recife,PE,Ensino Médio,5,Gupy,Cientista de Dados Júnior,Proposta,49,70,Aprovado,8658,,Totalmente Remoto
+CAN0074,04/05/2026 10:15,Beatriz Lima,beatriz.lima@example.com,Belo Horizonte,MG,Pós-Graduação,13,Indeed,Analista de Business Intelligence,Aprovado,60,62,Aprovado,11433,15 dias,
+CAN0075,31/05/2026 12:32,Larissa Alves,larissa.alves@example.com,São Paulo,SP,Mestrado,15,LinkedIn,Engenheiro de Dados Júnior,Teste Técnico,96,66,Em Processo,8995,,Híbrido
+CAN0076,18/05/2026 09:04,Matheus Lima,matheus.lima@example.com,Rio de Janeiro,RJ,Ensino Médio,10,Indicação,Analista de Dados Pleno,Proposta,72,,Aprovado,5245,30 dias,Totalmente Remoto
+CAN0077,29/05/2026 16:08,Rodrigo Ferreira,rodrigo.ferreira@example.com,Curitiba,PR,Doutorado,15,Indicação,Analista de Dados Júnior,Entrevista RH,61,93,Em Processo,8040,30 dias,Totalmente Remoto
+CAN0078,2026-05-16T08:41:00Z,Larissa Santos,larissa.santos@example.com,Belo Horizonte,MG,Doutorado,12,Glassdoor,Analista de Business Intelligence,Aprovado,,62,Aprovado,5481,,Totalmente Remoto
+CAN0079,2026-05-30T15:55:00Z,Mariana Rodrigues,mariana.rodrigues@example.com,Campinas,SP,Mestrado,10,Gupy,Cientista de Dados Júnior,Proposta,62,93,Aprovado,13539,,Presencial
+CAN0080,2026-05-09 17:19:00,Camila Gomes,camila.gomes@example.com,Salvador,BA,Pós-Graduação,8,Site Institucional,Engenheiro de Dados Júnior,Entrevista Técnica,92,72,Em Processo,7758,Imediata,Híbrido
+CAN0081,21/05/2026 08:47,Thiago Alves,thiago.alves@example.com,Curitiba,PR,Pós-graduacao,7,Glassdoor,Analista de Dados Pleno,Aprovado,54,53,Aprovado,10739,Imediata,Presencial
+CAN0082,14/05/2026 20:59,Isabela Alves,isabela.alves@example.com,Curitiba,PR,Ensino Médio,2,Indeed,Analista de Dados Júnior,Teste Técnico,66,,Em Processo,9504,,Híbrido
+CAN0083,29/05/2026 01:00,Beatriz Costa,beatriz.costa@example.com,Salvador,BA,Ensino Superior,14,LinkedIn,Engenheiro de Dados Júnior,Aprovado,56,95,Aprovado,7833,Imediata,Totalmente Remoto
+CAN0084,29/05/2026 12:52,Rodrigo Oliveira,rodrigo.oliveira@example.com,Rio de Janeiro,RJ,Ensino Superior,99,Indeed,Cientista de Dados Júnior,Entrevista RH,59,,Em Processo,13709,,Híbrido
+CAN0085,2026-05-10T05:25:00Z,Camila Souza,camila.souza@example.com,Curitiba,PR,Ensino Superior,4,Gupy,Analista de Business Intelligence,Entrevista RH,66,94,Em Processo,11806,Imediata,Totalmente Remoto
+CAN0086,28/05/2026 02:33,Amanda Oliveira,amanda.oliveira@example.com,Rio de Janeiro,RJ,Doutorado,6,Indeed,Analista de Business Intelligence,Entrevista Técnica,47,93,Em Processo,4489,Imediata,Totalmente Remoto
+CAN0087,2026-05-14 14:36:00,Matheus Gomes,matheus.gomes@example.com,Recife,PE,Ensino Médio,2,Indicação,Analista de Business Intelligence,Triagem,99,54,Em Processo,7703,30 dias,Totalmente Remoto
+CAN0088,31/05/2026 13:23,Matheus Martins,matheus.martins@example.com,Belo Horizonte,MG,Pós-graduacao,12,Glassdoor,Analista de Dados Júnior,Reprovado,41,69,Reprovado,9948,Imediata,Presencial
+CAN0089,2026-05-09T06:59:00Z,Beatriz Santos,beatriz.santos@example.com,Recife,PE,Ensino Médio,2,LinkedIn,Analista de Dados Júnior,Teste Técnico,87,52,Em Processo,6559,Imediata,Híbrido
+CAN0090,08/05/2026 23:36,Rodrigo Pereira,rodrigo.pereira@example.com,Belo Horizonte,MG,Doutorado,9,Site Institucional,Analista de Dados Pleno,Aprovado,83,,Aprovado,8642,30 dias,Híbrido
+CAN0091,14/05/2026 04:19,Julia Lopes,julia.lopes@example.com,Porto Alegre,RS,Ensino Superior,1,Gupy,Analista de Dados Pleno,Entrevista Técnica,55,66,Em Processo,10369,,Presencial
+CAN0092,2026-05-02T08:24:00Z,Mariana Oliveira,mariana.oliveira@example.com,Porto Alegre,RS,Pós-Graduação,0,Indeed,Analista de Dados Júnior,Aprovado,88,80,Aprovado,14530,30 dias,Híbrido
+CAN0093,2026-05-13T14:34:00Z,Amanda Gomes,amanda.gomes@example.com,Salvador,BA,Mestrado,10,Indicação,Analista de Dados Júnior,Proposta,95,,Aprovado,12065,15 dias,Presencial
+CAN0094,2026-05-11T07:24:00Z,Larissa Lopes,larissa.lopes@example.com,Campinas,SP,Mestrado,15,Glassdoor,Analista de Dados Pleno,Teste Técnico,86,84,Em Processo,11882,30 dias,
+CAN0095,2026-05-28T02:52:00Z,Mariana Silva,mariana.silva@example.com,Porto Alegre,RS,Ensino Superior,14,Site Institucional,Analista de Business Intelligence,Entrevista Técnica,,81,Em Processo,-500,30 dias,Presencial
+CAN0096,17/05/2026 22:43,Julia Souza,julia.souza@example.com,Belo Horizonte,MG,Doutorado,11,gupy,Engenheiro de Dados Júnior,Proposta,55,94,Aprovado,4320,Imediata,
+CAN0097,13/05/2026 12:35,Mariana Silva,mariana.silva@example.com,Rio de Janeiro,RJ,Mestrado,10,LinkedIn,Analista de Dados Júnior,Teste Técnico,53,94,Em Processo,3762,15 dias,Totalmente Remoto
+CAN0098,22/05/2026 01:11,Felipe Alves,felipe.alves@example.com,Recife,PE,pós-graduação,12,Site Institucional,Analista de Dados Pleno,Reprovado,,96,Reprovado,8666,Imediata,Totalmente Remoto
+CAN0099,31/05/2026 19:25,Felipe Lima,felipe.lima@example.com,Salvador,BA,Pós-Graduação,12,Glassdoor,Engenheiro de Dados Júnior,Triagem,89,89,Em Processo,4204,,Totalmente Remoto
+CAN0100,05/05/2026 23:24,Amanda Souza,amanda.souza@example.com,Curitiba,PR,pós-graduação,5,Site Institucional,Engenheiro de Dados Júnior,Triagem,41,,Em Processo,12798,Imediata,Híbrido
+CAN0101,2026-05-25T02:46:00Z,Larissa Ferreira,larissa.ferreira@example.com,Belo Horizonte,MG,Pós-Graduação,4,Gupy,Cientista de Dados Júnior,Entrevista Técnica,90,54,Em Processo,14811,Imediata,Presencial
+CAN0102,10/05/2026 00:25,Bruno Costa,bruno.costa@example.com,Recife,PE,DOUTORADO,6,Indeed,Cientista de Dados Júnior,Entrevista RH,87,94,Em Processo,6971,,Híbrido
+CAN0103,2026-05-04T18:12:00Z,Julia Silva,julia.silva@example.com,Salvador,BA,Ensino Superior,9,LinkedIn,Engenheiro de Dados Júnior,Aprovado,71,58,Aprovado,13791,15 dias,
+CAN0104,20/05/2026 15:37,Sofia Santos,sofia.santos@example.com,Campinas,SP,Doutorado,2,Indeed,Cientista de Dados Júnior,Teste Técnico,,89,Em Processo,14099,15 dias,Híbrido
+CAN0105,04/05/2026 00:06,Larissa Pereira,larissa.pereira@example.com,Recife,PE,Doutorado,4,LinkedIn,Cientista de Dados Júnior,Entrevista Técnica,98,55,Em Processo,5321,Imediata,Híbrido
+CAN0106,2026-05-16T03:28:00Z,Matheus Costa,matheus.costa@example.com,São Paulo,SP,ENSINO MÉDIO,3,Indeed,Analista de Dados Pleno,Proposta,51,85,Aprovado,10570,Imediata,
+CAN0107,2026-05-22 13:25:00,Thiago Almeida,thiago.almeida@example.com,,,Ensino Superior,2,Site Institucional,Cientista de Dados Júnior,Teste Técnico,69,57,Em Processo,11646,15 dias,Totalmente Remoto
+CAN0108,04/05/2026 11:22,Julia Gomes,julia.gomes@example.com,Rio de Janeiro,RJ,PÓS-GRADUAÇÃO,3,glassdoor,Engenheiro de Dados Júnior,Proposta,48,86,Aprovado,13412,Imediata,Híbrido
+CAN0109,10/05/2026 04:11,Matheus Santos,matheus.santos@example.com,São Paulo,SP,Ensino Superior,15,Gupy,Engenheiro de Dados Júnior,Entrevista Técnica,50,55,Em Processo,6613,,Presencial
+CAN0110,2026-05-25T14:36:00Z,Isabela Souza,isabela.souza@example.com,Curitiba,PR,Pós-Graduação,1,Gupy,Engenheiro de Dados Júnior,Triagem,87,91,Em Processo,3528,Imediata,Presencial
+CAN0111,2026-05-25T07:13:00Z,Amanda Carvalho,amanda.carvalho@example.com,Belo Horizonte,MG,Ensino Superior,11,Site Institucional,Cientista de Dados Júnior,Aprovado,58,68,Aprovado,11428,Imediata,
+CAN0112,2026-05-25 13:58:00,Gustavo Rodrigues,gustavo.rodrigues@example.com,Belo Horizonte,MG,Pós-Graduação,12,Site Institucional,Engenheiro de Dados Júnior,Entrevista Técnica,68,54,Em Processo,4525,30 dias,Híbrido
+CAN0113,2026-05-15T15:20:00Z,Felipe Oliveira,felipe.oliveira@example.com,Salvador,BA,Pós-Graduação,12,Gupy,Engenheiro de Dados Júnior,Entrevista RH,60,68,Em Processo,12275,30 dias,Presencial
+CAN0114,04/05/2026 20:50,Felipe Souza,felipe.souza@example.com,Belo Horizonte,MG,Ensino Médio,13,Glassdoor,Cientista de Dados Júnior,Teste Técnico,,67,Em Processo,4350,Imediata,
+CAN0115,2026-05-21T09:46:00Z,Larissa Carvalho,larissa.carvalho@example.com,,,Mestrado,7,gupy,Analista de Dados Júnior,Reprovado,67,,Reprovado,9276,Imediata,Híbrido
+CAN0116,2026-05-05 12:49:00,Gabriel Oliveira,gabriel.oliveira@example.com,São Paulo,SP,Ensino Superior,6,Indeed,Analista de Business Intelligence,Aprovado,,63,Aprovado,5017,15 dias,Presencial
+CAN0117,2026-05-08 08:41:00,Larissa Gomes,larissa.gomes@example.com,São Paulo,SP,Pós-Graduação,6,Indicação,Analista de Dados Pleno,Entrevista Técnica,64,57,Em Processo,4163,15 dias,Presencial
+CAN0118,13/05/2026 18:26,Julia Lopes,julia.lopes@example.com,,,ensino médio,1,Gupy,Analista de Business Intelligence,Reprovado,66,,Reprovado,11791,,
+CAN0119,2026-05-03 16:58:00,Gabriel Costa,gabriel.costa@example.com,Rio de Janeiro,RJ,Mestrado,7,LinkedIn,Analista de Dados Júnior,Entrevista Técnica,,88,Em Processo,13781,,Totalmente Remoto
+CAN0120,01/05/2026 05:31,Gustavo Ferreira,gustavo.ferreira@example.com,Curitiba,PR,Ensino Médio,0,Gupy,Analista de Dados Júnior,Entrevista RH,85,86,Em Processo,11368,30 dias,
+CAN0121,2026-05-06 08:49:00,Beatriz Pereira,beatriz.pereira@example.com,,,Ensino Médio,15,Indeed,Analista de Dados Júnior,Proposta,91,95,Aprovado,8272,15 dias,Presencial
+CAN0122,2026-05-19T11:07:00Z,Mariana Ferreira,mariana.ferreira@example.com,São Paulo,SP,Ensino Médio,9,Indicação,Analista de Business Intelligence,Entrevista Técnica,40,73,Em Processo,7979,,Híbrido
+CAN0123,2026-05-25T06:46:00Z,Larissa Rodrigues,,São Paulo,SP,Pós-Graduação,0,LinkedIn,Engenheiro de Dados Júnior,Reprovado,87,96,Reprovado,6902,Imediata,Presencial
+CAN0124,2026-05-02T07:57:00Z,Sofia Ribeiro,sofia.ribeiro@example.com,Rio de Janeiro,RJ,DOUTORADO,2,LinkedIn,Analista de Dados Pleno,Teste Técnico,58,66,Em Processo,9438,15 dias,Presencial
+CAN0125,2026-05-03T06:08:00Z,Beatriz Rodrigues,beatriz.rodrigues@example.com,Salvador,BA,MESTRADO,6,Gupy,Analista de Dados Júnior,Triagem,50,93,Em Processo,12884,15 dias,
+CAN0126,23/05/2026 07:22,Mariana Gomes,mariana.gomes@example.com,,,Mestrado,7,LinkedIn,Analista de Dados Pleno,Triagem,40,53,Em Processo,5141,30 dias,Totalmente Remoto
+CAN0127,03/05/2026 18:37,Lucas Silva,lucas.silva@example.com,Porto Alegre,RS,Mestrado,2,indicação,Analista de Dados Júnior,Teste Técnico,99,86,Em Processo,-500,15 dias,
+CAN0128,06/05/2026 08:17,Gabriel Santos,gabriel.santos@example.com,Porto Alegre,RS,Mestrado,15,Indicação,Engenheiro de Dados Júnior,Teste Técnico,81,83,Em Processo,11907,30 dias,Totalmente Remoto
+CAN0129,2026-05-26T15:22:00Z,Rodrigo Martins,rodrigo.martins@example.com,São Paulo,SP,ENSINO SUPERIOR,1,Gupy,Analista de Business Intelligence,Teste Técnico,50,56,Em Processo,11743,Imediata,Presencial
+CAN0130,2026-05-19 12:22:00,Julia Pereira,julia.pereira@example.com,Campinas,SP,Ensino Médio,11,SITE INSTITUCIONAL,Engenheiro de Dados Júnior,Proposta,59,,Aprovado,6811,,Híbrido
+CAN0131,2026-05-30 19:12:00,Rodrigo Ferreira,rodrigo.ferreira@example.com,Campinas,SP,Ensino Superior,4,Site Institucional,Analista de Dados Júnior,Entrevista RH,85,92,Em Processo,7944,30 dias,Totalmente Remoto
+CAN0132,31/05/2026 15:41,Julia Ribeiro,julia.ribeiro@example.com,Belo Horizonte,MG,Pós-graduacao,0,Site Institucional,Analista de Business Intelligence,Triagem,51,88,Em Processo,13016,15 dias,
+CAN0133,24/05/2026 02:15,Rodrigo Ferreira,rodrigo.ferreira@example.com,Rio de Janeiro,RJ,Pós-Graduação,8,glassdoor,Analista de Dados Júnior,Aprovado,40,53,Aprovado,5725,15 dias,Híbrido
+CAN0134,2026-05-04T15:50:00Z,Larissa Ferreira,larissa.ferreira@example.com,São Paulo,SP,Pós-Graduação,3,Indeed,Analista de Dados Pleno,Aprovado,44,85,Aprovado,8536,15 dias,Híbrido
+CAN0135,2026-05-31T20:10:00Z,Sofia Ferreira,sofia.ferreira@example.com,Campinas,SP,Ensino Superior,8,Indicação,Analista de Dados Júnior,Entrevista Técnica,76,85,Em Processo,80000,,Totalmente Remoto
+CAN0136,2026-05-16 06:06:00,Thiago Ferreira,thiago.ferreira@example.com,Rio de Janeiro,RJ,Ensino Médio,12,Glassdoor,Analista de Business Intelligence,Entrevista Técnica,51,73,Em Processo,10303,15 dias,
+CAN0137,2026-05-09 18:03:00,Beatriz Oliveira,beatriz.oliveira@example.com,Recife,PE,Doutorado,1,Site Institucional,Analista de Business Intelligence,Aprovado,95,80,Aprovado,7896,30 dias,
+CAN0138,2026-05-19T16:51:00Z,Gabriel Souza,gabriel.souza@example.com,Salvador,BA,Ensino Superior,6,gupy,Analista de Dados Pleno,Reprovado,80,59,Reprovado,14912,,Híbrido
+CAN0139,18/05/2026 10:54,Matheus Silva,matheus.silva@example.com,Recife,PE,Ensino Superior,3,Site Institucional,Cientista de Dados Júnior,Reprovado,74,72,Reprovado,13728,Imediata,
+CAN0140,2026-05-13T04:39:00Z,Bruno Santos,bruno.santos@example.com,Campinas,SP,Ensino Médio,8,LinkedIn,Cientista de Dados Júnior,Entrevista RH,57,81,Em Processo,6734,15 dias,Híbrido
+CAN0141,2026-05-09T23:26:00Z,Lucas Alves,lucas.alves@example.com,Recife,PE,Doutorado,1,indeed,Analista de Dados Pleno,Reprovado,94,,Reprovado,6158,,
+CAN0142,02/05/2026 14:03,Thiago Lima,thiago.lima@example.com,Salvador,BA,Ensino Médio,7,Site Institucional,Engenheiro de Dados Júnior,Proposta,75,72,Aprovado,7237,15 dias,
+CAN0143,2026-05-02T05:54:00Z,Thiago Pereira,thiago.pereira@example.com,Porto Alegre,RS,Mestrado,0,Indeed,Analista de Business Intelligence,Reprovado,40,64,Reprovado,8004,15 dias,Híbrido
+CAN0144,28/05/2026 11:29,Thiago Almeida,thiago.almeida@example.com,Recife,PE,Ensino Médio,11,Site Institucional,Cientista de Dados Júnior,Aprovado,,80,Aprovado,13495,,Totalmente Remoto
+CAN0145,2026-05-10T06:09:00Z,Larissa Santos,larissa.santos@example.com,Recife,PE,Ensino Superior,15,Indicação,Engenheiro de Dados Júnior,Entrevista Técnica,87,52,Em Processo,6111,30 dias,Híbrido
+CAN0146,2026-05-30T21:22:00Z,Camila Ferreira,camila.ferreira@example.com,Belo Horizonte,MG,MESTRADO,5,Indicação,Analista de Dados Pleno,Entrevista RH,54,97,Em Processo,8428,15 dias,Híbrido
+CAN0147,2026-05-02T20:37:00Z,Lucas Lopes,lucas.lopes@example.com,Rio de Janeiro,RJ,Mestrado,13,INDEED,Cientista de Dados Júnior,Entrevista Técnica,76,79,Em Processo,5954,30 dias,Híbrido
+CAN0148,21/05/2026 01:00,Gustavo Alves,gustavo.alves@example.com,Belo Horizonte,MG,Ensino Superior,2,Gupy,Engenheiro de Dados Júnior,Entrevista Técnica,,74,Em Processo,14971,,Totalmente Remoto
+CAN0149,2026-05-07 00:43:00,Larissa Pereira,larissa.pereira@example.com,Campinas,SP,Ensino Médio,9,LinkedIn,Cientista de Dados Júnior,Entrevista Técnica,86,83,Em Processo,14252,15 dias,Presencial
+CAN0150,2026-05-06 12:01:00,Larissa Rodrigues,larissa.rodrigues@example.com,São Paulo,SP,Ensino Superior,1,Glassdoor,Analista de Business Intelligence,Proposta,43,88,Aprovado,13708,,
+CAN0151,2026-05-15T12:07:00Z,Gustavo Lopes,gustavo.lopes@example.com,Porto Alegre,RS,Ensino Médio,3,Indicação,Analista de Dados Pleno,Entrevista Técnica,93,56,Em Processo,7631,,
+CAN0152,2026-05-07T08:53:00Z,Thiago Ribeiro,thiago.ribeiro@example.com,Curitiba,PR,Doutorado,6,Gupy,Analista de Dados Júnior,Triagem,82,55,Em Processo,13961,30 dias,
+CAN0153,24/05/2026 03:57,Larissa Almeida,larissa.almeida@example.com,Curitiba,PR,ensino médio,1,Indicação,Cientista de Dados Júnior,Entrevista Técnica,,57,Em Processo,80000,Imediata,Híbrido
+CAN0154,2026-05-31T19:17:00Z,Lucas Ribeiro,lucas.ribeiro@example.com,Belo Horizonte,MG,Mestrado,8,Glassdoor,Engenheiro de Dados Júnior,Aprovado,96,60,Aprovado,3960,Imediata,Totalmente Remoto
+CAN0155,16/05/2026 18:43,Julia Martins,julia.martins@example.com,São Paulo,SP,Ensino Superior,15,Gupy,Analista de Dados Júnior,Entrevista RH,,70,Em Processo,11598,30 dias,
+CAN0156,31/05/2026 21:55,Beatriz Carvalho,beatriz.carvalho@example.com,Porto Alegre,RS,Mestrado,45,Site Institucional,Engenheiro de Dados Júnior,Reprovado,50,54,Reprovado,8421,,
+CAN0157,2026-05-21 12:25:00,Lucas Almeida,lucas.almeida@example.com,Salvador,BA,Mestrado,3,Glassdoor,Analista de Dados Júnior,Entrevista Técnica,66,,Em Processo,4489,30 dias,Totalmente Remoto
+CAN0158,2026-05-18T06:41:00Z,Matheus Costa,matheus.costa@example.com,São Paulo,SP,Mestrado,15,Indicação,Analista de Dados Júnior,Triagem,88,92,Em Processo,13381,,Totalmente Remoto
+CAN0159,2026-05-04 01:57:00,Isabela Rodrigues,isabela.rodrigues@example.com,Recife,PE,doutorado,12,Indeed,Analista de Dados Júnior,Reprovado,66,52,Reprovado,12647,15 dias,Totalmente Remoto
+CAN0160,2026-05-05T15:00:00Z,Mariana Carvalho,mariana.carvalho@example.com,Salvador,BA,Ensino Superior,5,indeed,Analista de Business Intelligence,Entrevista Técnica,66,88,Em Processo,7482,15 dias,Presencial
+CAN0161,2026-05-05T13:38:00Z,Camila Costa,camila.costa@example.com,Porto Alegre,RS,Doutorado,11,Indeed,Analista de Dados Pleno,Proposta,74,94,Aprovado,8771,30 dias,Totalmente Remoto
+CAN0162,24/05/2026 17:18,Felipe Souza,felipe.souzaexample.com,São Paulo,SP,Ensino Superior,5,Glassdoor,Analista de Dados Júnior,Aprovado,90,68,Aprovado,8876,,Totalmente Remoto
+CAN0163,2026-05-18T07:47:00Z,Bruno Pereira,bruno.pereira@example.com,Curitiba,PR,Ensino Médio,12,Glassdoor,Analista de Business Intelligence,Triagem,40,97,Em Processo,10259,30 dias,Híbrido
+CAN0164,2026-05-25T18:34:00Z,Thiago Alves,thiago.alves@example.com,Belo Horizonte,MG,ensino médio,3,Gupy,Cientista de Dados Júnior,Teste Técnico,50,,Em Processo,10640,,
+CAN0165,2026-05-11T19:03:00Z,Camila Lopes,camila.lopes@example.com,Campinas,SP,Pós-Graduação,5,Site Institucional,Analista de Business Intelligence,Proposta,65,55,Aprovado,13868,Imediata,Totalmente Remoto
+CAN0166,2026-05-17T15:35:00Z,Felipe Souza,felipe.souza@example.com,Salvador,BA,Doutorado,7,Glassdoor,Engenheiro de Dados Júnior,Reprovado,100,57,Reprovado,-500,15 dias,Totalmente Remoto
+CAN0167,15/05/2026 15:02,Thiago Costa,thiago.costa@example.com,Rio de Janeiro,RJ,Doutorado,2,Glassdoor,Engenheiro de Dados Júnior,Reprovado,46,63,Reprovado,10130,30 dias,Presencial
+CAN0168,2026-05-15 22:21:00,Lucas Oliveira,lucas.oliveira@example.com,Curitiba,PR,Doutorado,8,Gupy,Engenheiro de Dados Júnior,Entrevista RH,41,74,Em Processo,13509,,Presencial
+CAN0169,2026-05-23T02:22:00Z,Beatriz Gomes,beatriz.gomes@example.com,Curitiba,PR,Pós-Graduação,14,GLASSDOOR,Analista de Business Intelligence,Teste Técnico,48,97,Em Processo,11941,15 dias,Totalmente Remoto
+CAN0170,2026-05-21T11:00:00Z,Gabriel Souza,gabriel.souza@,Recife,PE,Ensino Médio,11,Glassdoor,Analista de Dados Pleno,Teste Técnico,51,64,Em Processo,4877,Imediata,Totalmente Remoto
+CAN0171,2026-05-15 20:35:00,Camila Oliveira,camila.oliveira@example.com,Porto Alegre,RS,Mestrado,11,Glassdoor,Cientista de Dados Júnior,Proposta,44,62,Aprovado,13098,Imediata,Híbrido
+CAN0172,2026-05-26 10:27:00,Felipe Costa,felipe.costa@example.com,Porto Alegre,RS,Mestrado,11,Glassdoor,Engenheiro de Dados Júnior,Entrevista Técnica,68,72,Em Processo,4783,15 dias,Presencial
+CAN0173,29/05/2026 17:12,Lucas Oliveira,lucas.oliveira@example.com,São Paulo,SP,Doutorado,6,Site Institucional,Analista de Business Intelligence,Entrevista Técnica,81,99,Em Processo,12660,,Totalmente Remoto
+CAN0174,2026-05-03T12:23:00Z,Felipe Pereira,felipe.pereira@example.com,Belo Horizonte,MG,Ensino Superior,5,Site Institucional,Analista de Dados Pleno,Aprovado,86,,Aprovado,10989,,
+CAN0175,22/05/2026 06:33,Bruno Lopes,bruno.lopes@example.com,,,Pós-graduacao,8,Indicação,Analista de Business Intelligence,Teste Técnico,64,91,Em Processo,4275,Imediata,Híbrido
+CAN0176,27/05/2026 11:31,Felipe Rodrigues,felipe.rodrigues@example.com,Porto Alegre,RS,Pós-Graduação,5,Site Institucional,Analista de Dados Júnior,Aprovado,54,76,Aprovado,10889,30 dias,
+CAN0177,2026-05-27 13:01:00,Mariana Rodrigues,mariana.rodrigues@example.com,Belo Horizonte,MG,Doutorado,4,Indicação,Analista de Business Intelligence,Entrevista Técnica,78,86,Em Processo,14927,,
+CAN0178,15/05/2026 19:30,Julia Pereira,julia.pereira@example.com,Belo Horizonte,MG,Ensino Superior,8,Glassdoor,Engenheiro de Dados Júnior,Proposta,77,54,Aprovado,-500,30 dias,Presencial
+CAN0179,20/05/2026 03:11,Mariana Souza,mariana.souza@example.com,Belo Horizonte,MG,Doutorado,13,Indicação,Analista de Business Intelligence,Entrevista Técnica,54,80,Em Processo,12650,30 dias,Híbrido
+CAN0180,2026-05-05 08:30:00,Lucas Gomes,lucas.gomes@example.com,Recife,PE,Ensino Médio,0,LinkedIn,Engenheiro de Dados Júnior,Aprovado,53,94,Aprovado,4746,15 dias,Totalmente Remoto
+CAN0181,2026-05-14T18:23:00Z,Gustavo Martins,gustavo.martins@example.com,Recife,PE,Doutorado,11,Gupy,Cientista de Dados Júnior,Proposta,62,99,Aprovado,13801,,Presencial
+CAN0182,04/05/2026 06:32,Rodrigo Santos,rodrigo.santos@example.com,São Paulo,SP,Ensino Superior,13,Indicação,Analista de Dados Júnior,Proposta,42,96,Aprovado,13059,,Presencial
+CAN0183,31/05/2026 05:40,Matheus Silva,matheus.silva@example.com,Curitiba,PR,Doutorado,7,GLASSDOOR,Analista de Dados Júnior,Teste Técnico,45,67,Em Processo,9474,,
+CAN0184,2026-05-23 02:58:00,Camila Ribeiro,camila.ribeiro@example.com,Curitiba,PR,Ensino Superior,12,Indicação,Analista de Business Intelligence,Triagem,75,54,Em Processo,4917,30 dias,Totalmente Remoto
+CAN0185,09/05/2026 22:28,Isabela Pereira,isabela.pereira@example.com,Salvador,BA,Doutorado,15,LinkedIn,Analista de Dados Pleno,Aprovado,84,64,Aprovado,8785,,Presencial
+CAN0186,2026-05-10T02:25:00Z,Rodrigo Oliveira,rodrigo.oliveira@example.com,Belo Horizonte,MG,Pós-Graduação,8,Glassdoor,Analista de Dados Pleno,Entrevista Técnica,87,62,Em Processo,7348,,
+CAN0187,2026-05-20 11:09:00,Beatriz Oliveira,beatriz.oliveira@example.com,Salvador,BA,Doutorado,15,Indicação,Analista de Business Intelligence,Reprovado,57,81,Reprovado,11374,,Presencial
+CAN0188,2026-05-17T13:30:00Z,Mariana Ribeiro,mariana.ribeiro@example.com,Belo Horizonte,MG,Ensino Médio,14,LINKEDIN,Engenheiro de Dados Júnior,Proposta,46,70,Aprovado,6066,,Totalmente Remoto
+CAN0189,11/05/2026 11:11,Sofia Alves,sofia.alves@example.com,Campinas,SP,Mestrado,5,Site Institucional,Analista de Dados Júnior,Aprovado,57,65,Aprovado,6212,Imediata,Presencial
+CAN0190,2026-05-06 13:31:00,Rodrigo Lopes,rodrigo.lopes@example.com,São Paulo,SP,ENSINO SUPERIOR,15,LinkedIn,Cientista de Dados Júnior,Entrevista RH,63,73,Em Processo,7222,15 dias,Totalmente Remoto
+CAN0191,2026-05-07T18:36:00Z,Julia Gomes,julia.gomes@example.com,Salvador,BA,Mestrado,12,Gupy,Analista de Dados Pleno,Reprovado,50,90,Reprovado,13342,Imediata,
+CAN0192,11/05/2026 07:20,Camila Lima,camila.lima@example.com,Recife,PE,Mestrado,11,Site Institucional,Engenheiro de Dados Júnior,Teste Técnico,51,51,Em Processo,7122,Imediata,
+CAN0193,2026-05-13 03:06:00,Isabela Santos,,Rio de Janeiro,RJ,Doutorado,12,Indeed,Engenheiro de Dados Júnior,Aprovado,48,58,Aprovado,3575,15 dias,Híbrido
+CAN0194,28/05/2026 17:59,Matheus Rodrigues,matheus.rodrigues@example.com,Belo Horizonte,MG,Mestrado,13,Glassdoor,Cientista de Dados Júnior,Entrevista Técnica,74,64,Em Processo,8992,,
+CAN0195,17/05/2026 04:22,Isabela Silva,isabela.silva@example.com,Salvador,BA,Mestrado,13,Site Institucional,Analista de Dados Júnior,Proposta,63,62,Aprovado,9467,30 dias,Híbrido
+CAN0196,08/05/2026 08:05,Larissa Lima,larissa.lima@example.com,Curitiba,PR,ENSINO MÉDIO,3,Site Institucional,Analista de Business Intelligence,Entrevista Técnica,,,Em Processo,80000,,
+CAN0197,2026-05-15 23:00:00,Lucas Rodrigues,lucas.rodriguesexample.com,Campinas,SP,Mestrado,14,LinkedIn,Analista de Dados Pleno,Triagem,57,99,Em Processo,5975,15 dias,Presencial
+CAN0198,25/05/2026 22:15,Matheus Pereira,matheus.pereira@example.com,São Paulo,SP,Ensino Médio,6,Glassdoor,Cientista de Dados Júnior,Teste Técnico,,96,Em Processo,11534,15 dias,
+CAN0199,2026-05-29T01:55:00Z,Thiago Souza,thiago.souza@example.com,Recife,PE,Ensino Superior,3,INDEED,Analista de Business Intelligence,Reprovado,84,80,Reprovado,4466,30 dias,Totalmente Remoto
+CAN0200,2026-05-02T01:22:00Z,Gabriel Souza,gabriel.souza@example.com,Porto Alegre,RS,Doutorado,11,Gupy,Analista de Dados Júnior,Aprovado,64,72,Aprovado,3646,15 dias,Híbrido
+CAN0201,2026-05-07T18:11:00Z,Amanda Costa,amanda.costa@example.com,Curitiba,PR,Doutorado,5,Indeed,Cientista de Dados Júnior,Proposta,,79,Aprovado,9210,30 dias,Totalmente Remoto
+CAN0202,2026-05-08 10:46:00,Bruno Alves,bruno.alves@example.com,Salvador,BA,Ensino Superior,10,INDICAÇÃO,Analista de Dados Júnior,Reprovado,100,,Reprovado,4753,,Híbrido
+CAN0203,2026-05-22T15:33:00Z,Gustavo Santos,gustavo.santos@example.com,,,Ensino Superior,2,glassdoor,Cientista de Dados Júnior,Reprovado,85,53,Reprovado,3666,Imediata,Totalmente Remoto
+CAN0204,2026-05-04 03:46:00,Bruno Alves,bruno.alves@example.com,Porto Alegre,RS,Ensino Superior,13,Glassdoor,Engenheiro de Dados Júnior,Aprovado,82,77,Aprovado,5955,30 dias,
+CAN0205,20/05/2026 14:59,Rodrigo Costa,rodrigo.costa@example.com,Recife,PE,Mestrado,10,Site Institucional,Engenheiro de Dados Júnior,Reprovado,75,97,Reprovado,10331,,
+CAN0206,2026-05-10T19:01:00Z,Gabriel Gomes,gabriel.gomesexample.com,Porto Alegre,RS,Ensino Médio,8,Site Institucional,Analista de Business Intelligence,Teste Técnico,46,52,Em Processo,7341,Imediata,Híbrido
+CAN0207,2026-05-03T18:25:00Z,Thiago Oliveira,thiago.oliveira@example.com,Salvador,BA,Doutorado,3,indicação,Analista de Dados Júnior,Reprovado,43,99,Reprovado,10115,Imediata,Totalmente Remoto
+CAN0208,2026-05-30T00:40:00Z,Bruno Santos,bruno.santos@example.com,São Paulo,SP,Doutorado,7,Glassdoor,Engenheiro de Dados Júnior,Entrevista Técnica,88,,Em Processo,10076,Imediata,Híbrido
+CAN0209,2026-05-19T23:03:00Z,Bruno Lima,bruno.lima@example.com,Recife,PE,Ensino Superior,15,Gupy,Analista de Business Intelligence,Teste Técnico,75,89,Em Processo,6970,15 dias,Totalmente Remoto
+CAN0210,03/05/2026 03:42,Sofia Ribeiro,sofia.ribeiro@example.com,Campinas,SP,Ensino Médio,5,Site Institucional,Engenheiro de Dados Júnior,Proposta,,78,Aprovado,6271,,Presencial
+CAN0211,2026-05-04 23:03:00,Gabriel Gomes,gabriel.gomes@,Rio de Janeiro,RJ,mestrado,6,Site Institucional,Analista de Business Intelligence,Entrevista Técnica,79,96,Em Processo,-500,30 dias,
+CAN0212,2026-05-06 01:18:00,Gustavo Santos,gustavo.santos@example.com,São Paulo,SP,Pós-Graduação,11,LinkedIn,Engenheiro de Dados Júnior,Teste Técnico,64,,Em Processo,8168,Imediata,
+CAN0213,2026-05-17T14:35:00Z,Felipe Santos,felipe.santos@example.com,Curitiba,PR,Mestrado,0,Indicação,Cientista de Dados Júnior,Teste Técnico,72,67,Em Processo,9343,Imediata,Híbrido
+CAN0214,08/05/2026 04:21,Gabriel Oliveira,gabriel.oliveira@example.com,Porto Alegre,RS,DOUTORADO,10,Indeed,Analista de Dados Pleno,Proposta,74,93,Aprovado,8062,Imediata,Presencial
+CAN0215,2026-05-21 18:58:00,Rodrigo Oliveira,rodrigo.oliveira@example.com,Rio de Janeiro,RJ,Ensino Superior,10,Gupy,Cientista de Dados Júnior,Entrevista Técnica,87,90,Em Processo,6079,,Totalmente Remoto
+CAN0216,2026-05-20T08:38:00Z,Larissa Pereira,larissa.pereira@example.com,São Paulo,SP,Mestrado,15,Indicação,Engenheiro de Dados Júnior,Entrevista Técnica,70,58,Em Processo,9694,,Híbrido
+CAN0217,2026-05-08 23:42:00,Thiago Oliveira,thiago.oliveira@example.com,Salvador,BA,Mestrado,14,Gupy,Analista de Dados Júnior,Proposta,87,74,Aprovado,12370,30 dias,Totalmente Remoto
+CAN0218,2026-05-04 14:29:00,Larissa Martins,larissa.martins@example.com,São Paulo,SP,Doutorado,1,Gupy,Cientista de Dados Júnior,Reprovado,92,68,Reprovado,13045,Imediata,Totalmente Remoto
+CAN0219,2026-05-15T02:46:00Z,Beatriz Ferreira,beatriz.ferreira@example.com,Belo Horizonte,MG,Pós-Graduação,5,Glassdoor,Engenheiro de Dados Júnior,Triagem,56,70,Em Processo,5686,,
+CAN0220,2026-05-15 20:23:00,Bruno Ferreira,bruno.ferreira@example.com,,,Ensino Superior,4,Indeed,Analista de Dados Júnior,Entrevista Técnica,59,69,Em Processo,7731,,
+CAN0221,07/05/2026 00:39,Felipe Almeida,felipe.almeida@example.com,Salvador,BA,Ensino Médio,15,Site Institucional,Engenheiro de Dados Júnior,Entrevista Técnica,68,,Em Processo,11967,Imediata,
+CAN0222,05/05/2026 01:41,Mariana Rodrigues,mariana.rodrigues@example.com,Curitiba,PR,ENSINO MÉDIO,5,Indicação,Analista de Business Intelligence,Proposta,90,85,Aprovado,12485,,Híbrido
+CAN0223,2026-05-12 12:52:00,Sofia Oliveira,sofia.oliveira@example.com,Belo Horizonte,MG,Pós-Graduação,13,Glassdoor,Analista de Dados Júnior,Triagem,76,96,Em Processo,4436,30 dias,Totalmente Remoto
+CAN0224,2026-05-28T10:16:00Z,Amanda Rodrigues,amanda.rodrigues@example.com,Salvador,BA,Mestrado,5,Indeed,Analista de Dados Pleno,Triagem,47,51,Em Processo,6396,15 dias,
+CAN0225,2026-05-12T17:51:00Z,Thiago Silva,thiago.silva@example.com,Curitiba,PR,Ensino Médio,10,LinkedIn,Cientista de Dados Júnior,Entrevista Técnica,86,,Em Processo,5877,30 dias,Híbrido
+CAN0226,2026-05-26 01:41:00,Isabela Rodrigues,isabela.rodrigues@example.com,Campinas,SP,Mestrado,1,Indicação,Cientista de Dados Júnior,Proposta,74,51,Aprovado,8793,,Híbrido
+CAN0227,2026-05-13 20:34:00,Bruno Ferreira,bruno.ferreira@example.com,Curitiba,PR,Pós-Graduação,8,Gupy,Cientista de Dados Júnior,Entrevista Técnica,93,69,Em Processo,4838,,
+CAN0228,2026-05-03 14:32:00,Isabela Rodrigues,isabela.rodrigues@example.com,Salvador,BA,Doutorado,10,LinkedIn,Analista de Business Intelligence,Aprovado,48,63,Aprovado,14692,,Presencial
+CAN0229,2026-05-22 19:55:00,Rodrigo Almeida,rodrigo.almeida@example.com,Rio de Janeiro,RJ,PÓS-GRADUAÇÃO,6,Indeed,Analista de Business Intelligence,Entrevista RH,89,78,Em Processo,5580,,Totalmente Remoto
+CAN0230,04/05/2026 06:34,Rodrigo Lima,rodrigo.lima@example.com,Curitiba,PR,Ensino Superior,10,linkedin,Analista de Dados Júnior,Triagem,,53,Em Processo,14545,30 dias,Totalmente Remoto
+CAN0231,2026-05-12 09:21:00,Lucas Almeida,lucas.almeida@example.com,Rio de Janeiro,RJ,MESTRADO,14,indeed,Cientista de Dados Júnior,Entrevista Técnica,51,94,Em Processo,8320,,Híbrido
+CAN0232,2026-05-16 14:54:00,Camila Ribeiro,camila.ribeiro@example.com,Belo Horizonte,MG,Mestrado,3,glassdoor,Analista de Business Intelligence,Entrevista Técnica,65,87,Em Processo,11977,Imediata,Totalmente Remoto
+CAN0233,19/05/2026 13:50,Rodrigo Pereira,rodrigo.pereira@example.com,Rio de Janeiro,RJ,Doutorado,3,Gupy,Analista de Dados Júnior,Reprovado,68,61,Reprovado,12801,15 dias,Totalmente Remoto
+CAN0234,2026-05-22 01:05:00,Gabriel Silva,gabriel.silva@example.com,Belo Horizonte,MG,Pós-Graduação,14,Glassdoor,Cientista de Dados Júnior,Proposta,90,93,Aprovado,10122,Imediata,Totalmente Remoto
+CAN0235,2026-05-17 12:54:00,Camila Santos,camila.santos@example.com,,,Doutorado,11,Indicação,Analista de Dados Pleno,Entrevista Técnica,84,87,Em Processo,9271,Imediata,Híbrido
+CAN0236,05/05/2026 06:35,Amanda Carvalho,amanda.carvalho@example.com,Belo Horizonte,MG,Ensino Médio,4,Gupy,Analista de Dados Pleno,Triagem,48,91,Em Processo,14393,Imediata,Híbrido
+CAN0237,18/05/2026 14:24,Larissa Ferreira,larissa.ferreira@example.com,São Paulo,SP,Ensino Superior,8,Site Institucional,Analista de Dados Júnior,Triagem,76,80,Em Processo,10889,,Totalmente Remoto
+CAN0238,2026-05-28T08:29:00Z,Lucas Oliveira,lucas.oliveira@example.com,Rio de Janeiro,RJ,Doutorado,9,Indicação,Analista de Dados Júnior,Entrevista Técnica,69,82,Em Processo,8431,15 dias,Presencial
+CAN0239,23/05/2026 19:47,Gustavo Santos,gustavo.santos@example.com,Belo Horizonte,MG,Pós-Graduação,0,LINKEDIN,Cientista de Dados Júnior,Entrevista RH,48,89,Em Processo,3232,30 dias,Totalmente Remoto
+CAN0240,2026-05-15 11:51:00,Gustavo Pereira,gustavo.pereira@example.com,São Paulo,SP,Ensino Médio,4,Gupy,Analista de Dados Pleno,Aprovado,68,96,Aprovado,8653,,Presencial
+CAN0241,06/05/2026 14:25,Camila Lopes,camila.lopes@example.com,Porto Alegre,RS,Mestrado,4,gupy,Engenheiro de Dados Júnior,Aprovado,60,,Aprovado,11704,15 dias,Totalmente Remoto
+CAN0242,28/05/2026 08:21,Gustavo Souza,gustavo.souza@example.com,Recife,PE,Ensino Superior,6,Glassdoor,Analista de Dados Pleno,Entrevista RH,75,50,Em Processo,3195,30 dias,Presencial
+CAN0243,2026-05-24 09:16:00,Mariana Silva,mariana.silva@example.com,São Paulo,SP,Ensino Superior,3,LINKEDIN,Engenheiro de Dados Júnior,Aprovado,88,91,Aprovado,4816,,Presencial
+CAN0244,21/05/2026 14:59,Sofia Costa,sofia.costa@example.com,Rio de Janeiro,RJ,Ensino Médio,10,Indicação,Cientista de Dados Júnior,Teste Técnico,68,54,Em Processo,12999,Imediata,
+CAN0245,2026-05-25T13:13:00Z,Beatriz Almeida,beatriz.almeida@example.com,,,Ensino Médio,8,LinkedIn,Analista de Dados Pleno,Aprovado,80,50,Aprovado,7365,15 dias,Totalmente Remoto
+CAN0246,23/05/2026 15:30,Bruno Oliveira,bruno.oliveira@example.com,São Paulo,SP,Mestrado,11,Indicação,Analista de Dados Júnior,Entrevista RH,,71,Em Processo,7750,,
+CAN0247,13/05/2026 21:12,Bruno Souza,bruno.souza@example.com,Campinas,SP,Mestrado,4,LinkedIn,Analista de Business Intelligence,Teste Técnico,,74,Em Processo,8041,15 dias,Presencial
+CAN0248,02/05/2026 10:03,Mariana Martins,mariana.martins@example.com,Salvador,BA,Doutorado,7,LinkedIn,Engenheiro de Dados Júnior,Aprovado,41,80,Aprovado,6976,,
+CAN0249,2026-05-02 09:52:00,Matheus Ferreira,matheus.ferreira@example.com,Rio de Janeiro,RJ,Ensino medio,7,Indeed,Engenheiro de Dados Júnior,Entrevista RH,47,93,Em Processo,6493,15 dias,
+CAN0250,09/05/2026 04:48,Julia Ribeiro,julia.ribeiro@example.com,Salvador,BA,doutorado,12,LinkedIn,Analista de Dados Júnior,Triagem,40,61,Em Processo,12727,15 dias,Presencial
+CAN0251,2026-05-05T20:17:00Z,Matheus Carvalho,matheus.carvalho@example.com,Belo Horizonte,MG,Ensino Médio,15,LinkedIn,Cientista de Dados Júnior,Entrevista RH,66,50,Em Processo,11686,30 dias,Híbrido
+CAN0252,2026-05-25 20:42:00,Gustavo Santos,gustavo.santos@example.com,Belo Horizonte,MG,Mestrado,5,linkedin,Cientista de Dados Júnior,Teste Técnico,67,66,Em Processo,10424,30 dias,
+CAN0253,2026-05-26T00:31:00Z,Beatriz Oliveira,beatriz.oliveira@example.com,Salvador,BA,Pós-Graduação,10,LinkedIn,Analista de Dados Júnior,Teste Técnico,87,76,Em Processo,6615,Imediata,Presencial
+CAN0254,2026-05-07 19:29:00,Bruno Ribeiro,bruno.ribeiro@example.com,Porto Alegre,RS,Pós-Graduação,4,SITE INSTITUCIONAL,Analista de Dados Júnior,Reprovado,69,79,Reprovado,6602,30 dias,Presencial
+CAN0255,2026-05-19 17:54:00,Lucas Carvalho,lucas.carvalho@example.com,Salvador,BA,Ensino Superior,14,Glassdoor,Analista de Dados Pleno,Teste Técnico,60,77,Em Processo,12695,Imediata,Presencial
+CAN0256,2026-05-02T15:46:00Z,Mariana Carvalho,mariana.carvalho@example.com,Salvador,BA,Ensino Médio,7,LinkedIn,Engenheiro de Dados Júnior,Teste Técnico,48,72,Em Processo,-500,30 dias,Totalmente Remoto
+CAN0257,24/05/2026 18:01,Matheus Rodrigues,matheus.rodrigues@example.com,Recife,PE,Pós-Graduação,0,LinkedIn,Cientista de Dados Júnior,Proposta,42,68,Aprovado,13035,30 dias,
+CAN0258,2026-05-29 10:47:00,Amanda Santos,amanda.santos@example.com,Campinas,SP,Ensino Médio,5,GLASSDOOR,Analista de Dados Pleno,Entrevista RH,55,84,Em Processo,12504,30 dias,Híbrido
+CAN0259,2026-05-12T08:32:00Z,Sofia Lima,sofia.lima@example.com,Campinas,SP,Mestrado,3,Site Institucional,Analista de Business Intelligence,Entrevista RH,68,89,Em Processo,14357,Imediata,
+CAN0260,2026-05-29 14:05:00,Bruno Ferreira,bruno.ferreira@example.com,Rio de Janeiro,RJ,pós-graduação,15,Indeed,Analista de Dados Júnior,Entrevista RH,66,93,Em Processo,8680,Imediata,Presencial
+CAN0261,2026-05-01T07:53:00Z,Rodrigo Carvalho,rodrigo.carvalho@example.com,Campinas,SP,Doutorado,14,site institucional,Analista de Dados Pleno,Reprovado,56,64,Reprovado,3775,,Totalmente Remoto
+CAN0262,2026-05-30T05:45:00Z,Camila Ferreira,camila.ferreira@example.com,Belo Horizonte,MG,ENSINO MÉDIO,4,Indicação,Analista de Business Intelligence,Aprovado,42,92,Aprovado,9109,30 dias,Presencial
+CAN0263,2026-05-13 15:49:00,Matheus Costa,matheus.costa@example.com,Campinas,SP,Pós-Graduação,9,Site Institucional,Analista de Business Intelligence,Aprovado,98,78,Aprovado,10847,,Híbrido
+CAN0264,2026-05-01 12:39:00,Matheus Ribeiro,matheus.ribeiro@example.com,São Paulo,SP,Ensino Superior,7,Indicação,Analista de Dados Júnior,Proposta,94,78,Aprovado,11385,30 dias,Presencial
+CAN0265,30/05/2026 21:23,Gabriel Carvalho,gabriel.carvalho@example.com,,,Pós-Graduação,14,LinkedIn,Engenheiro de Dados Júnior,Aprovado,66,78,Aprovado,9944,30 dias,Presencial
+CAN0266,2026-05-07T09:30:00Z,Rodrigo Oliveira,rodrigo.oliveira@example.com,Recife,PE,Mestrado,8,Site Institucional,Analista de Business Intelligence,Reprovado,98,58,Reprovado,7742,,Totalmente Remoto
+CAN0267,2026-05-10T15:35:00Z,Matheus Pereira,matheus.pereiraexample.com,Belo Horizonte,MG,Mestrado,9,Gupy,Analista de Dados Pleno,Triagem,47,98,Em Processo,4093,15 dias,Híbrido
+CAN0268,2026-05-21T21:30:00Z,Beatriz Ribeiro,beatriz.ribeiro@example.com,São Paulo,SP,Ensino Superior,4,GLASSDOOR,Analista de Dados Júnior,Entrevista RH,63,76,Em Processo,3798,Imediata,Totalmente Remoto
+CAN0269,2026-05-06 03:38:00,Rodrigo Costa,rodrigo.costa@example.com,Curitiba,PR,Pós-graduacao,11,linkedin,Cientista de Dados Júnior,Reprovado,71,76,Reprovado,4678,Imediata,Totalmente Remoto
+CAN0270,2026-05-20T22:53:00Z,Beatriz Carvalho,beatriz.carvalho@example.com,Rio de Janeiro,RJ,Ensino Superior,15,Glassdoor,Engenheiro de Dados Júnior,Proposta,73,98,Aprovado,80000,,Presencial
+CAN0271,2026-05-23 07:19:00,Thiago Rodrigues,thiago.rodrigues@example.com,Recife,PE,ENSINO MÉDIO,13,LINKEDIN,Engenheiro de Dados Júnior,Triagem,,66,Em Processo,3168,30 dias,
+CAN0272,2026-05-29T06:11:00Z,Amanda Silva,amanda.silva@example.com,Curitiba,PR,Pós-Graduação,7,LINKEDIN,Analista de Business Intelligence,Teste Técnico,85,62,Em Processo,-500,,
+CAN0273,17/05/2026 22:30,Julia Almeida,julia.almeida@example.com,Rio de Janeiro,RJ,Pós-Graduação,13,Indeed,Cientista de Dados Júnior,Triagem,69,57,Em Processo,8918,Imediata,
+CAN0274,16/05/2026 03:24,Matheus Gomes,matheus.gomes@example.com,Salvador,BA,Mestrado,13,LinkedIn,Engenheiro de Dados Júnior,Aprovado,,61,Aprovado,14011,30 dias,Presencial
+CAN0275,2026-05-05T12:25:00Z,Beatriz Ferreira,beatriz.ferreira@example.com,Porto Alegre,RS,Doutorado,12,Gupy,Cientista de Dados Júnior,Reprovado,85,99,Reprovado,13548,30 dias,Híbrido
+CAN0276,2026-05-16 16:17:00,Matheus Souza,matheus.souza@example.com,Salvador,BA,Ensino Superior,1,Gupy,Analista de Dados Pleno,Entrevista Técnica,78,93,Em Processo,13211,,Híbrido
+CAN0277,26/05/2026 14:12,Isabela Lopes,isabela.lopes@example.com,Campinas,SP,Doutorado,1,LinkedIn,Cientista de Dados Júnior,Reprovado,64,,Reprovado,12120,30 dias,
+CAN0278,2026-05-14T04:19:00Z,Bruno Lopes,bruno.lopes@example.com,Salvador,BA,Doutorado,15,Indeed,Engenheiro de Dados Júnior,Entrevista RH,71,87,Em Processo,8779,,
+CAN0279,19/05/2026 01:08,Amanda Silva,amanda.silva@example.com,Campinas,SP,Mestrado,11,LinkedIn,Analista de Dados Pleno,Teste Técnico,81,69,Em Processo,4073,,
+CAN0280,18/05/2026 10:02,Sofia Carvalho,sofia.carvalho@example.com,Salvador,BA,Pós-Graduação,12,LinkedIn,Analista de Dados Júnior,Aprovado,83,63,Aprovado,13934,15 dias,Presencial
+CAN0281,2026-05-16 20:54:00,Thiago Gomes,thiago.gomes@example.com,Curitiba,PR,Mestrado,2,site institucional,Cientista de Dados Júnior,Triagem,76,83,Em Processo,4256,15 dias,Totalmente Remoto
+CAN0282,11/05/2026 06:26,Gustavo Almeida,gustavo.almeida@example.com,Belo Horizonte,MG,Doutorado,15,Glassdoor,Cientista de Dados Júnior,Aprovado,74,89,Aprovado,12275,,
+CAN0283,2026-05-15 04:15:00,Camila Carvalho,camila.carvalho@example.com,Rio de Janeiro,RJ,Mestrado,9,Indicação,Analista de Dados Pleno,Entrevista Técnica,55,,Em Processo,8087,15 dias,Presencial
+CAN0284,2026-05-07 05:17:00,Felipe Lima,felipe.lima@example.com,Curitiba,PR,Ensino Superior,1,Gupy,Analista de Dados Júnior,Reprovado,97,55,Reprovado,4041,15 dias,Presencial
+CAN0285,2026-05-13 23:53:00,Larissa Souza,larissa.souza@example.com,Rio de Janeiro,RJ,Doutorado,8,LinkedIn,Analista de Dados Júnior,Reprovado,91,70,Reprovado,9388,15 dias,
+CAN0286,04/05/2026 05:13,Matheus Carvalho,matheus.carvalho@example.com,São Paulo,SP,Pós-Graduação,3,Gupy,Analista de Dados Pleno,Entrevista RH,96,100,Em Processo,14725,30 dias,Totalmente Remoto
+CAN0287,2026-05-02 23:42:00,Larissa Lima,larissa.lima@example.com,Curitiba,PR,Pós-Graduação,3,Indeed,Engenheiro de Dados Júnior,Triagem,98,75,Em Processo,7929,Imediata,Presencial
+CAN0288,30/05/2026 14:40,Sofia Santos,sofia.santos@example.com,Rio de Janeiro,RJ,Mestrado,13,Indicação,Analista de Dados Júnior,Reprovado,50,,Reprovado,9895,30 dias,Totalmente Remoto
+CAN0289,2026-05-01T01:41:00Z,Julia Almeida,julia.almeida@example.com,,,Ensino Superior,10,LinkedIn,Analista de Business Intelligence,Aprovado,89,91,Aprovado,14235,15 dias,Totalmente Remoto
+CAN0290,2026-05-05T08:11:00Z,Rodrigo Gomes,rodrigo.gomes@example.com,Recife,PE,Mestrado,7,LinkedIn,Analista de Business Intelligence,Aprovado,54,55,Aprovado,14489,,Totalmente Remoto
+CAN0291,09/05/2026 04:05,Julia Souza,julia.souza@,Recife,PE,Mestrado,15,Glassdoor,Cientista de Dados Júnior,Entrevista RH,87,81,Em Processo,6385,15 dias,Presencial
+CAN0292,2026-05-14 05:26:00,Felipe Gomes,felipe.gomes@example.com,Porto Alegre,RS,Ensino Superior,14,gupy,Engenheiro de Dados Júnior,Aprovado,53,95,Aprovado,12784,,
+CAN0293,11/05/2026 07:30,Mariana Silva,mariana.silva@example.com,Recife,PE,Mestrado,4,SITE INSTITUCIONAL,Cientista de Dados Júnior,Teste Técnico,72,81,Em Processo,5161,15 dias,
+CAN0294,2026-05-04 10:02:00,Isabela Lima,isabela.lima@example.com,Recife,PE,Pós-Graduação,8,Gupy,Cientista de Dados Júnior,Aprovado,71,98,Aprovado,13771,Imediata,
+CAN0295,08/05/2026 05:02,Gustavo Ferreira,gustavo.ferreira@example.com,Recife,PE,MESTRADO,15,LinkedIn,Analista de Dados Pleno,Triagem,62,55,Em Processo,5757,30 dias,Totalmente Remoto
+CAN0296,2026-05-07T18:00:00Z,Julia Carvalho,julia.carvalho@example.com,Porto Alegre,RS,Ensino Médio,0,glassdoor,Analista de Business Intelligence,Triagem,93,,Em Processo,14595,15 dias,Presencial
+CAN0297,2026-05-11T01:41:00Z,Matheus Costa,matheus.costa@example.com,Belo Horizonte,MG,Ensino Médio,9,LinkedIn,Analista de Business Intelligence,Proposta,64,55,Aprovado,9535,Imediata,Híbrido
+CAN0298,2026-05-10T20:48:00Z,Gabriel Souza,gabriel.souza@example.com,Recife,PE,Pós-Graduação,4,LinkedIn,Analista de Business Intelligence,Teste Técnico,71,78,Em Processo,12225,,Híbrido
+CAN0299,2026-05-20T05:27:00Z,Sofia Oliveira,,Salvador,BA,Ensino Superior,2,gupy,Cientista de Dados Júnior,Teste Técnico,48,93,Em Processo,11570,30 dias,
+CAN0300,2026-05-02T16:06:00Z,Sofia Carvalho,sofia.carvalho@example.com,Curitiba,PR,Doutorado,0,Glassdoor,Analista de Dados Pleno,Reprovado,,52,Reprovado,7876,30 dias,Híbrido
+CAN0175,22/05/2026 06:33,Bruno Lopes,bruno.lopes@example.com,,,Pós-graduacao,8,Indicação,Analista de Business Intelligence,Teste Técnico,64,91,Em Processo,4275,Imediata,Híbrido
+CAN0096,17/05/2026 22:43,Julia Souza,julia.souza@example.com,Belo Horizonte,MG,Doutorado,11,gupy,Engenheiro de Dados Júnior,Proposta,55,94,Aprovado,4320,Imediata,
+CAN0109,10/05/2026 04:11,Matheus Santos,matheus.santos@example.com,São Paulo,SP,Ensino Superior,15,Gupy,Engenheiro de Dados Júnior,Entrevista Técnica,50,55,Em Processo,6613,,Presencial
+CAN0095,2026-05-28T02:52:00Z,Mariana Silva,mariana.silva@example.com,Porto Alegre,RS,Ensino Superior,14,Site Institucional,Analista de Business Intelligence,Entrevista Técnica,,81,Em Processo,-500,30 dias,Presencial
+CAN0041,07/05/2026 12:54,Beatriz Pereira,beatriz.pereira@example.com,Campinas,SP,Pós-graduacao,12,Site Institucional,Analista de Dados Júnior,Proposta,87,81,Aprovado,6770,30 dias,
