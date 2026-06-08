@@ -20,7 +20,7 @@ import Papa from "papaparse";
 import Link from "next/link";
 
 import { AnalysisResponse } from "@/types/analysis";
-import { fetchDemoData, uploadAndAnalyzeFile } from "@/lib/api";
+import { fetchDemoData, uploadAndAnalyzeFile, warmUpBackend } from "@/lib/api";
 import { ColumnMapper } from "../lib/mapper_client"; 
 import { generateStructuredInsights } from "@/lib/insights/generateInsights";
 
@@ -57,6 +57,7 @@ export default function Home() {
 
   // Auto-load demo data if ?demo=true query parameter is present (portfolio showcase link)
   useEffect(() => {
+    warmUpBackend();
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       if (params.get("demo") === "true") {
