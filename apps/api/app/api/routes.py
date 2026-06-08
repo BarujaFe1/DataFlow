@@ -14,7 +14,12 @@ from app.services.inference import InferenceEngine
 
 router = APIRouter()
 
-DEMO_PATH = "C:\\dev\\DataFlow\\data\\seed\\processo_seletivo_demo.csv"
+_ROUTES_FILE = os.path.abspath(__file__)      # .../DataFlow/apps/api/app/api/routes.py
+_APP_DIR = os.path.dirname(os.path.dirname(_ROUTES_FILE))  # .../DataFlow/apps/api/app
+_API_DIR = os.path.dirname(_APP_DIR)                       # .../DataFlow/apps/api
+_PROJECT_ROOT = os.path.dirname(os.path.dirname(_API_DIR)) # .../DataFlow
+
+DEMO_PATH = os.path.join(_PROJECT_ROOT, "data", "seed", "processo_seletivo_demo.csv")
 
 def run_pipeline(content_bytes: bytes, source: str, client_mapping: Optional[Dict[str, Optional[str]]] = None) -> AnalysisResponse:
     # 1. Parse
