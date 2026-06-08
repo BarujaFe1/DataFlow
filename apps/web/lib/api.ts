@@ -1,6 +1,7 @@
 import { AnalysisResponse } from "@/types/analysis";
 
-const API_BASE_URL = "http://127.0.0.1:8000/api";
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
 
 export async function fetchDemoData(): Promise<AnalysisResponse> {
   const res = await fetch(`${API_BASE_URL}/demo`, {
