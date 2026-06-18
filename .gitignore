@@ -45,3 +45,9 @@ Thumbs.db
 *.pdf
 tmp/
 temp/
+
+# TypeScript build cache
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+.vercel

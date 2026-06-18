@@ -189,7 +189,7 @@ export default function ExecutiveHero({ analysis, onGenerateReport, onReset, onS
             </button>
             
             <button
-              onClick={() => onScrollToSection("quality-cockpit")}
+              onClick={() => onScrollToSection("qualidade")}
               className="flex items-center space-x-2 px-4 py-3 text-sm font-semibold text-text-primary bg-surface-elevated border border-border-subtle hover:border-border-hover rounded-lg transition cursor-pointer"
             >
               <ShieldCheck className="w-4 h-4 text-success" />
@@ -197,7 +197,7 @@ export default function ExecutiveHero({ analysis, onGenerateReport, onReset, onS
             </button>
 
             <button
-              onClick={() => onScrollToSection("statistics-inference")}
+              onClick={() => onScrollToSection("estatistica")}
               className="flex items-center space-x-2 px-4 py-3 text-sm font-semibold text-text-secondary hover:text-text-primary bg-surface border border-border-subtle hover:border-border-hover rounded-lg transition cursor-pointer"
             >
               <Activity className="w-4 h-4 text-accent" />

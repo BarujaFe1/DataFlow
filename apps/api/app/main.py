@@ -9,10 +9,15 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Enable CORS for frontend integration
+# Enable CORS for frontend integration (local-first + Vercel production)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Allow all origins in local-first environment for smooth UX
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://dataflow.vercel.app",
+        "https://dataflow-glu1.vercel.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

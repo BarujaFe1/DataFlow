@@ -423,10 +423,10 @@ O DataFlow demonstra competências críticas para funções de **Analytics Engin
 
 ## 📚 Documentação Complementar
 
-- [docs/portfolio_pitch.md](file:///C:/dev/DataFlow/docs/portfolio_pitch.md) — roteiros de entrevista, LinkedIn e guia de apresentação.
-- [docs/final_release_audit.md](file:///C:/dev/DataFlow/docs/final_release_audit.md) — auditoria detalhada de código, schemas e testes.
-- [docs/technical_methodology.md](file:///C:/dev/DataFlow/docs/technical_methodology.md) — documentação aprofundada da lógica matemática.
-- [docs/release_notes_v1.3.md](file:///C:/dev/DataFlow/docs/release_notes_v1.3.md) — evolução histórica da versão.
+- [docs/portfolio_pitch.md](docs/portfolio_pitch.md) — roteiros de entrevista, LinkedIn e guia de apresentação.
+- [docs/final_release_audit.md](docs/final_release_audit.md) — auditoria detalhada de código, schemas e testes.
+- [docs/technical_methodology.md](docs/technical_methodology.md) — documentação aprofundada da lógica matemática.
+- [docs/release_notes_v1.3.md](docs/release_notes_v1.3.md) — evolução histórica da versão.
 
 ---
 

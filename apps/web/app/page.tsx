@@ -518,6 +518,7 @@ export default function Home() {
                 columns={quality.columns}
                 isPrivacyEnabled={isPrivacyEnabled}
                 onTogglePrivacy={() => setIsPrivacyEnabled(!isPrivacyEnabled)}
+                duplicateCount={kpis.duplicate_count}
               />
             </div>
 

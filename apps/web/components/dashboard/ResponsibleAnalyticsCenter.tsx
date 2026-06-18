@@ -8,12 +8,14 @@ interface ResponsibleAnalyticsCenterProps {
   columns: ColumnProfile[];
   isPrivacyEnabled: boolean;
   onTogglePrivacy: () => void;
+  duplicateCount?: number;
 }
 
 export default function ResponsibleAnalyticsCenter({
   columns,
   isPrivacyEnabled,
-  onTogglePrivacy
+  onTogglePrivacy,
+  duplicateCount = 0
 }: ResponsibleAnalyticsCenterProps) {
 
   // Detect sensitive columns
@@ -152,7 +154,7 @@ export default function ResponsibleAnalyticsCenter({
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-success shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-text-primary font-bold">[DESDUPLICAÇÃO]</span> 5 duplicatas identificadas e removidas por candidate_id.
+                  <span className="text-text-primary font-bold">[DESDUPLICAÇÃO]</span> {duplicateCount} duplicatas identificadas e removidas por candidate_id.
                 </div>
               </div>
               <div className="flex items-start gap-2">

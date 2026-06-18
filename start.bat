@@ -1,16 +1,21 @@
 @echo off
 title DataFlow Startup Wizard
 color 0B
+setlocal
+
+set "ROOT=%~dp0"
+set "ROOT=%ROOT:~0,-1%"
+
 echo ============================================================
 echo      Iniciando o DataFlow (Next.js 15 + FastAPI)
 echo ============================================================
 echo.
 
 echo [1/3] Iniciando o servidor Backend (FastAPI)...
-start "DataFlow API" /min cmd /k "cd /d C:\dev\DataFlow\apps\api && .venv\Scripts\python -m uvicorn app.main:app --host 127.0.0.1 --port 8000"
+start "DataFlow API" /min cmd /k "cd /d "%ROOT%\apps\api" && .venv\Scripts\python -m uvicorn app.main:app --host 127.0.0.1 --port 8000"
 
 echo [2/3] Iniciando o servidor Frontend (Next.js)...
-start "DataFlow Web" /min cmd /k "cd /d C:\dev\DataFlow\apps\web && npm run dev"
+start "DataFlow Web" /min cmd /k "cd /d "%ROOT%\apps\web" && npm run dev"
 
 echo.
 echo [3/3] Aguardando 5 segundos para os servidores inicializarem...
@@ -26,3 +31,5 @@ echo   DataFlow foi iniciado com sucesso!
 echo   Pressione qualquer tecla para encerrar este assistente.
 echo ============================================================
 pause >nul
+
+endlocal
