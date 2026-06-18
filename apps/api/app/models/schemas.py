@@ -58,6 +58,10 @@ class InferenceResult(BaseModel):
     significance: bool
     interpretation: str
     limitations: str
+    # Multiple-comparison correction (Bonferroni)
+    nominal_alpha: float = 0.05
+    bonferroni_alpha: Optional[float] = None  # alpha / total_tests
+    corrected_significance: Optional[bool] = None  # p < bonferroni_alpha
 
 class AnalysisMetadata(BaseModel):
     generated_at: str

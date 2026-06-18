@@ -58,7 +58,22 @@ def run_pipeline(content_bytes: bytes, source: str, client_mapping: Optional[Dic
 
     # 6. Statistical Inference
     inference_results_raw = InferenceEngine.run_all_inference(cleaned_records)
-    inference_results = [InferenceResult(**res) for res in inference_results_raw]
+
+    # Apply Bonferroni correction server-side: this is the authoritative source
+    # of truth surfaced to the frontend, so the dashboard and PDF agree.
+    NOMINAL_ALPHA = 0.05
+    total_tests = len(inference_results_raw) if inference_results_raw else 0
+    bonferroni_alpha = (NOMINAL_ALPHA / total_tests) if total_tests > 0 else NOMINAL_ALPHA
+
+    inference_results = []
+    for res in inference_results_raw:
+        corrected_sig = bool(res['p_value'] < bonferroni_alpha) if total_tests > 0 else res['significance']
+        inference_results.append(InferenceResult(
+            **res,
+            nominal_alpha=NOMINAL_ALPHA,
+            bonferroni_alpha=bonferroni_alpha,
+            corrected_significance=corrected_sig,
+        ))
 
     # Assemble response
     metadata = AnalysisMetadata(

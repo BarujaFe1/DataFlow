@@ -24,6 +24,13 @@
     <img alt="SciPy" src="https://img.shields.io/badge/SciPy-Statistical%20Evidence-8CAAE6?style=for-the-badge&logo=scipy&logoColor=white" />
     <img alt="LGPD Aware" src="https://img.shields.io/badge/LGPD--Aware-Responsible%20Analytics-22C55E?style=for-the-badge" />
   </p>
+
+  <p>
+    <a href="https://github.com/BarujaFe1/DataFlow/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/BarujaFe1/DataFlow/actions/workflows/ci.yml/badge.svg?branch=main" /></a>
+    <a href="https://dataflow-glu1.onrender.com/api/health"><img alt="API Health" src="https://img.shields.io/website?url=https%3A%2F%2Fdataflow-glu1.onrender.com%2Fapi%2Fhealth&label=API%20Live" /></a>
+    <a href="https://github.com/BarujaFe1/DataFlow/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-22C55E?style=flat-square" /></a>
+    <img alt="Tests" src="https://img.shields.io/badge/Pytest-13%20passing-3776AB?style=flat-square" />
+  </p>
 </div>
 
 <p align="center">

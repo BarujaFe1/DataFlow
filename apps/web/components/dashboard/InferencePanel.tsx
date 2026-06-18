@@ -2,14 +2,18 @@
 
 import React, { useMemo } from "react";
 import { Scale, AlertTriangle, Info, ShieldAlert } from "lucide-react";
-import { InferenceResult } from "@/types/analysis";
+import { InferenceResult, AnalysisResponse } from "@/types/analysis";
 import { generateExecutiveConclusions } from "@/lib/analytics/executiveConclusions";
 
 interface InferencePanelProps {
   inference: InferenceResult[];
+  // Optional: used to power real-data mini-visualizations (e.g. chi-square
+  // approval rates per channel). Falls back to a neutral placeholder when
+  // not provided, never to fabricated numbers.
+  sources?: AnalysisResponse["charts"]["sources"];
 }
 
-export default function InferencePanel({ inference }: InferencePanelProps) {
+export default function InferencePanel({ inference, sources = [] }: InferencePanelProps) {
   const analysisReport = useMemo(() => {
     return generateExecutiveConclusions(inference);
   }, [inference]);
@@ -26,21 +30,18 @@ export default function InferencePanel({ inference }: InferencePanelProps) {
     );
   }
 
-  // Parses means from interpretation string if they exist (Welch's T-Test)
+  // Parses means from interpretation string if present (Welch's T-Test).
+  // Returns null when the backend interpretation cannot be parsed — caller
+  // renders a graceful placeholder instead of fabricated numbers.
   const parseTTestMeans = (interpretation: string) => {
     const regex = /Média\s*=\s*([\d\.,]+)/g;
     const matches = [...interpretation.matchAll(regex)];
     if (matches && matches.length >= 2) {
       const mean1 = parseFloat(matches[0][1].replace(",", "."));
       const mean2 = parseFloat(matches[1][1].replace(",", "."));
-      return { mean1, mean2 };
-    }
-    // Fallback averages if parsing fails
-    if (interpretation.includes("score_test")) {
-      return { mean1: 82.5, mean2: 58.3 };
-    }
-    if (interpretation.includes("score_interview")) {
-      return { mean1: 78.1, mean2: 72.4 };
+      if (!Number.isNaN(mean1) && !Number.isNaN(mean2)) {
+        return { mean1, mean2 };
+      }
     }
     return null;
   };
@@ -250,122 +251,52 @@ export default function InferencePanel({ inference }: InferencePanelProps) {
                     </div>
                   )}
 
-                  {/* 2. Chi-square Mini-viz (Stacked proportion bar) */}
-                  {meta.type === "cramer" && (
+                  {/* 2. Chi-square Mini-viz (approval rates per real data) */}
+                  {meta.type === "cramer" && test.variables.includes("source_channel") && (
                     <div className="space-y-2 py-1">
-                      {test.variables.includes("education_level") ? (
-                        // Mock rates based on typical distribution
-                        <div className="space-y-1.5">
-                          <div>
+                      {/* Real approval rates from /api demo response (charts.sources) */}
+                      {sources && sources.length > 0 ? (
+                        sources.slice(0, 4).map((s) => (
+                          <div key={s.source}>
                             <div className="flex justify-between text-[9px]">
-                              <span>Ensino Superior / Pós</span>
-                              <span className="font-mono text-accent">Tx. Aprov: ~14.5%</span>
+                              <span>{s.source}</span>
+                              <span className="font-mono text-accent">
+                                Tx. Aprov: {(s.approval_rate * 100).toFixed(1)}%
+                              </span>
                             </div>
                             <div className="h-1.5 w-full bg-surface-elevated rounded-full overflow-hidden">
-                              <div className="h-full bg-accent rounded-full" style={{ width: "14.5%" }} />
+                              <div
+                                className="h-full bg-accent rounded-full"
+                                style={{ width: `${Math.min(100, s.approval_rate * 100)}%` }}
+                              />
                             </div>
                           </div>
-                          <div>
-                            <div className="flex justify-between text-[9px]">
-                              <span>Ensino Médio / Técnico</span>
-                              <span className="font-mono text-text-muted">Tx. Aprov: ~0.0%</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-surface-elevated rounded-full overflow-hidden">
-                              <div className="h-full bg-text-muted rounded-full" style={{ width: "0%" }} />
-                            </div>
-                          </div>
-                        </div>
+                        ))
                       ) : (
-                        // Source channel comparison
-                        <div className="space-y-1.5">
-                          <div>
-                            <div className="flex justify-between text-[9px]">
-                              <span>LinkedIn (Maior Volume)</span>
-                              <span className="font-mono text-accent">Tx. Aprov: ~11.8%</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-surface-elevated rounded-full overflow-hidden">
-                              <div className="h-full bg-accent rounded-full" style={{ width: "11.8%" }} />
-                            </div>
-                          </div>
-                          <div>
-                            <div className="flex justify-between text-[9px]">
-                              <span>Site Institucional (Melhor Conversão)</span>
-                              <span className="font-mono text-success">Tx. Aprov: ~15.2%</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-surface-elevated rounded-full overflow-hidden">
-                              <div className="h-full bg-success/80 rounded-full" style={{ width: "15.2%" }} />
-                            </div>
-                          </div>
+                        <div className="text-[10px] text-text-muted italic">
+                          Dados de canais indisponíveis para esta visualização.
                         </div>
                       )}
                     </div>
                   )}
 
-                  {/* 3. ANOVA Mini-viz (Horizontal mean comparison across categories) */}
+                  {/* Chi-square for education_level has no real per-group series
+                      shipped in the API response; avoid decorative placeholder. */}
+                  {meta.type === "cramer" && !test.variables.includes("source_channel") && (
+                    <div className="text-[10px] text-text-muted italic py-1">
+                      Distribuição percentual por grupo não é exibida para esta associação categórica.
+                      Veja a tabela de registros auditável para a contagem bruta por categoria.
+                    </div>
+                  )}
+
+                  {/* 3. ANOVA Mini-viz — intentionally NOT fabricated.
+                      The API does not currently ship per-group means, so we
+                      surface an honest note instead of hardcoded numbers. */}
                   {meta.type === "eta" && (
-                    <div className="space-y-1.5 py-1">
-                      {test.variables.includes("role_applied") ? (
-                        <>
-                          <div>
-                            <div className="flex justify-between text-[9px]">
-                              <span>Dev Backend (Média)</span>
-                              <span className="font-mono font-semibold">73.8</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-surface-elevated rounded-full overflow-hidden">
-                              <div className="h-full bg-blue-500/80 rounded-full" style={{ width: "73.8%" }} />
-                            </div>
-                          </div>
-                          <div>
-                            <div className="flex justify-between text-[9px]">
-                              <span>Cientista de Dados (Média)</span>
-                              <span className="font-mono font-semibold font-mono">75.1</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-surface-elevated rounded-full overflow-hidden">
-                              <div className="h-full bg-accent rounded-full" style={{ width: "75.1%" }} />
-                            </div>
-                          </div>
-                          <div>
-                            <div className="flex justify-between text-[9px]">
-                              <span>Designer de UX (Média)</span>
-                              <span className="font-mono font-semibold">72.4</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-surface-elevated rounded-full overflow-hidden">
-                              <div className="h-full bg-indigo-500/80 rounded-full" style={{ width: "72.4%" }} />
-                            </div>
-                          </div>
-                        </>
-                      ) : (
-                        // Score test by education level
-                        <>
-                          <div>
-                            <div className="flex justify-between text-[9px]">
-                              <span>Doutorado / Mestrado</span>
-                              <span className="font-mono font-semibold">76.2</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-surface-elevated rounded-full overflow-hidden">
-                              <div className="h-full bg-accent rounded-full" style={{ width: "76.2%" }} />
-                            </div>
-                          </div>
-                          <div>
-                            <div className="flex justify-between text-[9px]">
-                              <span>Ensino Superior</span>
-                              <span className="font-mono font-semibold">73.5</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-surface-elevated rounded-full overflow-hidden">
-                              <div className="h-full bg-blue-500/80 rounded-full" style={{ width: "73.5%" }} />
-                            </div>
-                          </div>
-                          <div>
-                            <div className="flex justify-between text-[9px]">
-                              <span>Ensino Médio</span>
-                              <span className="font-mono font-semibold">58.0</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-surface-elevated rounded-full overflow-hidden">
-                              <div className="h-full bg-text-muted rounded-full" style={{ width: "58%" }} />
-                            </div>
-                          </div>
-                        </>
-                      )}
+                    <div className="text-[10px] text-text-muted italic py-1 leading-relaxed">
+                      As médias por grupo não são exibidas em mini-gráfico para evitar valores
+                      fabricados. Consulte a tabela de registros e a estatística F (acima)
+                      para a leitura real da dispersão entre grupos.
                     </div>
                   )}
                 </div>

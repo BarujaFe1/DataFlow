@@ -66,7 +66,7 @@ export default function MethodologyPage() {
           </h2>
           
           <p className="text-xs text-text-secondary leading-relaxed">
-            O **Health Score** é um indicador sintético que varia de **0 a 100**, concebido para quantificar a confiabilidade geral do dataset tabular para auditoria. Ele parte da pontuação máxima **100** e sofre deduções com base nos seguintes eixos de qualidade de dados:
+            O <strong>Health Score</strong> é um indicador sintético que varia de <strong>0 a 100</strong>, concebido para quantificar a confiabilidade geral do dataset tabular para auditoria. Ele parte da pontuação máxima <strong>100</strong> e sofre deduções com base nos seguintes eixos de qualidade de dados:
           </p>
 
           <div className="bg-surface/50 border border-border-subtle p-5 rounded-xl flex flex-col gap-4">
@@ -76,14 +76,14 @@ export default function MethodologyPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
               <div className="space-y-1.5">
-                <p><strong>• Incompletude (Nulos):</strong> Dedução proporcional à taxa geral de células nulas sobre o total do grid, com limite máximo de **-25** pontos.</p>
-                <p><strong>• Redundância (Duplicados):</strong> Dedução mínima de **-2** pontos por qualquer duplicata, escalando dinamicamente até o limite de **-15** pontos.</p>
-                <p><strong>• Colunas Completamente Vazias:</strong> Penalidade de **-10** pontos por coluna identificada sem qualquer registro preenchido (max **-20**).</p>
+                <p><strong>• Incompletude (Nulos):</strong> Dedução proporcional à taxa geral de células nulas sobre o total do grid, com limite máximo de <strong>-25</strong> pontos.</p>
+                <p><strong>• Redundância (Duplicados):</strong> Dedução mínima de <strong>-2</strong> pontos por qualquer duplicata, escalando dinamicamente até o limite de <strong>-15</strong> pontos.</p>
+                <p><strong>• Colunas Completamente Vazias:</strong> Penalidade de <strong>-10</strong> pontos por coluna identificada sem qualquer registro preenchido (max <strong>-20</strong>).</p>
               </div>
               <div className="space-y-1.5">
-                <p><strong>• Colunas de Valor Constante:</strong> Penalidade de **-5** pontos por coluna cuja variância seja nula (max **-15**).</p>
-                <p><strong>• Formatos de E-mail Inválidos:</strong> Penalidade fixa de **-10** pontos se e-mails fora do padrão Regex {"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"} forem detectados.</p>
-                <p><strong>• Outliers Numéricos:</strong> Penalidade fixa de **-5** pontos se existirem colunas numéricas com valores discrepantes.</p>
+                <p><strong>• Colunas de Valor Constante:</strong> Penalidade de <strong>-5</strong> pontos por coluna cuja variância seja nula (max <strong>-15</strong>).</p>
+                <p><strong>• Formatos de E-mail Inválidos:</strong> Penalidade fixa de <strong>-10</strong> pontos se e-mails fora do padrão Regex {"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"} forem detectados.</p>
+                <p><strong>• Outliers Numéricos:</strong> Penalidade fixa de <strong>-5</strong> pontos se existirem colunas numéricas com valores discrepantes.</p>
               </div>
             </div>
           </div>
@@ -117,8 +117,8 @@ export default function MethodologyPage() {
 
           <p className="text-xs text-text-secondary leading-relaxed">
             Na base de demonstração sintética do processo seletivo:
-            <br />• **Anos de Experiência:** Outliers são classificados quando fora dos limites de 0 a 20 anos.
-            <br />• **Expectativa Salarial:** Outliers são detectados para pretensões salariais acima de R$ 100.000 mensais.
+            <br />• <strong>Anos de Experiência:</strong> Outliers são classificados quando fora dos limites de 0 a 20 anos.
+            <br />• <strong>Expectativa Salarial:</strong> Outliers são detectados para pretensões salariais acima de R$ 100.000 mensais.
           </p>
         </section>
 
@@ -130,7 +130,7 @@ export default function MethodologyPage() {
           </h2>
           
           <p className="text-xs text-text-secondary leading-relaxed">
-            A API de estatística é alimentada pela biblioteca **SciPy** do Python, avaliando as correlações e significâncias do processo seletivo a um nível de confiança nominal de 95% ($\alpha = 0.05$):
+            A API de estatística é alimentada pela biblioteca <strong>SciPy</strong> do Python, avaliando as correlações e significâncias do processo seletivo a um nível de confiança nominal de 95% ($\alpha = 0.05$):
           </p>
 
           <div className="flex flex-col gap-3">
@@ -177,7 +177,7 @@ export default function MethodologyPage() {
           </h2>
           
           <p className="text-xs text-text-secondary leading-relaxed">
-            Ao executar múltiplos testes de hipóteses estatísticos paralelos no mesmo dataset, o risco de encontrar uma correlação significativa por puro acaso (Erro Tipo I) aumenta de forma acumulada. Para mitigar o risco de falsos positivos na tomada de decisão corporativa, o DataFlow aplica a **Correção de Bonferroni**:
+            Ao executar múltiplos testes de hipóteses estatísticos paralelos no mesmo dataset, o risco de encontrar uma correlação significativa por puro acaso (Erro Tipo I) aumenta de forma acumulada. Para mitigar o risco de falsos positivos na tomada de decisão corporativa, o DataFlow aplica a <strong>Correção de Bonferroni</strong>:
           </p>
 
           <div className="bg-surface/50 border border-border-subtle p-5 rounded-xl flex flex-col gap-3 font-mono text-xs">
@@ -193,8 +193,8 @@ export default function MethodologyPage() {
           </div>
 
           <p className="text-xs text-text-secondary leading-relaxed">
-            **Caso Prático na Base Demo:**
-            <br />A escolaridade formal (`education_level` vs `final_status`) apresenta p-valor nominal de **p=0.0141**. Embora menor que $\alpha = 0.05$, o valor é maior que o limiar corrigido de **p=0.0083**. Conclusão: a associação estatística de escolaridade é classificada como *&quot;significativa sem correção; inconclusiva sob correção conservadora&quot;* e reportada apenas como sinal exploratório de viés, evitando que a escolaridade seja usada erroneamente como régua de corte.
+            <strong>Caso Prático na Base Demo:</strong>
+            <br />A escolaridade formal (`education_level` vs `final_status`) apresenta p-valor nominal de <strong>p=0.0141</strong>. Embora menor que $\alpha = 0.05$, o valor é maior que o limiar corrigido de <strong>p=0.0083</strong>. Conclusão: a associação estatística de escolaridade é classificada como *&quot;significativa sem correção; inconclusiva sob correção conservadora&quot;* e reportada apenas como sinal exploratório de viés, evitando que a escolaridade seja usada erroneamente como régua de corte.
           </p>
         </section>
 
@@ -219,8 +219,8 @@ export default function MethodologyPage() {
           
           <p className="text-xs text-text-secondary leading-relaxed">
             Em conformidade com a LGPD, nenhuma identificação pessoal (PII) é exposta por padrão no cockpit ou no PDF do relatório. As máscaras de dados garantem anonimização:
-            <br />• **Nomes:** Mapeados dinamicamente para &quot;Candidato CANXXXX&quot;, em que `CANXXXX` é o ID técnico individual unívoco.
-            <br />• **E-mails:** Ocultados exibindo apenas a primeira letra (ex: `g***@example.com`).
+            <br />• <strong>Nomes:</strong> Mapeados dinamicamente para &quot;Candidato CANXXXX&quot;, em que `CANXXXX` é o ID técnico individual unívoco.
+            <br />• <strong>E-mails:</strong> Ocultados exibindo apenas a primeira letra (ex: `g***@example.com`).
           </p>
         </section>
 
@@ -233,7 +233,7 @@ export default function MethodologyPage() {
           
           <div className="p-4 rounded-xl border border-success/15 bg-success/[0.01] text-xs leading-relaxed text-text-secondary flex flex-col gap-2">
             <p>
-              O DataFlow é um projeto de **Auditoria de Processos e Dados**. Ele **NÃO** faz classificação individual de talentos, ranqueamento, scoring de candidatos ou previsões automáticas de sucesso de admissão (regras proibidas em conformidade ética).
+              O DataFlow é um projeto de <strong>Auditoria de Processos e Dados</strong>. Ele <strong>NÃO</strong> faz classificação individual de talentos, ranqueamento, scoring de candidatos ou previsões automáticas de sucesso de admissão (regras proibidas em conformidade ética).
             </p>
             <p className="font-bold text-text-primary">
               Mensagem central: &quot;O DataFlow transforma dados tabulares imperfeitos em diagnósticos executivos confiáveis para calibragem de processo, garantindo que decisões finais sempre requeiram intervenção humana estruturada.&quot;

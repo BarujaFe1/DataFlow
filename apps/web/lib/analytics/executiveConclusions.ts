@@ -70,13 +70,23 @@ export function generateExecutiveConclusions(
 ): ExecutiveConclusionsReport {
   const NOMINAL_ALPHA = 0.05;
   const totalTests = inferenceResults.length || 6;
-  const bonferroniAlpha = NOMINAL_ALPHA / totalTests;
+  // Prefer backend-provided bonferroni_alpha (authoritative since Rodada 4);
+  // fall back to client-side computation for older API responses.
+  const backendBonferroniAlpha = inferenceResults.find(
+    (t) => t.bonferroni_alpha !== undefined && t.bonferroni_alpha !== null
+  )?.bonferroni_alpha;
+  const bonferroniAlpha =
+    backendBonferroniAlpha !== undefined ? (backendBonferroniAlpha as number) : NOMINAL_ALPHA / totalTests;
 
   const conclusions: DetailedConclusion[] = inferenceResults.map((test) => {
     const p = test.p_value;
     const eff = test.effect_size !== undefined ? test.effect_size : 0.0;
     const nominalSignificance = p < NOMINAL_ALPHA;
-    const correctedSignificance = p < bonferroniAlpha;
+    // Prefer backend-computed corrected_significance when available.
+    const correctedSignificance =
+      test.corrected_significance !== undefined && test.corrected_significance !== null
+        ? (test.corrected_significance as boolean)
+        : p < bonferroniAlpha;
 
     const evidenceClass = getEvidenceClass(p);
     const magnitudeClass = getMagnitudeClass(eff, test.test_name);

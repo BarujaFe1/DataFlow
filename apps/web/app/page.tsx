@@ -524,7 +524,7 @@ export default function Home() {
 
             {/* Inference Statistical Tests (Statistical Evidence Center) */}
             <div id="estatistica" className="scroll-mt-24">
-              <InferencePanel inference={inference} />
+              <InferencePanel inference={inference} sources={charts.sources} />
             </div>
 
             <div id="registros" className="scroll-mt-24">

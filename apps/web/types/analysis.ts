@@ -40,6 +40,11 @@ export interface InferenceResult {
   significance: boolean;
   interpretation: string;
   limitations: string;
+  // Multiple-comparison correction (Bonferroni) — authoritative values come
+  // from the backend since Rodada 4.
+  nominal_alpha?: number;
+  bonferroni_alpha?: number;
+  corrected_significance?: boolean;
 }
 
 export interface AnalysisMetadata {
