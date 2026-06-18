@@ -22,25 +22,24 @@ class InferenceEngine:
         clean_df = df[[cat_col, target_col]].dropna()
         if len(clean_df) < 30:
             return None
-            
+
         contingency_table = pd.crosstab(clean_df[cat_col], clean_df[target_col])
-        
+
         # Check table dimensions (must be at least 2x2)
         if contingency_table.shape[0] < 2 or contingency_table.shape[1] < 2:
             return None
-            
-        # Check cell counts (should be >= 5 in at least 80% of cells for Chi-square validity)
-        expected = stats.contingency.expected_freq(contingency_table)
-        if (expected < 5).mean() > 0.20:
-            # We can still run it, but flag as caution
-            pass
-            
+
+        # Cochran rule: at least 80% of expected cells should have E >= 5.
+        expected_freq = stats.contingency.expected_freq(contingency_table)
+        low_expected_ratio = float((expected_freq < 5).mean())
+        cohran_warning = low_expected_ratio > 0.20
+
         try:
             res = stats.chi2_contingency(contingency_table)
-            stat, p_val, dof, expected_vals = res.statistic, res.pvalue, res.dof, res.expected_freq
-            
+            stat, p_val, dof = res.statistic, res.pvalue, res.dof
+
             sig = bool(p_val < 0.05)
-            
+
             if sig:
                 interpretation = (
                     f"Existe uma associação estatisticamente significativa entre a coluna '{cat_col}' "
@@ -53,7 +52,7 @@ class InferenceEngine:
                     f"e o '{target_col}' (p-valor = {p_val:.4f}). As diferenças observadas nas taxas "
                     f"podem ser explicadas por variação amostral aleatória."
                 )
-                
+
             limitations = (
                 "1. Associação não implica causalidade: o canal de origem ou a escolaridade "
                 "pode estar correlacionada a outras variáveis omitidas. "
@@ -61,12 +60,18 @@ class InferenceEngine:
                 "3. Não utilize este resultado para criar regras de triagem discriminatórias "
                 "ou automatizadas que penalizem determinados grupos."
             )
-            
+            if cohran_warning:
+                limitations += (
+                    f" 4. Aviso de Cochran: {low_expected_ratio*100:.0f}% das células esperadas "
+                    "têm contagem < 5; o teste pode ser instável — considere Fisher exact ou "
+                    "agrupar categorias pequenas."
+                )
+
             # Simple effect size (Cramer's V)
             n = contingency_table.sum().sum()
             min_dim = min(contingency_table.shape) - 1
             cramers_v = np.sqrt(stat / (n * min_dim)) if min_dim > 0 and n > 0 else 0.0
-            
+
             return {
                 'test_name': f"Teste de Associação Qui-Quadrado ({cat_col} vs {target_col})",
                 'variables': [cat_col, target_col],
@@ -144,21 +149,30 @@ class InferenceEngine:
     def run_anova(cls, df: pd.DataFrame, num_col: str, group_col: str) -> Optional[Dict[str, Any]]:
         # Compare numerical scores (e.g. score_test) across categories (e.g. role_applied, education_level)
         clean_df = df[[num_col, group_col]].dropna()
-        
+
         # Group counts
         counts = clean_df[group_col].value_counts()
         valid_groups = counts[counts >= 5].index.tolist()
-        
+
         if len(valid_groups) < 3:
             return None # Must have at least 3 groups with 5+ observations
-            
+
         groups_data = [clean_df[clean_df[group_col] == g][num_col] for g in valid_groups]
-        
+
+        # Levene's test for homogeneity of variances (homocedasticity assumption)
+        try:
+            levene_res = stats.levene(*groups_data, center='median')
+            levene_p = float(levene_res.pvalue)
+            homocedastic = levene_p >= 0.05
+        except Exception:
+            levene_p = None
+            homocedastic = True  # assume default; warn in limitations
+
         try:
             res = stats.f_oneway(*groups_data)
             stat, p_val = res.statistic, res.pvalue
             sig = bool(p_val < 0.05)
-            
+
             # Simple effect size (eta squared approximation)
             # SS_between / SS_total
             all_vals = pd.concat(groups_data)
@@ -166,7 +180,7 @@ class InferenceEngine:
             ss_total = ((all_vals - grand_mean) ** 2).sum()
             ss_between = sum([len(g) * ((g.mean() - grand_mean) ** 2) for g in groups_data])
             eta_sq = float(ss_between / ss_total) if ss_total > 0 else 0.0
-            
+
             if sig:
                 interpretation = (
                     f"Existe variação estatisticamente relevante nas notas da coluna '{num_col}' "
@@ -180,13 +194,21 @@ class InferenceEngine:
                     f"ao comparar os grupos de '{group_col}' (p-valor = {p_val:.4f}). "
                     f"As notas médias são estatisticamente semelhantes entre as categorias avaliadas."
                 )
-                
+
             limitations = (
                 "1. A ANOVA supõe homogeneidade de variâncias (homocedasticidade) e normalidade dos resíduos. "
                 "2. O teste não diz quais grupos diferem entre si (requer testes adicionais post-hoc como Tukey HSD). "
                 "3. Utilize com cautela, pois desbalanceamento acentuado no tamanho dos grupos pode afetar o poder do teste."
             )
-            
+            if levene_p is not None:
+                limitations += (
+                    f" 4. Teste de Levene para homocedasticidade: p = {levene_p:.4f} "
+                    f"({'variâncias homogêneas' if homocedastic else 'variâncias heterogêneas; '
+                    'considere Welch ANOVA ou Kruskal-Wallis'})."
+                )
+            else:
+                limitations += " 4. Teste de Levene indisponível para esta amostra."
+
             return {
                 'test_name': f"Análise de Variância ANOVA de uma via ({num_col} por {group_col})",
                 'variables': [num_col, group_col],
@@ -218,11 +240,16 @@ class InferenceEngine:
     @classmethod
     def run_all_inference(cls, cleaned_records: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         df = pd.DataFrame(cleaned_records)
-        
+
+        # Drop duplicate candidates to avoid inflating sample size / p-values.
+        # Mirrors DataAggregator behaviour: keep only is_duplicate == False.
+        if 'is_duplicate' in df.columns:
+            df = df[df['is_duplicate'] == False].copy()
+
         # Verify columns exist
         cols = df.columns
         results = []
-        
+
         if len(df) < 15:
             return [] # Insufficient rows for statistical tests
             

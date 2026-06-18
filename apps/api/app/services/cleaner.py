@@ -8,9 +8,31 @@ class DataCleaner:
         if val is None or val == "":
             return None
         try:
-            # Strip spaces, handle comma as decimal point if needed
-            cleaned = str(val).strip().replace(',', '.')
-            # Keep only digits, dot and negative sign
+            # Strip spaces, currency symbols, percent and other non-numeric wrappers
+            cleaned = str(val).strip()
+            # Remove common currency prefixes/suffixes: "R$ 5.500,00", "US$1,200.50", "%"
+            cleaned = re.sub(r'(R\$|US\$|\$|EUR|€|£|%)', '', cleaned, flags=re.IGNORECASE)
+            cleaned = cleaned.strip()
+
+            has_comma = ',' in cleaned
+            has_dot = '.' in cleaned
+
+            if has_comma and has_dot:
+                # Mixed format: BR convention dot = thousands, comma = decimal
+                # e.g. "1.234,56" -> "1234.56"
+                cleaned = cleaned.replace('.', '').replace(',', '.')
+            elif has_comma:
+                # Comma only: BR decimal separator -> "5500,00" or "5,5" -> "5500.00"
+                cleaned = cleaned.replace(',', '.')
+            elif has_dot:
+                # Dot only could be US decimal ("1.5") or BR thousand-sep ("1.500").
+                # Heuristic: a single dot followed by exactly 3 digits in an integer >= 1000
+                # is treated as thousand separator. e.g. "1.200" -> 1200, "12.345" -> 12345,
+                # but "1.5" -> 1.5 and "12.34" -> 12.34 stay as decimals.
+                if re.match(r'^\d{1,3}(\.\d{3})+$', cleaned):
+                    cleaned = cleaned.replace('.', '')
+
+            # Keep only digits, dot and negative sign (drops leftover spaces, units, etc.)
             cleaned = re.sub(r'[^\d\.\-]', '', cleaned)
             return float(cleaned)
         except Exception:
