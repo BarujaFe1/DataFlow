@@ -94,3 +94,52 @@ Este documento serve como guia estratégico para apresentar o **DataFlow** em en
 ## 6. GitHub About Summary (Descrição do Repositório)
 
 > 📊 Web app monorepo (Next.js 15 + FastAPI) de profiling, saneamento e testes estatísticos (SciPy) para dados tabulares de recrutamento, com mascaramento LGPD nativo de PII e geração de relatórios executivos em PDF de 9 páginas.
+
+---
+
+## 7. Atualização Técnica Pós-Auditoria (V1.4)
+
+Após auditoria profunda do projeto, foram aplicadas as seguintes correções que elevam a defensabilidade técnica em entrevistas:
+
+### Arquitetura estatística consolidada
+- **Bonferroni movido para o backend**: o `routes.run_pipeline` agora computa `bonferroni_alpha = 0.05 / total_tests` e `corrected_significance` (p < α_adj) e envia no `InferenceResult`. Frontend (`executiveConclusions.ts`) prefere esses valores autoritativos; calcula fallback apenas para respostas antigas. **Resposta-padrão em entrevista**: "Bonferroni está centralizado no backend porque é onde os testes são executados em paralelo; dashboard e PDF consomem o mesmo número, eliminando divergência."
+
+### Honestidade de visualização
+- **Mini-vizes estatísticos deixaram de ser decorativos**: o `InferencePanel` agora recebe `charts.sources` da API e exibe as **taxas reais de aprovação por canal** no mini-gráfico do chi-quadrado (`source_channel`). Para `education_level` (sem série per-grupo na API) e para ANOVA (sem médias por grupo), inserimos notas honestas que conduzem o recrutador à tabela de registros em vez de nú硬os fabricados ("~11.8%" / "Dev Backend 73.8" removidos).
+- **`parseTTestMeans`** não retorna mais médias fallback inventadas (82.5/58.3 etc.): se não conseguir parsear, o componente exibe placeholder neutro.
+
+### Rigor estatístico reforçado
+- **Cochran rule enforced** em `run_chi_square`: quando >20% das células esperadas têm contagem <5, a limitation #4 é adicionada ("considere Fisher exact ou agrupar categorias pequenas").
+- **Levene's test real** em `run_anova`: a afirmação "testada via Levene" antes referia-se a um teste inexistente; agora é computado de fato, com p-value e verdict (variâncias homogêneas/heterogêneas) divulgados nas limitations.
+- **Desduplicação antes da inferência**: `run_all_inference` agora filtra `is_duplicate == True` (como o aggregator já fazia), eliminando inflação de N e viesamento de p-valores por dup-count.
+
+### Parser numérico BR-correto
+- `cleaner.parse_float` agora converte corretamente `"R$ 5.500,00"` → `5500.0`, `"1.234,56"` → `1234.56`, `"1.500"` → `1500` (BR thousand-sep heuristic), mantendo `"1.5"` → `1.5` (US decimal).
+
+### Tests + CI
+- **Pytest dobrou**: 6 → **13 testes** (parser delimiter `;`, parse_float BR currency, chi-square, ANOVA+Levene, inference dedup, demo end-to-end smoke, etc.).
+- **CI workflow** (`.github/workflows/ci.yml`) roda backend pytest + frontend lint/typecheck/build em Python 3.12 + Node 20 & 22. Status verde no README reflete sem exigir deploy.
+- **`npm run typecheck`** finalmente existe (script `"tsc --noEmit"` adicionado ao `package.json`).
+
+### Hygiene de repo
+- **`LICENSE` MIT** agora presente (era afirmado no README mas inexistente).
+- **5 assets `Imagem {1..5}.png` removidos** (confirmadas duplicatas MD5 redundantes de outros arquivos — ~6MB economizados).
+- **CORS estrito** no FastAPI (lista explícita de origens em vez de `["*"]` + `credentials=True`).
+- **`start.bat`** portável via `%~dp0` (não mais hardcoded para `C:\dev\DataFlow`).
+- **README**: 4 links `file:///C:/dev/DataFlow/docs/...` trocados por caminhos relativos funcionais no GitHub.
+- **`<html lang="pt-BR">`** no layout (era `lang="en"` em app PT-BR).
+- **Methodology page** sem mais `**bold**` markdown literalmente impresso.
+
+### CTAs quebrados
+- `ExecutiveHero` agora rola para `#qualidade` e `#estatistica` (IDs reais no `page.tsx`); antes chamava `#quality-cockpit` / `#statistics-inference` que não existiam → botões pareciam mortos.
+- `ResponsibleAnalyticsCenter` exibe o `kpis.duplicate_count` real em vez de "5 duplicatas" hardcoded — antes mentia sobre qualquer upload não-demo.
+
+### Perguntas que Felipe deve saber responder após V1.4
+1. **"Por que o Bonferroni no backend?"** → autoridade única; dashboard e PDF concordam; cliente só decora UI.
+2. **"Os mini-gráficos do InferencePanel mostram dados reais?"** → sim, chi-square puxa `charts.sources`; ANOVA exibe nota honesta porque o backend ainda não envia médias por grupo (roadmap).
+3. **"Comocalerias eu garantir 100k+ linhas?"** → virtualização (`@tanstack/react-virtual`) + paginação server-side (roadmap documentado em `release_notes_v1.3.md:51`).
+4. **"Cochran/Levene só detectam problemas ou corrigem?"** → detectam e emitem warning; correção exigiria Fisher exact para χ² e Welch ANOVA/Kruskal-Wallis para ANOVA — roadmap.
+
+### Resumo do resumo para entrevista
+
+> "O DataFlow V1.4 é um produto local-first com pipeline de dados defensável: Bonferroni centralizado no backend, mini-gráficos que refletem dados reais da API (não fabricados), Cochran e Levene de verdade implementados com warnings, parser numérico que entende moeda BR, 13 testes pytest incluindo smoke-test end-to-end, e CI workflow que roda Tudo a cada push. Mantive a honestidade estatística como prioridade, mesmo que isso signifique exibir um placeholder 'ver tabela de registros' em vez de um número bonito que não vem dos dados."
