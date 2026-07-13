@@ -19,6 +19,19 @@ export function maskEmail(email: string): string {
   return `${user[0]}***${domain}`;
 }
 
+/** Coarse salary band for LGPD-aware display (defense in depth with API masking). */
+export function maskSalary(value: unknown): number | null {
+  if (value === null || value === undefined || value === "") return null;
+  const n = typeof value === "number" ? value : Number(value);
+  if (!Number.isFinite(n)) return null;
+  if (n < 3000) return 2500;
+  if (n < 5000) return 4000;
+  if (n < 8000) return 6500;
+  if (n < 12000) return 10000;
+  if (n < 18000) return 15000;
+  return 20000;
+}
+
 export interface DictionaryEntry {
   name: string;
   type: string;

@@ -43,11 +43,24 @@ class ColumnProfile(BaseModel):
     stats: Optional[ColumnStats] = None
     top_values: Optional[List[CategoryCount]] = None
 
+class HealthScoreBreakdown(BaseModel):
+    base: int = 100
+    missing_penalty: int = 0
+    duplicate_penalty: int = 0
+    empty_column_penalty: int = 0
+    constant_column_penalty: int = 0
+    invalid_email_penalty: int = 0
+    outlier_penalty: int = 0
+    final: int
+    messages: List[str] = []
+
+
 class QualitySummary(BaseModel):
     health_score: int
     summary: str
     columns: List[ColumnProfile]
     dataset_flags: List[str] = []
+    health_score_breakdown: Optional[HealthScoreBreakdown] = None
 
 class InferenceResult(BaseModel):
     test_name: str
@@ -64,6 +77,8 @@ class AnalysisMetadata(BaseModel):
     source: str # 'demo' | 'upload'
     rows: int
     columns: int
+    privacy_mode: str = "masked"  # 'masked' | 'reveal' (local audit only)
+    schema_headers: List[str] = []
 
 class AnalysisResponse(BaseModel):
     metadata: AnalysisMetadata

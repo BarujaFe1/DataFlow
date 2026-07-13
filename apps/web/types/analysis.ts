@@ -24,11 +24,24 @@ export interface ColumnProfile {
   top_values?: CategoryCount[];
 }
 
+export interface HealthScoreBreakdown {
+  base: number;
+  missing_penalty: number;
+  duplicate_penalty: number;
+  empty_column_penalty: number;
+  constant_column_penalty: number;
+  invalid_email_penalty: number;
+  outlier_penalty: number;
+  final: number;
+  messages: string[];
+}
+
 export interface QualitySummary {
   health_score: number;
   summary: string;
   columns: ColumnProfile[];
   dataset_flags: string[];
+  health_score_breakdown?: HealthScoreBreakdown;
 }
 
 export interface InferenceResult {
@@ -47,6 +60,8 @@ export interface AnalysisMetadata {
   source: 'demo' | 'upload';
   rows: number;
   columns: number;
+  privacy_mode?: 'masked' | 'reveal';
+  schema_headers?: string[];
 }
 
 export interface AnalysisResponse {
@@ -100,7 +115,9 @@ export interface AnalysisResponse {
     }>;
     mapping_config?: Record<string, string | null>;
     available_headers?: string[];
+    raw_headers?: string[];
     cleaning_logs?: string[];
+    health_score_breakdown?: HealthScoreBreakdown;
     [key: string]: unknown;
   };
   inference: InferenceResult[];

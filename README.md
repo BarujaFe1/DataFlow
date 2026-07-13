@@ -393,40 +393,59 @@ O DataFlow utiliza estatística inferencial clássica com foco em transparência
 
 ## 🛡️ Segurança, LGPD e Boas Práticas
 
-* **Mascaramento no Client:** Garante que informações confidenciais de candidatos nunca cheguem sem proteção à tela ou logs.
-* **Separação de Insights:** Foco em indicadores agregados do pipeline, barrando inferências pessoais.
-* **Veto a ML de Seleção:** Exclusão de qualquer modelo de pontuação preditiva de talentos ou recomendação automática de candidatos para evitar reprodução de vieses históricos.
+* **Mascaramento na API (padrão):** `name`, `email` e faixas de `salary_expectation` são mascarados em `services/masking.py` antes do JSON sair do servidor. O Network tab do navegador não expõe PII bruto no modo demo público.
+* **Defesa em profundidade no client:** a UI reaplica máscaras e dicionário de colunas; export CSV/JSON respeita o modo privacidade.
+* **Reveal controlado:** `privacy_mode=reveal` só funciona com `DATAFLOW_ALLOW_PII_REVEAL=true` (auditoria local). Nunca habilite em hosts públicos.
+* **Responsible Analytics:** insights agregados; veto a ranking/decisão automatizada sobre indivíduos.
+* Detalhes: [SECURITY_NOTES.md](./SECURITY_NOTES.md)
 
 ---
 
 ## 🧭 Roadmap do Produto
 
-* **Fase 0 — Ingestão Local:** Parser CSV, Wizard de Schema e dashboard básico.
-* **Fase 1 — Profiling & Score:** Estruturação do Health Score e waterfall de integridade.
-* **Fase 2 — Data Quality:** Issues Register e comparativo Before/After.
-* **Fase 3 — Estatística:** Integração com SciPy, testes de hipóteses e Bonferroni.
-* **Fase 4 — UX Premium:** Visualizações dinâmicas (Funil SVG, Spearman Heatmap, Boxplots) e DataTable reativo.
-* **Fase 5 — Relatório PDF:** Print stylesheet otimizado para orçamento exato de 9 páginas sem localhost.
-* **Próximas Evoluções:** Virtualização de tabelas (100k+ linhas), persistência relacional com PostgreSQL e suporte a XLSX.
+* **Fase 0 — Ingestão Local:** Parser CSV, Wizard de Schema e dashboard básico. ✅
+* **Fase 1 — Profiling & Score:** Health Score + waterfall com breakdown da API. ✅
+* **Fase 2 — Data Quality:** Issues Register e comparativo Before/After. ✅
+* **Fase 3 — Estatística:** SciPy + narrativa Bonferroni no frontend. ✅
+* **Fase 4 — UX Premium:** Funil, heatmap, boxplots, DataTable. ✅
+* **Fase 5 — Relatório PDF:** Print stylesheet executivo. ✅
+* **Próximas evoluções:** virtualização de tabelas, persistência opcional, XLSX, Playwright smoke, Bonferroni no backend.
 
 ---
 
-## 💼 Valor para Portfólio / Portfolio Value
+## 💼 O que este projeto demonstra
 
-O DataFlow demonstra competências críticas para funções de **Analytics Engineering, Data Science e Data Engineering**:
-- **Design de Produto de Dados:** Tradução de necessidades de negócios em recursos interativos premium.
-- **Rigor Analítico:** Aplicação consciente de estatística sem falsos positivos.
-- **Governança Ética:** Conformidade ativa com LGPD e design de IA responsável.
-- **Arquitetura Full-Stack:** Comunicação limpa entre Next.js 15 e FastAPI em monorepo.
+- Pipeline de qualidade de dados explicável (não só um dashboard bonito)
+- Health score auditável com penalidades documentadas
+- Inferência estatística com limitações honestas
+- LGPD-aware design (máscara na borda da API + UI)
+- Full-stack TypeScript/Python com deploy Vercel + Render
+- Documentação de portfólio e roteiro de entrevista
+
+## 🎤 Como eu apresentaria em entrevista
+
+1. **Problema (30s):** processos seletivos vivem em CSV bagunçado; decisões sem qualidade de dados e sem ética.
+2. **Demo (90s):** `/?demo=true` → Health Score  → Issues Register → evidência estatística → PDF.
+3. **Arquitetura (60s):** monorepo `apps/web` + `apps/api`; pipeline parse→map→clean→profile→aggregate→infer→mask.
+4. **Trade-offs (45s):** score heurístico vs Great Expectations; Bonferroni no frontend; free-tier cold start.
+5. **LGPD (30s):** mascaramento no payload; reveal só local; nunca ranking individual.
+6. **Prova de engenharia (30s):** CI (lint/typecheck/pytest/build) + testes de masking e health score.
+
+Roteiro expandido: [docs/portfolio_pitch.md](./docs/portfolio_pitch.md)
 
 ---
 
 ## 📚 Documentação Complementar
 
-- [docs/portfolio_pitch.md](file:///C:/dev/DataFlow/docs/portfolio_pitch.md) — roteiros de entrevista, LinkedIn e guia de apresentação.
-- [docs/final_release_audit.md](file:///C:/dev/DataFlow/docs/final_release_audit.md) — auditoria detalhada de código, schemas e testes.
-- [docs/technical_methodology.md](file:///C:/dev/DataFlow/docs/technical_methodology.md) — documentação aprofundada da lógica matemática.
-- [docs/release_notes_v1.3.md](file:///C:/dev/DataFlow/docs/release_notes_v1.3.md) — evolução histórica da versão.
+- [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) — fluxo e limites do sistema
+- [docs/TECHNICAL_DECISIONS.md](./docs/TECHNICAL_DECISIONS.md) — ADRs / trade-offs
+- [docs/TESTING.md](./docs/TESTING.md) — como rodar testes
+- [docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md) — local, Vercel, Render
+- [docs/AUDIT_REPORT.md](./docs/AUDIT_REPORT.md) — auditoria do quality pass
+- [docs/HANDOFF.md](./docs/HANDOFF.md) — handoff da branch
+- [docs/portfolio_pitch.md](./docs/portfolio_pitch.md) — pitch e LinkedIn
+- [docs/technical_methodology.md](./docs/technical_methodology.md) — matemática
+- [docs/final_release_audit.md](./docs/final_release_audit.md) — auditoria histórica
 
 ---
 
@@ -468,6 +487,15 @@ csv-processing
 
 ---
 
+## ✅ Status atual
+
+- **Lab / portfolio product** — demo pública em Vercel + API Render
+- Branch de qualidade: `chore/portfolio-quality-pass`
+- Licença: MIT (`LICENSE`)
+- CI: `.github/workflows/ci.yml` (API pytest + web lint/typecheck/build)
+
+---
+
 ## 👤 Autor / Author
 
 Desenvolvido por **Felipe Alirio Baruja**.
@@ -480,5 +508,4 @@ Desenvolvido por **Felipe Alirio Baruja**.
 
 ## 📄 Licença / License
 
-MIT License. Copyright (c) 2026 Felipe Alirio Baruja.
-O código está disponível sob a licença MIT caso o arquivo `LICENSE` esteja presente no repositório.
+MIT License — veja [LICENSE](./LICENSE). Copyright (c) 2026 Felipe Alirio Baruja.

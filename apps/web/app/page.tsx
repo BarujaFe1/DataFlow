@@ -529,7 +529,11 @@ export default function Home() {
             <div id="registros" className="scroll-mt-24">
               <DataTable 
                 data={activeAnalysis.records || []} 
-                headers={activeAnalysis.charts.available_headers || []} 
+                headers={
+                  activeAnalysis.metadata.schema_headers?.length
+                    ? activeAnalysis.metadata.schema_headers
+                    : activeAnalysis.charts.available_headers || Object.keys(activeAnalysis.records?.[0] || {})
+                } 
                 isPrivacyEnabled={isPrivacyEnabled}
                 columnsProfile={activeAnalysis.quality.columns}
                 inference={activeAnalysis.inference}
@@ -543,5 +547,24 @@ export default function Home() {
     );
   }
 
-  return null;
+  return (
+    <div className="min-h-screen bg-background text-text-primary flex flex-col items-center justify-center gap-4 p-8">
+      <AlertCircle className="w-10 h-10 text-warning" aria-hidden />
+      <h1 className="text-xl font-semibold">Nenhuma análise ativa</h1>
+      <p className="text-text-muted text-center max-w-md text-sm">
+        Volte à tela inicial para carregar o dataset demo ou enviar um CSV.
+      </p>
+      <button
+        type="button"
+        onClick={() => {
+          setActiveAnalysis(null);
+          setView("landing");
+          setError(null);
+        }}
+        className="px-4 py-2 rounded-lg bg-accent text-white text-sm font-medium hover:opacity-90"
+      >
+        Ir para o início
+      </button>
+    </div>
+  );
 }

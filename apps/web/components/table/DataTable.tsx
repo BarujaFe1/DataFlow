@@ -35,7 +35,7 @@ import {
   ShieldAlert,
   Database
 } from "lucide-react";
-import { maskName, maskEmail, COLUMN_DICTIONARY } from "@/lib/masking";
+import { maskName, maskEmail, maskSalary, COLUMN_DICTIONARY } from "@/lib/masking";
 
 interface ColumnProfileType {
   name: string;
@@ -469,12 +469,14 @@ export default function DataTable({
         let val = row[header];
         const candidateId = String(row.candidate_id || "S/ID");
 
-        // Mask names/emails in CSV if required
+        // Mask names/emails/salary in CSV if required
         if (forceMask || isPrivacyEnabled) {
           if (header === "name" && val) {
             val = maskName(String(val), candidateId);
           } else if (header === "email" && val) {
             val = maskEmail(String(val));
+          } else if (header === "salary_expectation" && val !== null && val !== undefined) {
+            val = maskSalary(val);
           }
         }
 

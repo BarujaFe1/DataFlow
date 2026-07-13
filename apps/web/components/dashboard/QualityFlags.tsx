@@ -146,20 +146,32 @@ export default function QualityFlags({ quality, kpis }: QualityFlagsProps) {
     return <span className="text-[9px] text-text-muted font-mono">Sem preview</span>;
   };
 
-  // Waterfall/Breakdown calculations
+  // Waterfall/Breakdown — prefer API single source of truth
   const scoreBreakdown = useMemo(() => {
-    // 1. Missing cells
-    const totalCells = (kpis.total_candidates || 305) * columns.length;
+    const api = quality.health_score_breakdown;
+    if (api) {
+      return {
+        missingPenalty: api.missing_penalty,
+        dupPenalty: api.duplicate_penalty,
+        emptyPenalty: api.empty_column_penalty,
+        constPenalty: api.constant_column_penalty,
+        emailPenalty: api.invalid_email_penalty,
+        outlierPenalty: api.outlier_penalty,
+        final: api.final,
+      };
+    }
+
+    // Fallback recompute (no hardcoded demo row count)
+    const rowCount = Math.max(1, kpis.total_candidates || 1);
+    const totalCells = rowCount * Math.max(1, columns.length);
     const missingCells = columns.reduce((sum, c) => sum + c.missing_count, 0);
     const overallMissingRate = totalCells > 0 ? missingCells / totalCells : 0;
     const missingPenalty = Math.floor(overallMissingRate * 25);
 
-    // 2. Duplicates
     const duplicateCount = kpis.duplicate_count || 0;
-    const duplicateRate = kpis.total_candidates > 0 ? duplicateCount / kpis.total_candidates : 0;
+    const duplicateRate = rowCount > 0 ? duplicateCount / rowCount : 0;
     const dupPenalty = duplicateRate > 0 ? Math.min(15, Math.floor(duplicateRate * 50) + 2) : 0;
 
-    // 3. Column penalties
     let emptyCols = 0;
     let constCols = 0;
     let invalidEmailCols = 0;
@@ -178,7 +190,6 @@ export default function QualityFlags({ quality, kpis }: QualityFlagsProps) {
     const outlierPenalty = outlierCols > 0 ? 5 : 0;
 
     return {
-      initial: 100,
       missingPenalty,
       dupPenalty,
       emptyPenalty,
@@ -187,7 +198,7 @@ export default function QualityFlags({ quality, kpis }: QualityFlagsProps) {
       outlierPenalty,
       final: health_score
     };
-  }, [columns, kpis, health_score]);
+  }, [columns, kpis, health_score, quality.health_score_breakdown]);
 
   // Generate Issue Register items
   const issues = useMemo(() => {

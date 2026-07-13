@@ -166,21 +166,22 @@ class DataProfiler:
             
         # Calculate health score (0 to 100)
         health_score = 100
-        penalties = []
+        penalty_messages = []
         
         # 1. Missing cells penalty (max -25)
         overall_missing_rate = missing_cells / total_cells if total_cells > 0 else 0
         missing_penalty = int(overall_missing_rate * 25)
         if missing_penalty > 0:
             health_score -= missing_penalty
-            penalties.append(f"Taxa de preenchimento incompleta: -{missing_penalty} pts")
+            penalty_messages.append(f"Taxa de preenchimento incompleta: -{missing_penalty} pts")
             
         # 2. Duplicate penalty (max -15)
         duplicate_rate = duplicate_count / total_rows if total_rows > 0 else 0
+        dup_penalty = 0
         if duplicate_rate > 0:
             dup_penalty = min(15, int(duplicate_rate * 50) + 2) # minimum 2 pts penalty if there is any duplicate
             health_score -= dup_penalty
-            penalties.append(f"Registros duplicados ({duplicate_count}): -{dup_penalty} pts")
+            penalty_messages.append(f"Registros duplicados ({duplicate_count}): -{dup_penalty} pts")
             dataset_flags.append(f"Presença de {duplicate_count} registros duplicados")
             
         # 3. Column issues penalties
@@ -199,32 +200,48 @@ class DataProfiler:
             if any("Outliers detectados" in f for f in c['flags']):
                 outlier_cols += 1
                 
+        empty_penalty = 0
         if empty_cols > 0:
             empty_penalty = min(20, empty_cols * 10)
             health_score -= empty_penalty
-            penalties.append(f"Colunas totalmente vazias ({empty_cols}): -{empty_penalty} pts")
+            penalty_messages.append(f"Colunas totalmente vazias ({empty_cols}): -{empty_penalty} pts")
             dataset_flags.append(f"Contém {empty_cols} coluna(s) totalmente vazia(s)")
             
+        const_penalty = 0
         if const_cols > 0:
             const_penalty = min(15, const_cols * 5)
             health_score -= const_penalty
-            penalties.append(f"Colunas constantes ({const_cols}): -{const_penalty} pts")
+            penalty_messages.append(f"Colunas constantes ({const_cols}): -{const_penalty} pts")
             dataset_flags.append(f"Contém {const_cols} coluna(s) com valor constante")
             
+        email_penalty = 0
         if invalid_email_cols > 0:
             email_penalty = 10
             health_score -= email_penalty
-            penalties.append(f"E-mails inválidos detectados: -{email_penalty} pts")
+            penalty_messages.append(f"E-mails inválidos detectados: -{email_penalty} pts")
             dataset_flags.append("Contém endereços de e-mail inválidos")
             
+        outlier_penalty = 0
         if outlier_cols > 0:
             outlier_penalty = 5
             health_score -= outlier_penalty
-            penalties.append(f"Outliers em colunas numéricas: -{outlier_penalty} pts")
+            penalty_messages.append(f"Outliers em colunas numéricas: -{outlier_penalty} pts")
             dataset_flags.append(f"Outliers detectados em {outlier_cols} coluna(s)")
 
         # Ensure bounds
         health_score = max(0, min(100, health_score))
+
+        breakdown = {
+            'base': 100,
+            'missing_penalty': missing_penalty,
+            'duplicate_penalty': dup_penalty,
+            'empty_column_penalty': empty_penalty,
+            'constant_column_penalty': const_penalty,
+            'invalid_email_penalty': email_penalty,
+            'outlier_penalty': outlier_penalty,
+            'final': health_score,
+            'messages': penalty_messages,
+        }
         
         # Build health score text summary
         if health_score >= 85:
@@ -236,12 +253,13 @@ class DataProfiler:
         else:
             summary = "Crítico! O dataset possui sérios problemas de qualidade de dados (nulos excessivos, duplicatas ou colunas vazias)."
             
-        if penalties:
-            summary += " Penalidades aplicadas: " + ", ".join(penalties) + "."
+        if penalty_messages:
+            summary += " Penalidades aplicadas: " + ", ".join(penalty_messages) + "."
             
         return {
             'health_score': health_score,
             'summary': summary,
             'columns': columns_profile,
-            'dataset_flags': dataset_flags
+            'dataset_flags': dataset_flags,
+            'health_score_breakdown': breakdown,
         }
