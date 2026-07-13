@@ -30,6 +30,29 @@
   <img src="./assets/hero-cover.png" alt="DataFlow product overview" width="100%" />
 </p>
 
+<p align="center">
+  <a href="https://dataflow-sand.vercel.app/?demo=true"><strong>Live demo</strong></a> ·
+  <a href="https://github.com/BarujaFe1/DataFlow/actions"><strong>CI</strong></a> ·
+  <a href="./docs/GUIDED_DEMO.md"><strong>Demo guiada 3–5 min</strong></a> ·
+  <a href="./docs/CHANGELOG_v1.4.md"><strong>Changelog v1.4</strong></a>
+</p>
+
+> **Estado honesto:** lab / portfolio product (não SaaS enterprise). Demo pública: frontend Vercel + API Render (cold start possível). Branch de qualidade: `chore/portfolio-quality-pass` — **merge em `main` necessário** para o deploy público refletir mascaramento na API e CI completa.
+
+---
+
+## Case demo — números verificados (não inventados)
+
+| Métrica | Valor | Fonte |
+|---------|-------|-------|
+| Registros ingeridos | **305** | `data/seed/processo_seletivo_demo.csv` |
+| Válidos após limpeza | **300** | KPI `valid_candidates` |
+| Duplicatas | **5** | flag `is_duplicate` |
+| Health Score | **82/100** | `-1` missing · `-2` dup · `-10` e-mail · `-5` outliers |
+| Privacidade | `masked` | API mascara PII no JSON por padrão |
+
+Snapshot versionado: [`data/demo_case_snapshot.json`](./data/demo_case_snapshot.json) (também alimenta o strip de métricas na landing — evita zeros quando a API está fria).
+
 ---
 
 ## 1. Visão Geral / Overview
@@ -51,16 +74,16 @@ O projeto foi desenvolvido por **Felipe Alirio Baruja** como uma peça âncora d
   <img src="./assets/screenshots/01-hero-executive-briefing.png" alt="DataFlow Executive Briefing" width="100%" />
 </p>
 
-O DataFlow apresenta uma experiência dark premium focada em diagnóstico executivo: Health Score, alertas controlados, LGPD ativo, recomendações acionáveis e navegação por seções analíticas.
+O DataFlow apresenta um dashboard focado em diagnóstico executivo: Health Score, alertas controlados, LGPD ativo por padrão, recomendações acionáveis e navegação por seções analíticas.
 
 ---
 
 ## 2. Por que este projeto importa? / Why this project matters
 
 * **Planilhas são a realidade:** A maioria dos processos de negócios consome dados tabulares imperfeitos. Saber higienizar, monitorar a completude e estruturar pipelines locais é uma habilidade fundamental.
-* **Estatística sem contexto gera decisões ruins:** O DataFlow não apenas gera estatísticas descritivas básicas, mas calcula hipóteses inferenciais robustas mitigando riscos de falsos positivos (aplicando **Correção de Bonferroni**).
-* **IA e Ética de Dados (Responsible Analytics):** Ele foi desenhado sob preceitos rígidos de governança. O DataFlow audita processos e calibragem, **nunca decide ou ranqueia pessoas**. Todas as informações demográficas ou sensíveis são protegidas.
-* **Masterpiece de Engenharia:** Ele substitui os tradicionais scripts estáticos de notebooks por uma solução digital real, interativa e completa.
+* **Estatística sem contexto gera decisões ruins:** Além de descritivas, o DataFlow calcula testes exploratórios (Welch, χ², ANOVA) e documenta limitações; a narrativa de Bonferroni no frontend reduz falso positivo em storytelling.
+* **Responsible Analytics (não “IA de seleção”):** O produto audita processo e qualidade — **nunca** ranqueia ou decide sobre indivíduos. PII é mascarado na API por padrão.
+* **Produto além do notebook:** Substitui scripts estáticos por um fluxo interativo (upload → score → evidência → PDF) discutível em entrevista.
 
 ---
 
@@ -210,7 +233,7 @@ A experiência do DataFlow foi pensada como uma jornada analítica guiada:
 4. Investigar vulnerabilidades listadas no Quality Issues Register
 5. Analisar o Funil Operacional SVG e eficiência de canais
 6. Avaliar sinais e p-valores do Statistical Evidence Center
-7. Conferir regras de uso de IA no Responsible Analytics Center
+7. Conferir regras de Responsible Analytics (uso permitido / proibido — sem ranking individual)
 8. Auditar ou exportar os registros mascarados na tabela de dados
 9. Exportar o Relatório Executivo PDF de 9 páginas sem artefatos
 ```
@@ -502,7 +525,7 @@ Desenvolvido por **Felipe Alirio Baruja**.
 
 - **Portfolio:** [barujafe.vercel.app](https://barujafe.vercel.app/)
 - **GitHub:** [@BarujaFe1](https://github.com/BarujaFe1)
-- **LinkedIn:** [Gustavo Felipe Alirio Baruja](https://www.linkedin.com/in/barujafe/)
+- **LinkedIn:** [Felipe Alirio Baruja](https://www.linkedin.com/in/barujafe/)
 
 ---
 
