@@ -1,0 +1,58 @@
+{
+  "case_id": "processo_seletivo_demo",
+  "source_file": "data/seed/processo_seletivo_demo.csv",
+  "verified_at": "2026-07-13",
+  "pipeline_version": "1.4",
+  "privacy_mode_default": "masked",
+  "metrics": {
+    "rows_ingested": 305,
+    "rows_valid": 300,
+    "duplicate_count": 5,
+    "columns_mapped": 17,
+    "health_score": 82,
+    "approval_rate": 0.3,
+    "avg_score_test": 69.56
+  },
+  "health_score_breakdown": {
+    "base": 100,
+    "missing_penalty": 1,
+    "duplicate_penalty": 2,
+    "empty_column_penalty": 0,
+    "constant_column_penalty": 0,
+    "invalid_email_penalty": 10,
+    "outlier_penalty": 5,
+    "final": 82
+  },
+  "labels": {
+    "pt": {
+      "title": "Case demo — processo seletivo sintético",
+      "subtitle": "Números verificados pelo pipeline local (não inventados para marketing).",
+      "health": "Health Score",
+      "ingested": "Registros ingeridos",
+      "valid": "Registros válidos",
+      "duplicates": "Duplicatas"
+    },
+    "en": {
+      "title": "Demo case — synthetic recruiting pipeline",
+      "subtitle": "Numbers verified by the local pipeline (not marketing placeholders).",
+      "health": "Health Score",
+      "ingested": "Rows ingested",
+      "valid": "Valid rows",
+      "duplicates": "Duplicates"
+    }
+  },
+  "claims": {
+    "allowed": [
+      "Explainable health score with documented penalties",
+      "LGPD-aware masking at API boundary by default",
+      "SciPy exploratory inference (Welch t, chi-square, ANOVA)",
+      "Local-first CSV lab / portfolio product"
+    ],
+    "forbidden": [
+      "Enterprise production SaaS",
+      "Certified LGPD compliance platform",
+      "AI hiring / ranking engine",
+      "Guaranteed statistical decisions for individuals"
+    ]
+  }
+}

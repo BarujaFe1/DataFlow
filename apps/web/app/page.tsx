@@ -36,6 +36,7 @@ import ExecutiveHero from "@/components/dashboard/ExecutiveHero";
 import PipelineTimeline from "@/components/dashboard/PipelineTimeline";
 import ResponsibleAnalyticsCenter from "@/components/dashboard/ResponsibleAnalyticsCenter";
 import SidebarNav from "@/components/dashboard/SidebarNav";
+import DemoMetricsStrip from "@/components/landing/DemoMetricsStrip";
 
 
 export default function Home() {
@@ -195,9 +196,11 @@ export default function Home() {
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-text-primary mb-4">
             Data<span className="text-accent">Flow</span>
           </h1>
-          <p className="text-base md:text-lg text-text-secondary max-w-xl leading-relaxed mb-8">
-            Mapeie, limpe, audite a integridade e analise estatisticamente seus datasets brutos em um fluxo de portfólio completo.
+          <p className="text-base md:text-lg text-text-secondary max-w-xl leading-relaxed mb-6">
+            Mapeie, limpe, audite a integridade e analise estatisticamente datasets tabulares em um lab local-first de portfólio — com Health Score explicável e mascaramento LGPD-aware.
           </p>
+
+          <DemoMetricsStrip className="mb-8 max-w-3xl" />
 
           {error && (
             <div className="w-full mb-8 p-4 bg-danger/10 border border-danger/20 rounded-lg flex items-start space-x-3 text-sm text-danger text-left">

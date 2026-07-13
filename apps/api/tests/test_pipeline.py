@@ -162,6 +162,29 @@ def test_demo_endpoint_masks_pii():
     assert str(first.get("name", "")).startswith("Candidato ")
 
 
+def test_demo_case_snapshot_matches_pipeline():
+    """Regression: portfolio snapshot must stay aligned with live demo pipeline."""
+    import json
+    from pathlib import Path
+
+    snapshot_path = Path(__file__).resolve().parents[3] / "data" / "demo_case_snapshot.json"
+    assert snapshot_path.exists(), "missing data/demo_case_snapshot.json"
+    snap = json.loads(snapshot_path.read_text(encoding="utf-8"))
+
+    assert os.path.exists(DEMO_PATH)
+    with open(DEMO_PATH, "rb") as f:
+        result = run_pipeline(f.read(), source="demo", privacy_mode="masked")
+
+    m = snap["metrics"]
+    assert result.metadata.rows == m["rows_ingested"]
+    assert result.kpis["valid_candidates"] == m["rows_valid"]
+    assert result.kpis["duplicate_count"] == m["duplicate_count"]
+    assert result.quality.health_score == m["health_score"]
+    assert result.quality.health_score_breakdown is not None
+    assert result.quality.health_score_breakdown.final == snap["health_score_breakdown"]["final"]
+    assert result.metadata.privacy_mode == "masked"
+
+
 def test_analyze_rejects_non_csv():
     res = client.post(
         "/api/analyze",

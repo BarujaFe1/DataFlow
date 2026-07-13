@@ -17,6 +17,7 @@ import {
   Check,
   MessageSquare
 } from "lucide-react";
+import DemoMetricsStrip from "@/components/landing/DemoMetricsStrip";
 
 export default function ShowcasePage() {
   const [copiedText, setCopiedText] = useState<string | null>(null);
@@ -27,24 +28,27 @@ export default function ShowcasePage() {
     setTimeout(() => setCopiedText(null), 2000);
   };
 
-  const elevatorPitch = "O DataFlow é uma plataforma de analytics engineering que audita e higieniza bases de dados seletivas brutas em segundos. Ele gera um Health Score explicável, roda testes de hipóteses inferenciais em SciPy (ANOVA, Welch t-test, Qui-quadrado), audita riscos éticos de seleção via LGPD e compila tudo em um relatório executivo PDF altamente profissional de 9 páginas para tomada de decisão.";
+  const elevatorPitch = "O DataFlow é um lab de analytics engineering para auditar e higienizar CSVs de processo seletivo. Ele gera um Health Score explicável, roda testes exploratórios em SciPy (ANOVA, Welch t-test, Qui-quadrado), aplica mascaramento LGPD-aware por padrão e exporta um relatório PDF executivo.";
 
-  const readmeSummary = "DataFlow is a high-performance analytics engineering monorepo designed to profile, sanitize, and validate tabular recruiting datasets. Built with Next.js 15 and FastAPI (Python), it performs automatic data quality profiling, checks structural duplicates and invalid records, runs inferential statistical hypothesis tests using SciPy, and generates board-ready PDF reports with native LGPD privacy masking.";
+  const readmeSummary = "DataFlow is a local-first analytics engineering lab for profiling, cleaning and validating tabular recruiting datasets. Built with Next.js 15 and FastAPI, it runs data-quality checks, SciPy exploratory inference and LGPD-aware masking, then exports an executive PDF report.";
 
-  const linkedinPost = `🚀 Acabo de construir o DataFlow, uma ferramenta de Analytics Engineering e Responsible Analytics! 🛠️📊
+  const linkedinPost = `Acabei de publicar o DataFlow — lab de Analytics Engineering + Responsible Analytics.
 
-Desenvolvido com Next.js 15, Tailwind CSS e FastAPI (Python), o projeto resolve o problema clássico de dados tabulares corrompidos em processos seletivos.
+Stack: Next.js 15, TypeScript, FastAPI, Pandas, SciPy.
 
-Principais Diferenciais Técnicos:
-1️⃣ Ingestão & Mapping Wizard dinâmico de planilhas.
-2️⃣ Data Quality Cockpit com cálculo explicável de Health Score.
-3️⃣ Inferência Estatística de Processo (Welch t-test, ANOVA, Qui-quadrado via SciPy).
-4️⃣ Responsible Analytics: privacidade de PII (LGPD) ativa por padrão.
-5️⃣ Relatório Executivo PDF de 9 páginas formatado para impressão.
+O que ele faz de verdade:
+1) Mapping wizard de CSV → schema canônico
+2) Data Quality Cockpit com Health Score explicável (demo: 82/100 em 305 linhas)
+3) Inferência exploratória de processo (Welch, ANOVA, Qui-quadrado)
+4) Mascaramento de PII na API por padrão (LGPD-aware)
+5) Relatório PDF executivo
 
-Um projeto de portfólio completo que une engenharia de software de ponta e rigor analítico! Confira o repositório ou teste a demo online.
+Não é SaaS enterprise nem motor de ranking de candidatos — é um case demonstrável de qualidade de dados + produto analítico.
 
-#DataScience #DataEngineering #AnalyticsEngineering #NextJS #Python #MachineLearning #LGPD`;
+Demo: https://dataflow-sand.vercel.app/?demo=true
+Repo: https://github.com/BarujaFe1/DataFlow
+
+#AnalyticsEngineering #DataQuality #DataEngineering #NextJS #Python #FastAPI #LGPD #ResponsibleAnalytics`;
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col font-sans relative overflow-hidden">
@@ -57,7 +61,7 @@ Um projeto de portfólio completo que une engenharia de software de ponta e rigo
         <Link href="/" className="text-xl font-bold tracking-tight text-text-primary flex items-center space-x-2">
           <span>DataFlow</span>
           <span className="text-accent font-normal text-xs bg-accent/10 border border-accent/20 px-2.5 py-0.5 rounded-full">
-            Showcase V1.3
+            Showcase V1.4
           </span>
         </Link>
         
@@ -89,12 +93,14 @@ Um projeto de portfólio completo que une engenharia de software de ponta e rigo
           </div>
           
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
-            Elevando a Análise de Dados a Nível de <span className="text-accent">Produto Real</span>
+            Qualidade de Dados como <span className="text-accent">Produto Demonstrável</span>
           </h1>
           
           <p className="text-base md:text-lg text-text-secondary leading-relaxed">
-            DataFlow é uma plataforma local-first desenvolvida para auditoria estrutural de planilhas, limpeza automatizada de dados, diagnóstico inferencial estatístico e geração de relatórios PDF executivos em segundos.
+            Lab local-first para auditoria estrutural de planilhas, limpeza, diagnóstico estatístico exploratório e relatório PDF — pensado para entrevistas de analytics engineering e engenharia de dados.
           </p>
+
+          <DemoMetricsStrip className="mt-2 max-w-3xl mx-auto" />
 
           <div className="flex flex-wrap items-center justify-center gap-4 mt-4">
             <Link 
@@ -181,7 +187,7 @@ Um projeto de portfólio completo que une engenharia de software de ponta e rigo
             <div className="p-4 bg-surface rounded-xl border border-border-subtle flex flex-col gap-2">
               <span className="font-bold text-text-primary text-[11px] block">Pitch Curto (30 Segundos - RH/Gestor)</span>
               <p className="text-text-secondary">
-                &quot;O DataFlow é uma aplicação de analytics engineering que automatiza a governança e o diagnóstico estatístico de bases brutas de recrutamento. Ele identifica duplicatas, mascaras dados pessoais para LGPD, roda testes de hipóteses de processo em SciPy (evitando decisões enviesadas) e gera relatórios executivos em PDF com quebras de página perfeitas.&quot;
+                &quot;O DataFlow é um lab de analytics engineering que diagnostica qualidade em bases brutas de recrutamento. Ele identifica duplicatas, mascara PII na API (LGPD-aware), roda testes exploratórios de processo em SciPy e gera relatório PDF executivo — sem ranquear candidatos.&quot;
               </p>
             </div>
 
@@ -269,7 +275,7 @@ Um projeto de portfólio completo que une engenharia de software de ponta e rigo
               </div>
               <div className="flex items-center space-x-2 text-xs text-text-secondary">
                 <CheckCircle className="w-4 h-4 text-success shrink-0" />
-                <span>Interface focada em Acessibilidade e UX Premium.</span>
+                <span>Interface legível para demo e navegação por seções analíticas.</span>
               </div>
             </div>
           </div>
@@ -287,7 +293,7 @@ Um projeto de portfólio completo que une engenharia de software de ponta e rigo
               </div>
               <div className="p-3 bg-surface rounded-lg border border-border-subtle">
                 <span className="text-success font-semibold block mb-1">Backend</span>
-                <span>Python 3.12<br />FastAPI REST Service<br />SciPy & statsmodels<br />Pandas & NumPy</span>
+                <span>Python 3.12<br />FastAPI<br />SciPy · Pandas · NumPy</span>
               </div>
             </div>
 
