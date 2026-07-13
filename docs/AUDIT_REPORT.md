@@ -99,4 +99,4 @@ Engineering maturity lagged the pitch: keep-warm-only CI, thin tests, client-onl
 - [x] `.env.example` + `.gitignore` safe
 - [x] Essential tests for health score + masking
 - [x] UX/privacy review
-- [ ] Commit + push on `chore/portfolio-quality-pass`
+- [x] Commit + push on `chore/portfolio-quality-pass`
