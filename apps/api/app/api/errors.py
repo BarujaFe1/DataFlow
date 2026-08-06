@@ -11,7 +11,7 @@ from fastapi import Request
 from fastapi.exceptions import HTTPException
 from fastapi.responses import JSONResponse
 
-from app.models.schemas import ErrorResponse, ErrorDetail
+from app.models.schemas import ErrorDetail, ErrorResponse
 
 
 class AppError(Exception):

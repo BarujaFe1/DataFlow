@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, feat/dataflow-v1-hardening]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -32,8 +32,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run pytest
-        run: python -m pytest -v
+      - name: Lint (ruff)
+        run: ruff check .
+
+      - name: Run tests with coverage
+        run: pytest --cov=app --cov-report=term-missing --cov-fail-under=80
 
   frontend:
     name: Frontend (Node ${{ matrix.node-version }})

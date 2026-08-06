@@ -6,7 +6,7 @@ a raw result; the multiple-comparison correction for the family is applied by
 the route layer (see ``api/routes.py``) so the whole family is corrected once.
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 import numpy as np
 import pandas as pd

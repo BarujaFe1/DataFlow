@@ -6,9 +6,9 @@ statistics on top of this foundation.
 """
 
 from app.core.versions import (
+    ANALYSIS_ENGINE_VERSION,
     METHODOLOGY_VERSION,
     SCORE_POLICY_VERSION,
-    ANALYSIS_ENGINE_VERSION,
 )
 
 __all__ = [

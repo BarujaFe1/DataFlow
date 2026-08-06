@@ -1,7 +1,9 @@
-import io
 import csv
+import io
+from typing import Any, Dict, List, Tuple
+
 import pandas as pd
-from typing import List, Dict, Any, Tuple
+
 
 class CSVParser:
     @staticmethod
@@ -30,7 +32,6 @@ class CSVParser:
 
     @classmethod
     def parse(cls, content_bytes: bytes) -> Tuple[List[Dict[str, Any]], List[str]]:
-        errors = []
         if not content_bytes or len(content_bytes.strip()) == 0:
             return [], ["O arquivo enviado está vazio."]
             

@@ -12,7 +12,7 @@ Pins down the *contract* of ``app.core.scoring.score_dataset``:
 - The overall score always lives in [0, 100].
 """
 
-from app.core.scoring import score_dataset, DEFAULT_WEIGHTS
+from app.core.scoring import DEFAULT_WEIGHTS, score_dataset
 
 
 def test_weights_sum_to_one():

@@ -1,6 +1,7 @@
 import re
 from datetime import datetime
-from typing import List, Dict, Any, Tuple, Optional
+from typing import Any, Dict, List, Optional, Tuple
+
 
 class DataCleaner:
     @staticmethod

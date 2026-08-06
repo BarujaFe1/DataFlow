@@ -1,7 +1,10 @@
-import pandas as pd
+from typing import Any, Dict, List, Tuple
+
 import numpy as np
-from typing import List, Dict, Any, Tuple
+import pandas as pd
+
 from app.services.inference import InferenceEngine
+
 
 class DataAggregator:
     @classmethod

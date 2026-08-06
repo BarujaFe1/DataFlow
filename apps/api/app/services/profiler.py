@@ -10,7 +10,6 @@ and returns a versioned, dimensioned, explainable score.
 import re
 from typing import Any, Dict, List
 
-import numpy as np
 import pandas as pd
 
 from app.core import scoring as scoring_engine

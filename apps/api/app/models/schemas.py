@@ -1,12 +1,12 @@
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, Field
 
 from app.core.issues import Issue as IssueModel
 from app.core.versions import (
+    ANALYSIS_ENGINE_VERSION,
     METHODOLOGY_VERSION,
     SCORE_POLICY_VERSION,
-    ANALYSIS_ENGINE_VERSION,
 )
 
 

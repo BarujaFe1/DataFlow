@@ -1,11 +1,12 @@
-import pytest
 import pandas as pd
-from app.services.parser import CSVParser
-from app.services.mapper import ColumnMapper
-from app.services.cleaner import DataCleaner
-from app.services.profiler import DataProfiler
-from app.services.inference import InferenceEngine
+
 from app.services.aggregator import DataAggregator
+from app.services.cleaner import DataCleaner
+from app.services.inference import InferenceEngine
+from app.services.mapper import ColumnMapper
+from app.services.parser import CSVParser
+from app.services.profiler import DataProfiler
+
 
 def test_parser_valid():
     csv_bytes = b"id,nome,cargo\n1,Felipe,Analista\n2,Mariana,Cientista"

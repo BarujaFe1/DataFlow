@@ -1,0 +1,16 @@
+# Ruff configuration for the DataFlow backend.
+#
+# Scope is intentionally focused on high-signal correctness gates:
+#   F  - pyflakes: unused imports/variables, undefined names, syntax-level issues
+#   E9 - Python syntax/import errors that would break at runtime
+#   I  - import sorting (keeps diffs clean)
+#
+# Out of scope (deliberately NOT enforced yet, to avoid a large cosmetic rewrite
+# of pre-existing code): PEP 585/604 annotation style (UP006/UP045/UP035) and the
+# broad-exception (BLE001) cleanup across legacy modules. New code avoids blind
+# excepts by construction; legacy cleanups are tracked as future work.
+[lint]
+select = ["F", "E9", "I"]
+
+# FastAPI relies on default-argument calls such as File(...) / Form(...); ignore.
+ignore = ["B008"]
