@@ -1,25 +1,26 @@
-import os
 import json
+import os
 import uuid
 from datetime import datetime
-from fastapi import APIRouter, UploadFile, File, Form
-from typing import Optional, Dict
+from typing import Dict, Optional
+
+from fastapi import APIRouter, File, Form, UploadFile
 
 from app.api.errors import AppError
-from app.models.schemas import (
-    AnalysisResponse,
-    AnalysisMetadata,
-    QualitySummary,
-    InferenceResult,
-)
-from app.services.parser import CSVParser
-from app.services.mapper import ColumnMapper
-from app.services.cleaner import DataCleaner
-from app.services.profiler import DataProfiler
-from app.services.aggregator import DataAggregator
-from app.services.inference import InferenceEngine
-from app.core import statistics as st
 from app.core import security as sec
+from app.core import statistics as st
+from app.models.schemas import (
+    AnalysisMetadata,
+    AnalysisResponse,
+    InferenceResult,
+    QualitySummary,
+)
+from app.services.aggregator import DataAggregator
+from app.services.cleaner import DataCleaner
+from app.services.inference import InferenceEngine
+from app.services.mapper import ColumnMapper
+from app.services.parser import CSVParser
+from app.services.profiler import DataProfiler
 
 router = APIRouter()
 
@@ -177,7 +178,7 @@ def get_demo():
     try:
         with open(DEMO_PATH, "rb") as f:
             content_bytes = f.read()
-    except Exception:
+    except OSError:
         raise AppError(
             status_code=500,
             code="DEMO_READ_ERROR",
@@ -206,7 +207,7 @@ async def analyze_file(
 
     try:
         content_bytes = await file.read()
-    except Exception:
+    except OSError:
         raise AppError(
             status_code=500,
             code="READ_ERROR",

@@ -11,12 +11,15 @@ Design rules (see docs/methodology/statistics.md):
 - We never claim causality.
 """
 
-from typing import Any, Dict, List, Optional, Tuple
+import logging
 import warnings
+from typing import Any, Dict, List, Optional
 
 import numpy as np
 import pandas as pd
 from scipy import stats
+
+logger = logging.getLogger(__name__)
 
 try:  # statsmodels is declared in requirements; use it for corrections.
     from statsmodels.stats.multitest import multipletests
@@ -122,7 +125,8 @@ def welch_anova(groups: List[pd.Series]) -> Dict[str, Any]:
     df2 = float(df2) if np.isfinite(df2) and df2 > 0 else float(k * min(n) - k)
     try:
         p = float(stats.f.sf(F, df1, df2))
-    except Exception:
+    except (ValueError, TypeError, OverflowError) as exc:
+        logger.warning("Welch ANOVA p-value skipped: %s", exc)
         p = None
     return {
         "statistic": float(F),
@@ -187,8 +191,9 @@ def run_chi_square(
     strong_warning = bool((expected < 1).any())
     try:
         res = stats.chi2_contingency(contingency)
-        stat, p_val, dof = res.statistic, res.pvalue, res.dof
-    except Exception:
+        stat, p_val = res.statistic, res.pvalue
+    except (ValueError, TypeError) as exc:
+        logger.warning("chi-square skipped: %s", exc)
         return None
     warnings = []
     if cohran_warning:
@@ -261,7 +266,10 @@ def run_t_test(
             warnings.simplefilter("ignore")
             res = stats.ttest_ind(ga, gb, equal_var=False)
         stat, p_val = res.statistic, res.pvalue
-    except Exception:
+    except (ValueError, TypeError) as exc:
+        # Expected only for malformed input; programming errors (e.g. scoping
+        # bugs) must propagate so they are caught by tests, not hidden as None.
+        logger.warning("t-test skipped for %s vs %s: %s", group_a, gb_label, exc)
         return None
     # Degenerate case: a constant group makes Welch's t undefined (inf/nan).
     if not (np.isfinite(stat) and np.isfinite(p_val)):
@@ -321,7 +329,8 @@ def run_anova(
             res = stats.f_oneway(*groups)
             stat, p_val = res.statistic, res.pvalue
             method = "anova"
-        except Exception:
+        except (ValueError, TypeError) as exc:
+            logger.warning("ANOVA skipped: %s", exc)
             return None
         effect = eta_squared(groups)
     else:
@@ -391,7 +400,6 @@ def _chi_interpretation(cat_col, target_col, p_val, v) -> str:
 
 def _t_interpretation(num_col, ga, gb, p_val, m1, m2, d) -> str:
     if p_val < 0.05:
-        direction = "maior" if m1 > m2 else "menor"
         return (
             f"Foi encontrada diferença estatisticamente significativa em '{num_col}' entre "
             f"'{ga}' (Média={m1:.2f}) e '{gb}' (Média={m2:.2f}) (p={p_val:.4f}, d de Cohen={d:.2f})."
