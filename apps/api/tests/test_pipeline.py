@@ -72,11 +72,11 @@ def test_inference_t_test():
         data.append({'score_test': 60.0 + i % 5, 'final_status': 'Reprovado'})
         
     df = pd.DataFrame(data)
-    res = InferenceEngine.run_t_test(df, 'score_test', 'final_status')
+    res = InferenceEngine.run_t_test(df, 'score_test', 'final_status', 'Aprovado', 'Reprovado')
     assert res is not None
     assert res['significance'] is True
     assert res['statistic'] > 0
-    assert "Aprovados" in res['interpretation']
+    assert "Aprovado" in res['interpretation']
 
 
 def test_inference_chi_square():
@@ -90,7 +90,7 @@ def test_inference_chi_square():
     df = pd.DataFrame(raw)
     res = InferenceEngine.run_chi_square(df, 'education_level', 'final_status')
     assert res is not None
-    assert res['test_name'].startswith('Teste de Associação Qui-Quadrado')
+    assert 'Qui-quadrado' in res['test_name']
     assert 'p_value' in res
     assert isinstance(res['effect_size'], float)
     assert res['effect_size'] >= 0  # Cramer's V is always non-negative
@@ -125,11 +125,11 @@ def test_inference_skips_duplicates():
         data.append({'score_test': 999.0, 'final_status': 'Aprovado', 'is_duplicate': True})
     results = InferenceEngine.run_all_inference(data)
     # The t-test result should drop the 999 rows so Aprovados mean stays near 92
-    t_test = next((r for r in results if 'Teste t' in r['test_name']), None)
+    t_test = next((r for r in results if r['test_type'] == 'welch_t'), None)
     assert t_test is not None
     # Try to parse the Aprovados mean from the interpretation string
     import re
-    match = re.search(r'Aprovados \(Media = ([\d.]+)\)', t_test['interpretation'].replace('Média', 'Media'))
+    match = re.search(r"Aprovado' \(Média=([\d.]+)\)", t_test['interpretation'])
     assert match is not None, f"Could not parse mean from interpretation: {t_test['interpretation']}"
     approved_mean = float(match.group(1))
     # If duplicates were NOT filtered, the mean would be heavily inflated (toward 999).
