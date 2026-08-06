@@ -6,7 +6,7 @@ Este documento consolida as alterações, decisões técnicas e validações rea
 
 ## 1. Resumo das Mudanças
 *   **Correção de Credibilidade Analítica**: Corrigido o erro analítico no sumário do PDF e no dashboard. Os testes de Welch para notas de teste ($p=0.4515$) e notas de entrevista ($p=0.0624$) agora são corretamente descritos como não estatisticamente significativos em $\alpha=0.05$.
-*   **Correção de Múltiplas Comparações (Bonferroni)**: Implementada a correção de Bonferroni para 6 testes simultâneos no frontend, resultando em um $\alpha_{Bonferroni} \approx 0.0083$. A escolaridade ($p=0.0141$) é classificada como "Significativo sem correção; inconclusivo após correção conservadora" e tratada como sinal exploratório.
+*   **Correção de Múltiplas Comparações (Bonferroni)**: Correção de Bonferroni para 6 testes simultâneos ($\alpha_{Bonferroni} \approx 0.0083$), **autoridade do backend** desde a Rodada 4 (`statistics.correct_pvalues`); o frontend consome `bonferroni_alpha`/`corrected_significance` e faz fallback local apenas se ausentes. A escolaridade ($p=0.0141$) é classificada como "Significativo sem correção; inconclusivo após correção conservadora" e tratada como sinal exploratório.
 *   **PDF Sem Artefatos de Browser**: Otimizadas as folhas de estilo de impressão com `@page { margin: 0; }` em `globals.css` para ocultar cabeçalhos (como `localhost:3000`) e datas injetados pelo navegador. O preenchimento interno (`print:p-[20mm]`) atua como margem física. O relatório tem exatamente 9 páginas e um dicionário de dados completo com as 17 colunas.
 *   **Visualizações Estatísticas Premium**:
     *   **Funil SVG Real**: Substituição do gráfico de barras de etapas por um funil vertical em SVG com drop-offs e volume por fase.
@@ -20,7 +20,7 @@ Este documento consolida as alterações, decisões técnicas e validações rea
 ## 2. Arquivos Alterados e Criados
 
 ### 📁 Arquivos Criados:
-*   [executiveConclusions.ts](file:///C:/dev/DataFlow/apps/web/lib/analytics/executiveConclusions.ts): Utilitário de classificação de p-valores, Bonferroni e mapeador verbal de conclusões.
+*   [executiveConclusions.ts](file:///C:/dev/DataFlow/apps/web/lib/analytics/executiveConclusions.ts): Utilitário de classificação de p-valores e mapeador verbal de conclusões; **consome** `bonferroni_alpha`/`corrected_significance` do backend e aplica Bonferroni apenas como fallback.
 *   [reportModel.ts](file:///C:/dev/DataFlow/apps/web/lib/reporting/reportModel.ts): Camada de serialização de dados estruturados para renderização uniforme do PDF.
 *   [RecruitmentFunnel.tsx](file:///C:/dev/DataFlow/apps/web/components/charts/RecruitmentFunnel.tsx): Componente visual de funil vertical SVG.
 *   [CorrelationMatrix.tsx](file:///C:/dev/DataFlow/apps/web/components/charts/CorrelationMatrix.tsx): Matriz 4x4 de correlação de Spearman.
@@ -44,7 +44,7 @@ Este documento consolida as alterações, decisões técnicas e validações rea
 ## 3. Decisões de Design e Engenharia
 
 ### 🧠 Decisões Estatísticas:
-*   **Correção de Bonferroni**: Para evitar inflação do erro tipo I devido a comparações múltiplas em 6 testes simultâneos, reduzimos o $\alpha$ de significância para $\approx 0.0083$. A escolaridade ($p=0.0141$) tornou-se inconclusiva sob essa ótica conservadora.
+*   **Correção de Bonferroni**: Para evitar inflação do erro tipo I devido a comparações múltiplas em 6 testes simultâneos, o backend reduz o $\alpha$ de significância para $\approx 0.0083$ (autoridade única desde Rodada 4; frontend consome). A escolaridade ($p=0.0141$) tornou-se inconclusiva sob essa ótica conservadora.
 *   **Spearman Rank Correlation**: Optou-se pela correlação de Spearman sobre Pearson devido à presença de outliers acentuados em expectativa salarial e anos de experiência, permitindo uma análise de tendência ordinal mais robusta.
 
 ### 🎨 Decisões de UX/UI & PDF:

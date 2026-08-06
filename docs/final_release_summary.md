@@ -31,7 +31,7 @@ A versão **V1.3** estabiliza o DataFlow como um produto de portfólio de engenh
 
 ## 5. O que mudou em Responsible Analytics (Ética)
 * **Veto a ML Preditivo:** Removidos do Insight Generator e de outras seções quaisquer sugestões de aplicar modelos preditivos de aprovação/reprovação automática de candidatos ou ranqueamento automático de talentos, mantendo o foco em auditoria e calibragem.
-* **Anonimização de PII:** Mascaramento persistente no frontend e nos CSVs de exportação.
+* **Anonimização de PII:** Mascaramento **backend-enforced por padrão** (modo demo) via `security.mask_records`; o frontend mantém camada extra de apresentação. Não é "persistente em todos os modos" — `local` + `DATAFLOW_ENABLE_RAW_RECORDS=true` desativa (modo bruto intencional). Política de CSV de exportação está sob revisão (ver `docs/claim_matrix.md`, claims C5/C6).
 
 ---
 

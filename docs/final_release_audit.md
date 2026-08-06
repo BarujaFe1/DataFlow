@@ -95,10 +95,10 @@ O dataset de demonstração (`processo_seletivo_demo.csv`) é uma base sintétic
 ---
 
 ## 9. Como o Masking LGPD Funciona
-O mascaramento LGPD é executado diretamente na camada de apresentação no frontend usando funções utilitárias em `apps/web/lib/masking.ts`:
-* **Nomes**: Convertidos para a string estruturada `"Candidato CANXXXX"`, em que `CANXXXX` é o identificador técnico unívoco (ID Candidato) gerado.
-* **E-mails**: Reduzidos para o formato de privacidade, exibindo apenas o primeiro caractere antes do `@` (ex: `g***@empresa.com`), ocultando o nome completo do usuário.
-* **Expectativa Salarial**: Os dados brutos continuam disponíveis para cálculos agregados em gráficos e métricas, mas os nomes e e-mails associados estão permanentemente mascarados na tabela de auditoria por padrão. O toggle de privacidade (`isPrivacyEnabled`) na interface ativa ou desativa o mascaramento em tempo real (com aviso ético).
+O mascaramento LGPD é **aplicado no backend por padrão** (defesa em profundidade) em `apps/api/app/core/security.py` (`mask_records` / `mask_name` / `mask_email`), antes dos dados saírem da API — um consumidor direto do endpoint nunca recebe PII bruta no modo demo. O frontend ainda mantém `apps/web/lib/masking.ts` como camada extra de apresentação.
+* **Nomes**: Convertidos para a string estruturada `"Candidato {ID}"`, em que `ID` é o identificador técnico unívoco (`candidate_id`).
+* **E-mails**: Reduzidos para o formato de privacidade, exibindo apenas o primeiro caractere antes do `@` (ex: `g***@empresa.com`).
+* **Modo de privacidade**: `security.should_mask_records()` mascara salvo quando `DATAFLOW_PRIVACY_MODE=local` **e** `DATAFLOW_ENABLE_RAW_RECORDS=true` (modo bruto intencional, documentado). No modo demo (padrão) os nomes/e-mails estão mascarados por padrão; o toggle de privacidade (`isPrivacyEnabled`) na interface reflete esse estado. Veja `docs/claim_matrix.md` (claims C5/C6).
 
 ---
 
@@ -130,7 +130,7 @@ O score final é limitado para ficar no intervalo de `[0, 100]`.
   * **Chi-Square (Qui-Quadrado)**: Para examinar associação estatística entre escolaridade (`education_level`) e o status final (`final_status`).
   * **ANOVA**: Para testar a variância de notas entre múltiplos canais de atração.
 * O backend retorna o p-valor, a estatística de teste, o effect size (d de Cohen, Cramér's V) e a interpretação preliminar.
-* No frontend, o componente `InferencePanel.tsx` consome esses resultados e utiliza o utilitário centralizado `executiveConclusions.ts` para recalcular a significância aplicando a correção de Bonferroni (dividindo $\alpha = 0.05$ por 6 comparações $\approx 0.0083$).
+* A correção de múltiplas comparações (**Bonferroni**, $\alpha \approx 0.0083$ para 6 testes) é **autoridade do backend** (`statistics.correct_pvalues` + `routes._apply_family_correction`), que já devolve `bonferroni_alpha` e `corrected_significance`. O frontend (`InferencePanel.tsx` / `executiveConclusions.ts`) **consome** esses campos e só refaz o cálculo como fallback se ausentes. Veja `docs/claim_matrix.md` (claims C3/C4).
 
 ---
 
