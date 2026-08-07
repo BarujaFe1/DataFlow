@@ -256,25 +256,26 @@ already live on the wanted domain). Changes are code/doc only, pending CI + a fr
   This converges CI and production on 24 without a regressive pin. The redundant `dataflow-omega`
   project (team `baruja-fe`) is pinned to 22.x and can be retired as part of step 4.
 
-### 11.6 Verification status (re-audit, 2026-08-07)
-- `tsc --noEmit` (frontend): ✅ reported clean on the prior pass; **re-verified this round** (see §11.7).
-- Local `vitest`: ⚠️ **not yet executed** in this sandbox — `node_modules` was partially installed
-  (jsdom missing `package.json`), causing `ERR_MODULE_NOT_FOUND`. Repair via `npm ci` is in progress;
-  the remote CI is the authoritative runner. This round **adds** `scorePenalties.test.ts` and
-  `HealthScoreWaterfall.test.tsx` pinning the reconciliation invariant.
-- **Code state:** the §11.1–§11.5 fixes are implemented in source but **not yet on `main`** (committed
-  on a feature branch, pending CI). `main` is still `5079442`; **production (`dataflow-sand.vercel.app`)
-  is NOT yet corrected** (no deploy per instruction).
-- **Next gate (before merge):** `npm ci` → lint → typecheck → `vitest run` → `next build` all green on
-  the branch SHA; CI green; then re-render the PDF on a fresh build and re-audit the visual artifact to
-  confirm the waterfall closes at the headline score (with an explicit "Ajuste de arredondamento" step
-  when applicable), the effect-size labels read Cramer's V, the source_channel card reads "não prova
-  equivalência", and the privacy language is "mascaramento de PII" throughout.
+### 11.6 Verification status (re-audit, 2026-08-07) — ✅ COMPLETE
+- `tsc --noEmit` (frontend): ✅ clean (local + CI).
+- `vitest`: ✅ **executed** — 32 passed (7 files) locally, and the same in CI on both Node 20 and 22.
+  The new `scorePenalties.test.ts` (10) and `HealthScoreWaterfall.test.tsx` (5) pin the reconciliation
+  invariant (chart always closes at the headline score; residual surfaced, not hidden).
+- **CI:** ✅ green on branch SHA `d622e7e` (PR #3, draft) — Backend (Python 3.13) + Frontend (Node 20/22)
+  all pass (Lint / Typecheck / Vitest / Build). Node 20 deprecation annotations appear on GitHub's
+  runners, corroborating the §11.5 forward-path (move to 24).
+- **Code state:** the §11.1–§11.5 fixes are implemented and committed on branch
+  `fix/health-score-rounding-reconciliation`, **not yet on `main`**. `main` is still `5079442`;
+  **production (`dataflow-sand.vercel.app`) is NOT yet corrected** (no deploy per instruction).
+- **Next gate (user-side, before merge):** re-render the PDF from a build of SHA `d622e7e` and re-audit
+  the visual artifact to confirm the waterfall closes at the headline score (with an explicit "Ajuste de
+  arredondamento" step when applicable), the effect-size labels read Cramer's V, the source_channel card
+  reads "não prova equivalência", and the privacy language is "mascaramento de PII" throughout. Then the
+  merge/PR #3 decision.
 
 ### 11.7 Local verification (this round)
 - `npm ci` → clean, lockfile-reproducible install (jsdom + vitest fully present).
 - `eslint`: ✅ clean.
 - `tsc --noEmit`: ✅ clean.
 - `vitest run`: ✅ **32 passed** (7 files, incl. the new `scorePenalties.test.ts` (10) and `HealthScoreWaterfall.test.tsx` (5) reconciliation tests).
-- `next build`: ✅ success.
-- Note: replace "N passed" with the actual count from the run output once executed (don't hardcode).
+- `next build`: ✅ success (and CI build on Node 20/22 also green).
