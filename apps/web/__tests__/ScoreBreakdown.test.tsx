@@ -62,8 +62,9 @@ describe("ScoreBreakdown", () => {
     rerender(<ScoreBreakdown score={{ ...fullScore, confidence: 0.5 }} />);
     const smallSampleBadge = screen.getByText(/Robustez da avaliação 50%/);
     expect(smallSampleBadge).toBeInTheDocument();
-    // Tooltip must clarify it is NOT a probability / confidence interval.
-    expect(smallSampleBadge).toHaveAttribute(
+    // The tooltip lives on the wrapping <div> (not the inner label <span>); it must
+    // clarify this indicator is NOT a probability / confidence interval.
+    expect(smallSampleBadge.parentElement).toHaveAttribute(
       "title",
       expect.stringContaining(
         "Não representa probabilidade nem intervalo de confiança"
