@@ -71,19 +71,21 @@ export default function MethodologyPage() {
 
           <div className="bg-surface/50 border border-border-subtle p-5 rounded-xl flex flex-col gap-4">
             <div className="text-xs font-mono bg-background p-3 rounded-lg border border-border-subtle text-center text-text-primary font-bold">
-              Score = 100 - Penalidade(Nulos) - Penalidade(Duplicados) - Penalidade(Vazias) - Penalidade(Constantes) - Penalidade(Emails) - Penalidade(Outliers)
+              Score = &Sigma; (ScoreDimens&atilde;o&#x1D62; &times; Peso&#x1D62;) &times; 100 &nbsp;&rarr;&nbsp; &Sigma; Penalidades = 100 &minus; Score
             </div>
+
+            <p className="text-xs text-text-secondary leading-relaxed">
+              O score combina <strong>seis dimensões de qualidade</strong> por meio de uma média ponderada (pesos somam 1.0): <strong>Completude</strong> (nulos), <strong>Unicidade</strong> (duplicados), <strong>Validade</strong> (e-mails inválidos), <strong>Consistência</strong> (falhas de parsing numérico), <strong>Plausibilidade</strong> (valores impossíveis / outliers) e <strong>Esquema</strong> (colunas vazias).
+            </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
               <div className="space-y-1.5">
-                <p><strong>• Incompletude (Nulos):</strong> Dedução proporcional à taxa geral de células nulas sobre o total do grid, com limite máximo de <strong>-25</strong> pontos.</p>
-                <p><strong>• Redundância (Duplicados):</strong> Dedução mínima de <strong>-2</strong> pontos por qualquer duplicata, escalando dinamicamente até o limite de <strong>-15</strong> pontos.</p>
-                <p><strong>• Colunas Completamente Vazias:</strong> Penalidade de <strong>-10</strong> pontos por coluna identificada sem qualquer registro preenchido (max <strong>-20</strong>).</p>
+                <p><strong>• Penalidade por dimensão:</strong> Penalidade&#x1D62; = (1 &minus; ScoreDimens&atilde;o&#x1D62;) &times; Peso&#x1D62; &times; 100.</p>
+                <p><strong>• Reconciliação:</strong> a soma das penalidades ponderadas é, por construção, exatamente <strong>100 &minus; Score</strong>.</p>
               </div>
               <div className="space-y-1.5">
-                <p><strong>• Colunas de Valor Constante:</strong> Penalidade de <strong>-5</strong> pontos por coluna cuja variância seja nula (max <strong>-15</strong>).</p>
-                <p><strong>• Formatos de E-mail Inválidos:</strong> Penalidade fixa de <strong>-10</strong> pontos se e-mails fora do padrão Regex {"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"} forem detectados.</p>
-                <p><strong>• Outliers Numéricos:</strong> Penalidade fixa de <strong>-5</strong> pontos se existirem colunas numéricas com valores discrepantes.</p>
+                <p><strong>• Waterfall do relatório:</strong> construído a partir dessas penalidades autoritativas do backend, de modo que o gráfico sempre fecha no score de cabeçalho.</p>
+                <p><strong>• Pequenas amostras:</strong> a confiança do score decai para &lt; 1.0 quando o total de linhas é insuficiente.</p>
               </div>
             </div>
           </div>
@@ -218,7 +220,7 @@ export default function MethodologyPage() {
           </h2>
           
           <p className="text-xs text-text-secondary leading-relaxed">
-            Em conformidade com a LGPD, nenhuma identificação pessoal (PII) é exposta por padrão no cockpit ou no PDF do relatório. As máscaras de dados garantem anonimização:
+            Seguindo a política de privacidade do projeto (responsible analytics, postura LGPD-aware), nenhuma identificação pessoal (PII) é exposta por padrão no cockpit ou no PDF do relatório. Os valores são <strong>mascarados/pseudonimizados para apresentação</strong> (não anonimização irreversível nem certificação de conformidade regulatória):
             <br />• <strong>Nomes:</strong> Mapeados dinamicamente para &quot;Candidato CANXXXX&quot;, em que `CANXXXX` é o ID técnico individual unívoco.
             <br />• <strong>E-mails:</strong> Ocultados exibindo apenas a primeira letra (ex: `g***@example.com`).
           </p>

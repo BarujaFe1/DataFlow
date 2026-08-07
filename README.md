@@ -229,7 +229,7 @@ npm run dev
 O DataFlow demonstra competências críticas para funções de **Analytics Engineering, Data Science e Data Engineering**:
 - **Design de Produto de Dados:** Tradução de necessidades de negócios em recursos interativos premium.
 - **Rigor Analítico:** Aplicação consciente de estatística sem falsos positivos.
-- **Governança Ética:** Conformidade ativa com LGPD e design de IA responsável.
+- **Governança Ética:** política de privacidade LGPD-aware (lab) e design de IA responsável — sem certificação de conformidade regulatória.
 - **Arquitetura Full-Stack:** Comunicação limpa entre Next.js 15 e FastAPI em monorepo.
 
 ---

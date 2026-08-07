@@ -216,7 +216,7 @@ export default function ReportView({ data, onBack, isPrivacyEnabled = true }: Re
               <div>
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] text-text-muted uppercase font-mono block">Saúde Geral do Dataset</span>
-                  <span className="text-[10px] text-cyan-400 font-extrabold uppercase bg-cyan-950/40 border border-cyan-800/40 px-2 py-0.5 rounded-full">LGPD Ativo</span>
+                  <span className="text-[10px] text-cyan-400 font-extrabold uppercase bg-cyan-950/40 border border-cyan-800/40 px-2 py-0.5 rounded-full">Mascaramento PII</span>
                 </div>
                 <span className="text-lg font-bold text-text-primary block mt-1">
                   Qualidade {getHealthLabel(report.healthScore)}
@@ -465,13 +465,13 @@ export default function ReportView({ data, onBack, isPrivacyEnabled = true }: Re
               </div>
 
               <div className="flex flex-col gap-2">
-                <span className="text-xs font-bold text-text-primary block">Conformidade e Mascaramento de Identificadores (PII)</span>
+                <span className="text-xs font-bold text-text-primary block">Mascaramento de Identificadores (PII) — Política de Privacidade</span>
                 <div className="border border-border-subtle rounded-lg bg-surface-elevated/15 p-4 text-[11px] leading-relaxed text-text-secondary flex flex-col gap-2">
                   <p>
                     <strong>Mascaramento Ativo:</strong> {report.cleaningAudit.maskingEnabled ? "SIM (Nível de Apresentação)" : "NÃO"}.
                   </p>
                   <p>
-                    Em alinhamento com as regras da LGPD, os campos contendo nomes completos de candidatos e endereços eletrônicos originais são substituídos por hashes anonimizados técnicos no relatório.
+                    Seguindo a política de privacidade do projeto (responsible analytics), os campos contendo nomes completos de candidatos e endereços eletrônicos originais recebem <strong>mascaramento de PII para fins de apresentação</strong> no relatório. Trata-se de ofuscação de identificadores para visualização, não de pseudonimização na acepção da ANPD (re-identificação apenas via informação adicional mantida separadamente), não de anonimização irreversível nem de certificação de conformidade regulatória.
                   </p>
                   <p className="font-mono text-[10px] text-accent flex items-center gap-1.5 mt-1">
                     <Lock className="w-3.5 h-3.5 shrink-0" />
@@ -629,7 +629,7 @@ export default function ReportView({ data, onBack, isPrivacyEnabled = true }: Re
                   </div>
                   <div className="flex justify-between items-center text-[8.5px] font-mono text-text-muted border-t border-border-subtle/40 pt-1">
                     <span>Estatística: {test.statistic.toFixed(2)}</span>
-                    <span>Efeito ({test.testName.includes("Qui-Quadrado") ? "Cramer's V" : "Eta Sq"}): {test.effectSize?.toFixed(2) || "0.00"}</span>
+                    <span>Efeito ({test.effectSizeName ?? (test.testName.includes("Qui-Quadrado") ? "Cramer's V" : "Eta Sq")}): {test.effectSize?.toFixed(2) || "0.00"}</span>
                   </div>
                 </div>
               ))}
@@ -646,7 +646,7 @@ export default function ReportView({ data, onBack, isPrivacyEnabled = true }: Re
             </div>
 
             <p className="text-xs text-text-secondary leading-relaxed">
-              Estrutura ética e governança de dados em conformidade com as diretrizes da LGPD (Lei Geral de Proteção de Dados):
+              Estrutura ética e governança de dados baseada na política de privacidade do projeto (responsible analytics). O mascaramento de PII é ativado por padrão; isso não constitui certificação de conformidade regulatória (LGPD):
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
@@ -759,7 +759,7 @@ export default function ReportView({ data, onBack, isPrivacyEnabled = true }: Re
                   <div className="grid grid-cols-12 bg-surface px-3 py-1.5 font-bold text-text-secondary border-b border-border-subtle text-[9px] uppercase">
                     <div className="col-span-3">Nome da Variável</div>
                     <div className="col-span-3">Tipo Inferido</div>
-                    <div className="col-span-6">Descrição de Negócio / Proteção LGPD</div>
+                    <div className="col-span-6">Descrição de Negócio / Mascaramento PII</div>
                   </div>
                   <div className="divide-y divide-border-subtle font-mono text-[9px] bg-surface/10">
                     {report.dataDictionary.map(c => (

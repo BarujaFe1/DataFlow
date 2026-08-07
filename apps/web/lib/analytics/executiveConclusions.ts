@@ -6,6 +6,7 @@ export interface DetailedConclusion {
   statistic: number;
   pValue: number;
   effectSize?: number;
+  effectSizeName?: string; // backend-authoritative effect-size label (e.g. "Cramer's V", "eta^2")
   nominalSignificance: boolean;
   correctedSignificance: boolean;
   evidenceClass: "Forte" | "Moderada" | "Limítrofe" | "Fraca";
@@ -139,11 +140,11 @@ export function generateExecutiveConclusions(
     } else if (varsJoined.includes("source_channel") && varsJoined.includes("status")) {
       practicalInterpretation = nominalSignificance
         ? `Existe uma disparidade de atração: os canais de captação apresentam taxas de aprovação desiguais (p-valor = ${p.toFixed(4)}), sugerindo maior fit técnico em determinados portais.`
-        : "O canal de origem não demonstra relevância sobre a aprovação final. Todos os canais geram perfis equivalentes.";
-      
+        : `Com os dados disponíveis, o canal de origem não apresenta associação estatisticamente significativa com a aprovação final (p-valor = ${p.toFixed(4)}). Isso indica ausência de evidência de diferença entre canais nesta base — o que não prova que os canais sejam equivalentes; pode refletir poder estatístico insuficiente ou um recorte específico.`;
+
       recommendedAction = nominalSignificance
         ? "Concentrar esforços de mídia nos canais de maior taxa de aprovação relativa e calibrar os anúncios de canais menos eficientes."
-        : "Distribuir as vagas de forma homogênea nos canais atuais para diversificar a origem das candidaturas.";
+        : "Manter a diversificação da origem das candidaturas; reavaliar com amostra maior ou outro recorte antes de concluir sobre equivalência de canais.";
     } else if (varsJoined.includes("score_test") && varsJoined.includes("status")) {
       practicalInterpretation = nominalSignificance
         ? `Candidatos aprovados obtiveram notas significativamente diferentes nas avaliações técnicas (p-valor = ${p.toFixed(4)}). A magnitude prática (${magnitudeClass}) sugere forte diferenciação de performance.`
@@ -168,6 +169,7 @@ export function generateExecutiveConclusions(
       statistic: test.statistic,
       pValue: p,
       effectSize: eff,
+      effectSizeName: test.effect_size_name ?? undefined,
       nominalSignificance,
       correctedSignificance,
       evidenceClass,
@@ -240,7 +242,7 @@ export function generateExecutiveConclusions(
 
   // 4. Data Quality / Masking
   executiveSummary.push(
-    "A conformidade estrutural da base é satisfatória, com mascaramento de PII (nomes/e-mails) ativo no relatório público em alinhamento com a LGPD."
+    "A qualidade estrutural da base é satisfatória, com mascaramento de PII (nomes/e-mails) ativo no relatório público segundo a política de privacidade do projeto (responsible analytics), sem constituir certificação de conformidade regulatória."
   );
 
   return {

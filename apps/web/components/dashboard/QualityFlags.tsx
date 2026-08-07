@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { ColumnProfile, AnalysisResponse } from "@/types/analysis";
 import HealthScoreWaterfall from "@/components/charts/HealthScoreWaterfall";
+import { buildScorePenalties } from "@/lib/reporting/scorePenalties";
 
 
 interface QualityFlagsProps {
@@ -146,48 +147,9 @@ export default function QualityFlags({ quality, kpis }: QualityFlagsProps) {
     return <span className="text-[9px] text-text-muted font-mono">Sem preview</span>;
   };
 
-  // Waterfall/Breakdown calculations
-  const scoreBreakdown = useMemo(() => {
-    // 1. Missing cells
-    const totalCells = (kpis.total_candidates || 305) * columns.length;
-    const missingCells = columns.reduce((sum, c) => sum + c.missing_count, 0);
-    const overallMissingRate = totalCells > 0 ? missingCells / totalCells : 0;
-    const missingPenalty = Math.floor(overallMissingRate * 25);
-
-    // 2. Duplicates
-    const duplicateCount = kpis.duplicate_count || 0;
-    const duplicateRate = kpis.total_candidates > 0 ? duplicateCount / kpis.total_candidates : 0;
-    const dupPenalty = duplicateRate > 0 ? Math.min(15, Math.floor(duplicateRate * 50) + 2) : 0;
-
-    // 3. Column penalties
-    let emptyCols = 0;
-    let constCols = 0;
-    let invalidEmailCols = 0;
-    let outlierCols = 0;
-
-    columns.forEach(c => {
-      if (c.flags.includes("Coluna totalmente vazia")) emptyCols++;
-      if (c.flags.includes("Coluna constante (mesmo valor em todas as linhas)")) constCols++;
-      if (c.flags.some(f => f.includes("E-mails inválidos"))) invalidEmailCols++;
-      if (c.flags.some(f => f.toLowerCase().includes("outlier"))) outlierCols++;
-    });
-
-    const emptyPenalty = Math.min(20, emptyCols * 10);
-    const constPenalty = Math.min(15, constCols * 5);
-    const emailPenalty = invalidEmailCols > 0 ? 10 : 0;
-    const outlierPenalty = outlierCols > 0 ? 5 : 0;
-
-    return {
-      initial: 100,
-      missingPenalty,
-      dupPenalty,
-      emptyPenalty,
-      constPenalty,
-      emailPenalty,
-      outlierPenalty,
-      final: health_score
-    };
-  }, [columns, kpis, health_score]);
+  // Waterfall/Breakdown calculations — driven by the backend-authoritative
+  // weighted penalties so the decomposition reconciles with health_score.
+  const scorePenalties = useMemo(() => buildScorePenalties(quality.score), [quality.score]);
 
   // Generate Issue Register items
   const issues = useMemo(() => {
@@ -281,16 +243,9 @@ export default function QualityFlags({ quality, kpis }: QualityFlagsProps) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Waterfall Health Breakdown */}
-        <HealthScoreWaterfall 
-          score={health_score} 
-          penalties={{
-            missingPenalty: scoreBreakdown.missingPenalty,
-            dupPenalty: scoreBreakdown.dupPenalty,
-            emptyPenalty: scoreBreakdown.emptyPenalty,
-            constPenalty: scoreBreakdown.constPenalty,
-            emailPenalty: scoreBreakdown.emailPenalty,
-            outlierPenalty: scoreBreakdown.outlierPenalty
-          }}
+        <HealthScoreWaterfall
+          score={health_score}
+          penalties={scorePenalties}
         />
 
         {/* Before vs After Data Audit */}

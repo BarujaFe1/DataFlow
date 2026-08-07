@@ -120,12 +120,12 @@ export function generateStructuredInsights(data: AnalysisResponse): StructuredIn
         insights.push({
           id,
           type: "statistical_signal",
-          title: test.significance 
+          title: test.significance
             ? "Canais de origem com conversões desiguais"
-            : "Canais de origem equivalentes na qualidade",
+            : "Sem diferença significativa entre canais",
           description: test.significance
             ? "Há uma diferença estatisticamente significativa na taxa de aprovação com base no canal de origem do candidato. Determinados portais geram leads com maior fit cultural/técnico."
-            : "Não existe associação estatisticamente relevante entre o canal de origem e a taxa de aprovação final. As fontes trazem candidatos com performance final semelhante.",
+            : "Não há evidência estatística de associação entre o canal de origem e a taxa de aprovação final nesta base (V de Cramer pequeno). Isso não prova que os canais sejam equivalentes — pode refletir poder estatístico insuficiente ou um recorte específico.",
           metric: `p = ${test.p_value.toFixed(4)} (V de Cramer = ${test.effect_size?.toFixed(2) || "N/A"})`,
           severity: test.significance ? "medium" : "low",
           confidence: "moderate",
