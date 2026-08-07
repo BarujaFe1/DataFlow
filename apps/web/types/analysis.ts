@@ -24,27 +24,69 @@ export interface ColumnProfile {
   top_values?: CategoryCount[];
 }
 
+// Structured, explainable data-quality finding produced by the scoring engine.
+// Mirrors backend `app.core.issues.Issue`.
+export interface QualityIssue {
+  issue_id: string;
+  dimension: string; // completeness | uniqueness | validity | consistency | plausibility | schema
+  column?: string | null;
+  severity: "low" | "medium" | "high";
+  count: number;
+  rate: number;
+  rule_scope: string; // generic | recruitment | <domain>
+  evidence: Record<string, unknown>;
+  penalty: number; // contribution to the dimension penalty (already weighted)
+  action: string;
+  is_auto_fixable: boolean;
+}
+
+// Backend-authoritative quality score (Health Score v2, versioned heuristic).
+// Mirrors backend `app.core.scoring.QualityScore`.
+export interface QualityScore {
+  overall: number;
+  dimension_scores: Record<string, number>; // dimension -> 0..100
+  weights: Record<string, number>; // dimension -> weight (sums to 1)
+  policy_version: string;
+  issues: QualityIssue[];
+  penalties: Array<{ dimension: string; rate: number; penalty_points: number }>;
+  confidence: number; // 1.0 if rows >= 100 else max(0.3, rows/100) — small-sample proxy
+  applicability: string;
+}
+
 export interface QualitySummary {
   health_score: number;
   summary: string;
   columns: ColumnProfile[];
   dataset_flags: string[];
+  score: QualityScore; // Backend-authoritative score breakdown (Fase 8)
 }
 
 export interface InferenceResult {
   test_name: string;
+  test_type: string; // t_test | chi_square | anova | unknown
   variables: string[];
+  n_total?: number | null;
+  group_sizes?: Record<string, number> | null;
   statistic: number;
   p_value: number;
   effect_size?: number;
-  significance: boolean;
-  interpretation: string;
-  limitations: string;
+  effect_size_name?: string | null;
+  significance: boolean; // DEPRECATED alias of significant_raw
   // Multiple-comparison correction (Bonferroni) — authoritative values come
   // from the backend since Rodada 4.
   nominal_alpha?: number;
   bonferroni_alpha?: number;
   corrected_significance?: boolean;
+  p_value_adjusted?: number | null;
+  significant_raw?: boolean | null;
+  significant_adjusted?: boolean | null;
+  correction_method?: string | null;
+  assumptions?: string[];
+  assumption_checks?: Record<string, unknown>;
+  warnings?: string[];
+  interpretation: string;
+  limitations: string;
+  decision_scope?: string | null;
 }
 
 export interface AnalysisMetadata {
@@ -52,6 +94,7 @@ export interface AnalysisMetadata {
   source: 'demo' | 'upload';
   rows: number;
   columns: number;
+  privacy_mode?: string; // 'demo' | 'local' | 'raw' (backend masking context)
 }
 
 export interface AnalysisResponse {

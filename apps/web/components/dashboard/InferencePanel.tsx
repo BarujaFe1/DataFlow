@@ -76,6 +76,42 @@ export default function InferencePanel({ inference, sources = [] }: InferencePan
     };
   };
 
+  // Small-sample / low-power detection from authoritative backend signals.
+  const isSmallSample = (raw?: InferenceResult): boolean => {
+    if (!raw) return false;
+    const n = raw.n_total;
+    const groups = raw.group_sizes ? Object.values(raw.group_sizes) : [];
+    const minGroup = groups.length ? Math.min(...groups) : undefined;
+    const smallBySize =
+      (n !== null && n !== undefined && n < 100) ||
+      (minGroup !== undefined && minGroup < 30);
+    const warnFlag = (raw.warnings || []).some((w) =>
+      /Cochran|esperada < 1|variâncias muito diferentes/i.test(w)
+    );
+    return smallBySize || warnFlag;
+  };
+
+  const smallSampleReason = (raw: InferenceResult): string => {
+    const n = raw.n_total;
+    const groups = raw.group_sizes ? Object.values(raw.group_sizes) : [];
+    const minGroup = groups.length ? Math.min(...groups) : undefined;
+    const bits: string[] = [];
+    if (n !== null && n !== undefined && n < 100) bits.push(`n total = ${n} (< 100)`);
+    if (minGroup !== undefined && minGroup < 30) bits.push(`menor grupo = ${minGroup} (< 30)`);
+    const warn = (raw.warnings || []).find((w) =>
+      /Cochran|esperada < 1|variâncias muito diferentes/i.test(w)
+    );
+    if (warn) bits.push(warn);
+    return bits.join("; ") || "tamanho amostral reduzido";
+  };
+
+  const formatGroupSizes = (raw?: InferenceResult): string => {
+    if (!raw || !raw.group_sizes) return "—";
+    return Object.entries(raw.group_sizes)
+      .map(([k, v]) => `${k}=${v}`)
+      .join(", ");
+  };
+
   return (
     <div className="glass-card p-6 w-full flex flex-col gap-6 bg-surface/30 border border-border-subtle rounded-2xl">
       
@@ -221,6 +257,62 @@ export default function InferencePanel({ inference, sources = [] }: InferencePan
                   </div>
                 </div>
 
+                {/* Corrected p-value (multiple-comparison transparency) */}
+                {(() => {
+                  const raw = inference[index];
+                  if (!raw || raw.p_value_adjusted === null || raw.p_value_adjusted === undefined) return null;
+                  return (
+                    <div className="p-2.5 rounded-lg border border-indigo-500/20 bg-indigo-500/[0.04] flex flex-col gap-1.5 text-[10px] leading-relaxed">
+                      <div className="flex items-center justify-between font-mono">
+                        <span className="text-text-muted">p bruto (nominal):</span>
+                        <span className="text-text-primary font-semibold">{raw.p_value.toFixed(4)}</span>
+                      </div>
+                      <div className="flex items-center justify-between font-mono">
+                        <span className="text-text-muted">p ajustado ({raw.correction_method || "bonferroni"}):</span>
+                        <span className="text-text-primary font-semibold">{raw.p_value_adjusted.toFixed(4)}</span>
+                      </div>
+                      <p className="text-text-secondary mt-0.5">
+                        <strong className="text-indigo-300">Por que o p foi ajustado?</strong> Rodamos múltiplos testes em
+                        paralelo; sem correção, a chance acumulada de falso positivo cresce a cada teste. O p ajustado aplica a
+                        correção de {raw.correction_method === "holm" ? "Holm" : "Bonferroni"} para manter o erro tipo I sob
+                        controle — por isso comparamos a significância contra o limiar ajustado, não contra 0.05.
+                      </p>
+                    </div>
+                  );
+                })()}
+
+                {/* Sample size transparency */}
+                {(() => {
+                  const raw = inference[index];
+                  if (!raw) return null;
+                  return (
+                    <div className="flex flex-wrap items-center gap-2 text-[10px] font-mono text-text-muted">
+                      <span className="px-2 py-0.5 rounded bg-surface border border-border-subtle">
+                        n total: {raw.n_total ?? "—"}
+                      </span>
+                      <span className="px-2 py-0.5 rounded bg-surface border border-border-subtle">
+                        grupos: {formatGroupSizes(raw)}
+                      </span>
+                    </div>
+                  );
+                })()}
+
+                {/* Small-sample alert */}
+                {(() => {
+                  const raw = inference[index];
+                  if (!raw || !isSmallSample(raw)) return null;
+                  return (
+                    <div className="p-2.5 rounded-lg border border-warning/25 bg-warning/10 text-warning flex items-start gap-2 text-[10px] leading-relaxed">
+                      <AlertTriangle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                      <span>
+                        <strong>Amostra limitada — atenção na interpretação:</strong> {smallSampleReason(raw)}. Este é um
+                        alerta heurístico de transparência, não um critério universal de validade do teste. Consulte também
+                        as premissas específicas de cada teste e os avisos emitidos pelo backend.
+                      </span>
+                    </div>
+                  );
+                })()}
+
                 {/* MINI-VISUALIZATION */}
                 <div className="p-3 bg-surface/30 rounded-lg border border-border-subtle/50 flex flex-col gap-2">
                   <span className="text-[9px] font-bold text-text-secondary uppercase tracking-wider block font-mono">
@@ -352,6 +444,11 @@ export default function InferencePanel({ inference, sources = [] }: InferencePan
             <span className="font-bold text-text-primary block">Aviso Técnico de Comparações Múltiplas (Bonferroni Correction)</span>
             <p className="text-text-secondary mt-0.5">
               Ao executar múltiplos testes de hipóteses estatísticas simultaneamente (n = {analysisReport.totalTests}), a taxa global de erro tipo I acumula. Por isso, definimos o limiar de significância ajustado de Bonferroni em <span className="font-mono text-accent font-semibold">{analysisReport.bonferroniAlpha.toFixed(4)}</span> para comprovação científica rigorosa.
+            </p>
+            <p className="text-text-secondary mt-1 text-[11px]">
+              <strong className="text-text-primary">Em linguagem simples:</strong> cada teste individual carrega ~5% de chance de
+              um falso positivo. Com vários testes rodando juntos, essas chances se somam. O p ajustado &ldquo;cobre&rdquo; essa soma — só
+              declaramos significância quando o p ajustado também passa do limiar, evitando conclusões apressadas.
             </p>
           </div>
         </div>

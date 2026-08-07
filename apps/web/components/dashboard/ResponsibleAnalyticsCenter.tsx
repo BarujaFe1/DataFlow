@@ -1,21 +1,24 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { ShieldCheck, Lock, Unlock, CheckCircle2, Info } from "lucide-react";
+import { ShieldCheck, Lock, Unlock, CheckCircle2, Info, EyeOff } from "lucide-react";
 import { ColumnProfile } from "@/types/analysis";
+import { maskName, maskEmail, COLUMN_DICTIONARY } from "@/lib/masking";
 
 interface ResponsibleAnalyticsCenterProps {
   columns: ColumnProfile[];
   isPrivacyEnabled: boolean;
   onTogglePrivacy: () => void;
   duplicateCount?: number;
+  privacyMode?: string; // 'demo' | 'local' | 'raw' (backend masking context)
 }
 
 export default function ResponsibleAnalyticsCenter({
   columns,
   isPrivacyEnabled,
   onTogglePrivacy,
-  duplicateCount = 0
+  duplicateCount = 0,
+  privacyMode = "demo"
 }: ResponsibleAnalyticsCenterProps) {
 
   // Detect sensitive columns
@@ -25,6 +28,37 @@ export default function ResponsibleAnalyticsCenter({
       sensitiveKeywords.some(keyword => c.name.toLowerCase().includes(keyword))
     );
   }, [columns]);
+
+  // PII columns explicitly registered in the data dictionary (demonstrable masking).
+  const piiColumns = useMemo(() => {
+    return Object.values(COLUMN_DICTIONARY).filter(
+      (e) => /Pessoal|Identificador/.test(e.type)
+    );
+  }, []);
+
+  // Masking guarantee text driven by the backend privacy_mode.
+  const maskingPolicy = useMemo(() => {
+    switch (privacyMode) {
+      case "raw":
+        return {
+          tone: "bg-danger/10 border-danger/20 text-danger",
+          icon: <Unlock className="w-3.5 h-3.5 shrink-0" />,
+          text: "Modo RAW: dados completos (incluindo PII) expostos por escolha explícita e documentada. Use apenas em contexto local controlado."
+        };
+      case "local":
+        return {
+          tone: isPrivacyEnabled ? "bg-success/10 border-success/20 text-success" : "bg-warning/10 border-warning/20 text-warning",
+          icon: isPrivacyEnabled ? <Lock className="w-3.5 h-3.5 shrink-0" /> : <Unlock className="w-3.5 h-3.5 shrink-0" />,
+          text: `Modo Local: o mascaramento segue o toggle LGPD do cabeçalho (atualmente ${isPrivacyEnabled ? "ATIVO" : "INATIVO"}). O CSV de exportação do servidor sempre mascara PII.`
+        };
+      default:
+        return {
+          tone: "bg-success/10 border-success/20 text-success",
+          icon: <Lock className="w-3.5 h-3.5 shrink-0" />,
+          text: "Modo Demo: os registros retornados e exportados passam pelo mascaramento configurado no backend (GET /api/export sempre mascara PII no modo demo)."
+        };
+    }
+  }, [privacyMode, isPrivacyEnabled]);
 
   // Allowed uses list
   const allowedUses = [
@@ -174,6 +208,54 @@ export default function ResponsibleAnalyticsCenter({
 
         </div>
 
+      </div>
+
+      {/* Privacy Disclosure — masking guarantee driven by backend privacy_mode */}
+      <div className="p-5 rounded-xl border border-success/15 bg-success/[0.02] flex flex-col gap-3">
+        <div className="flex items-center gap-2">
+          <EyeOff className="w-4 h-4 text-success shrink-0" />
+          <span className="text-xs font-bold text-success uppercase tracking-wider">Divulgação de Privacidade — Política de Mascaramento (LGPD)</span>
+        </div>
+
+        {/* Live mode policy (configured behavior, not an absolute guarantee) */}
+        <div className={`p-2.5 rounded-lg border flex items-start gap-2 text-[11px] leading-relaxed ${maskingPolicy.tone}`}>
+          {maskingPolicy.icon}
+          <span>{maskingPolicy.text}</span>
+        </div>
+
+        {/* Demonstration of the transform applied to PII */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="p-3 rounded-lg border border-border-subtle bg-surface/50 flex flex-col gap-2">
+            <span className="text-[10px] font-bold text-text-primary uppercase tracking-wider">Transformação Aplicada</span>
+            <div className="flex items-center justify-between text-[11px] font-mono">
+              <span className="text-text-secondary">Nome</span>
+              <span className="text-text-muted">→</span>
+              <span className="text-text-primary">{maskName("Maria Oliveira", "C-1042")}</span>
+            </div>
+            <div className="flex items-center justify-between text-[11px] font-mono">
+              <span className="text-text-secondary">E-mail</span>
+              <span className="text-text-muted">→</span>
+              <span className="text-text-primary">{maskEmail("maria.oliveira@empresa.com")}</span>
+            </div>
+          </div>
+
+          <div className="p-3 rounded-lg border border-border-subtle bg-surface/50 flex flex-col gap-2">
+            <span className="text-[10px] font-bold text-text-primary uppercase tracking-wider">Campos PII Protegidos</span>
+            <div className="flex flex-wrap gap-1.5">
+              {piiColumns.slice(0, 6).map((c) => (
+                <span
+                  key={c.name}
+                  className="px-2 py-0.5 rounded bg-surface border border-border-subtle font-mono text-[9px] text-text-secondary"
+                >
+                  {c.name}
+                </span>
+              ))}
+            </div>
+            <span className="text-[9px] text-text-muted">
+              {piiColumns.length} campo(s) pessoais/identificadores registrados no dicionário de dados.
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Footer warning */}
