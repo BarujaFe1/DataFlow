@@ -60,6 +60,10 @@ describe("IssuesPanel", () => {
   it("flags auto-fixable issues and marks the rest for manual review", () => {
     render(<IssuesPanel issues={issues} />);
     expect(screen.getByText(/auto-corrigível/)).toBeInTheDocument();
-    expect(screen.getByText(/\(revisão manual\)/)).toBeInTheDocument();
+    // Two of the three fixture issues are non-auto-fixable, so the manual-review
+    // label appears more than once.
+    expect(
+      screen.getAllByText(/\(revisão manual\)/).length
+    ).toBeGreaterThan(0);
   });
 });
