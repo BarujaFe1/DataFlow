@@ -15,6 +15,8 @@ interface ExecutiveHeroProps {
 export default function ExecutiveHero({ analysis, onGenerateReport, onReset, onScrollToSection }: ExecutiveHeroProps) {
   const { quality, kpis, metadata } = analysis;
   const score = quality.health_score;
+  const confidence = quality.score?.confidence ?? 1.0;
+  const isSmallSample = confidence < 1.0;
 
   // Determine health details
   const getHealthDetails = (val: number) => {
@@ -163,6 +165,12 @@ export default function ExecutiveHero({ analysis, onGenerateReport, onReset, onS
               <p className="text-xs text-text-secondary leading-relaxed font-medium">
                 {summary.risk}
               </p>
+              {isSmallSample && (
+                <p className="text-[10px] text-warning leading-relaxed mt-1 font-medium">
+                  ⚠️ Amostra pequena ({metadata.rows} registros): confiança do score reduzida para {Math.round(confidence * 100)}%.
+                  Leia os resultados como sinal direcional, não como certificado absoluto de qualidade.
+                </p>
+              )}
             </div>
 
             {/* Next action */}

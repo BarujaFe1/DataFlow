@@ -20,7 +20,7 @@ import Papa from "papaparse";
 import Link from "next/link";
 
 import { AnalysisResponse } from "@/types/analysis";
-import { fetchDemoData, uploadAndAnalyzeFile, warmUpBackend } from "@/lib/api";
+import { fetchDemoData, uploadAndAnalyzeFile, warmUpBackend, fetchExportCsv } from "@/lib/api";
 import { ColumnMapper } from "../lib/mapper_client"; 
 import { generateStructuredInsights } from "@/lib/insights/generateInsights";
 
@@ -35,6 +35,8 @@ import ReportView from "@/components/report/ReportView";
 import ExecutiveHero from "@/components/dashboard/ExecutiveHero";
 import PipelineTimeline from "@/components/dashboard/PipelineTimeline";
 import ResponsibleAnalyticsCenter from "@/components/dashboard/ResponsibleAnalyticsCenter";
+import ScoreBreakdown from "@/components/dashboard/ScoreBreakdown";
+import IssuesPanel from "@/components/dashboard/IssuesPanel";
 import SidebarNav from "@/components/dashboard/SidebarNav";
 
 
@@ -156,6 +158,15 @@ export default function Home() {
     setIsMappingMode(false);
     setError(null);
     setView("landing");
+  };
+
+  const handleExportCsv = async () => {
+    try {
+      await fetchExportCsv();
+    } catch (err: unknown) {
+      const errMsg = err instanceof Error ? err.message : "Erro ao exportar o CSV mascarado.";
+      setError(errMsg);
+    }
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -382,6 +393,15 @@ export default function Home() {
             </button>
             
             <button
+              onClick={handleExportCsv}
+              className="flex items-center space-x-1.5 px-4 py-2 text-xs font-semibold text-text-primary bg-surface-elevated border border-border-subtle hover:border-border-hover rounded-lg transition cursor-pointer"
+              title="Baixar CSV sempre mascarado pelo servidor (LGPD)"
+            >
+              <Database className="w-3.5 h-3.5 text-success" />
+              <span>Baixar CSV (Mascarado)</span>
+            </button>
+            
+            <button
               onClick={handleReset}
               className="flex items-center space-x-1.5 px-4 py-2 text-xs font-semibold text-black bg-accent rounded-lg hover:bg-opacity-90 transition cursor-pointer shadow-md"
             >
@@ -503,8 +523,10 @@ export default function Home() {
             </div>
 
             {/* Data Quality Cockpit (Full Width Refactored) */}
-            <div id="qualidade" className="scroll-mt-24">
+            <div id="qualidade" className="scroll-mt-24 flex flex-col gap-6">
               <QualityFlags quality={quality} kpis={kpis} />
+              <ScoreBreakdown score={quality.score} />
+              <IssuesPanel issues={quality.score.issues} />
             </div>
 
             {/* Charts Panel (Funnel and Correlation Matrix) */}
@@ -519,6 +541,7 @@ export default function Home() {
                 isPrivacyEnabled={isPrivacyEnabled}
                 onTogglePrivacy={() => setIsPrivacyEnabled(!isPrivacyEnabled)}
                 duplicateCount={kpis.duplicate_count}
+                privacyMode={metadata.privacy_mode}
               />
             </div>
 
@@ -527,7 +550,19 @@ export default function Home() {
               <InferencePanel inference={inference} sources={charts.sources} />
             </div>
 
-            <div id="registros" className="scroll-mt-24">
+            <div id="registros" className="scroll-mt-24 flex flex-col gap-3">
+              {/* One-line privacy disclosure tied to backend privacy_mode */}
+              <div className="p-2.5 rounded-lg border border-success/20 bg-success/[0.02] flex items-start gap-2 text-[11px] leading-relaxed text-text-secondary">
+                <Lock className="w-3.5 h-3.5 text-success shrink-0 mt-0.5" />
+                <span>
+                  <strong className="text-success">Divulgação de Privacidade:</strong>{" "}
+                  {metadata.privacy_mode === "raw"
+                    ? "Modo RAW ativo — dados completos (incl. PII) visíveis por escolha explícita documentada."
+                    : isPrivacyEnabled
+                    ? "Nomes e e-mails são mascarados neste painel (LGPD). O botão “Baixar CSV (Mascarado)” exporta sempre a versão anonimizada pelo servidor."
+                    : "LGPD inativo neste painel — dados completos visíveis localmente. O CSV de exportação do servidor permanece mascarado por design."}
+                </span>
+              </div>
               <DataTable 
                 data={activeAnalysis.records || []} 
                 headers={activeAnalysis.charts.available_headers || []} 

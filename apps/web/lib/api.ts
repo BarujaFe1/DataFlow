@@ -79,3 +79,44 @@ export async function uploadAndAnalyzeFile(
 
   return res.json();
 }
+
+/**
+ * Download the masked CSV produced by the backend's GET /api/export endpoint.
+ *
+ * This is the *safe* download path: the server always masks PII before serving
+ * the file (claim C6), so the resulting blob can never contain raw personal
+ * data in demo mode. The blob is named to match the server's
+ * Content-Disposition (dataflow_export.csv).
+ */
+export async function fetchExportCsv(): Promise<void> {
+  let res: Response;
+  try {
+    res = await fetchWithTimeout(`${API_BASE_URL}/export`, {
+      method: "GET",
+      headers: { Accept: "text/csv" },
+      cache: "no-store"
+    });
+  } catch {
+    throw new Error(`Falha ao conectar com o servidor de análise. ${COLD_START_HINT}`);
+  }
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.detail || "Falha ao exportar o CSV mascarado.");
+  }
+
+  const blob = await res.blob();
+  // Respect the server's declared filename when present.
+  const disposition = res.headers.get("Content-Disposition") || "";
+  const nameMatch = disposition.match(/filename="?([^";]+)"?/);
+  const filename = nameMatch ? nameMatch[1] : "dataflow_export.csv";
+
+  const url = window.URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(url);
+}
