@@ -11,6 +11,7 @@ dist/
 
 # Python / Backend Caches
 .venv/
+.venv-ci/
 venv/
 env/
 ENV/

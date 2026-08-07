@@ -27,28 +27,42 @@ This matrix is the source of truth for Phase 1 (documentary correction).
 | **C3** | Correção de Bonferroni aplicada | final_release_summary.md:27 · release_notes_v1.3.md:14 · upgrade_summary_v2.md:9/47 | Backend-authoritative desde commit `79fb033`: `statistics.correct_pvalues` (statsmodels `multipletests`, bonferroni default; fallback manual) + `routes._apply_family_correction`; `bonferroni_alpha` exposto (0.0083 p/ 6 testes). | ✅ Verdadeiro | — |
 | **C4** | Bonferroni é calculado no **frontend** (`executiveConclusions.ts`) | final_release_audit.md:133 · upgrade_summary_v2.md:23/36/47 | Frontend **consome** `bonferroni_alpha`/`corrected_significance` do backend e só refaz o cálculo se ausentes (fallback, implementado em Rodada 4). Autoridade está no backend. | 🔄 Mudou | Corrigir docs → "backend-authoritative; frontend consome + fallback". |
 | **C5** | Mascaramento LGPD feito no **frontend** (`masking.ts`) | final_release_audit.md:98 | Backend mascara por padrão: `security.mask_records` (`mask_name`→`Candidato {ID}`, `mask_email`→`g***@domínio`) aplicado em `routes` via `should_mask_records()` (True salvo `local`+raw). `masking.ts` do frontend ainda existe como camada extra (defesa em profundidade). | 🔄 Mudou | Corrigir final_release_audit.md:98-101. |
-| **C6** | Mascaramento "persistente" / em "CSVs de exportação por padrão" | final_release_audit.md:101 · final_release_summary.md:34 · technical_methodology.md:119 | Backend mascara no modo demo por padrão; **não** mascara em `local` + `DATAFLOW_ENABLE_RAW_RECORDS=true`. Política de CSV de exportação **não verificada** (candidata a follow-up). | ⚠️ Parcial | Corrigir claim de "persistente"; marcar CSV como não verificado. |
-| **C7** | Cobertura de testes ≥ 80% | (não reclamado antes; agora portão CI) | CI (`ci.yml`) roda `pytest --cov=app --cov-fail-under=80`; medido local **89.9%**. | ✅ Agora real | Registro de evidência nova. |
+| **C6** | Mascaramento "persistente" / em "CSVs de exportação por padrão" | final_release_audit.md:101 · final_release_summary.md:34 · technical_methodology.md:119 | Backend mascara antes de exportar: `GET /api/export` serve `records_out` já mascarados no modo demo e só expõe raw em `local`+`DATAFLOW_ENABLE_RAW_RECORDS=true`. Verificado por `tests/test_export.py` (demo mascara; local+raw expõe; Content-Disposition `dataflow_export.csv`). | ✅ Verdadeiro (testado) | Corrigir claim de "persistente" (não vale p/ todos os modos); CSV de exportação agora testado. |
+| **C7** | Cobertura de testes ≥ 80% passa no CI | CI (`ci.yml`) impõe `pytest --cov=app --cov-fail-under=80`; medido local **89.9%**. | ⚠️ **Parcial** — gate configurado e 89,9% medido localmente; a execução remota do CI ainda falha durante a *collection* (httpx ausente + `ModuleNotFoundError: app`). | Registro de evidência nova; ver C15. |
 | **C8** | Contagem de testes hardcoded ("13 testes", "36 testes") | portfolio_pitch.md:120 · progress_2026-08-06.md (≤36) | Contagem móvel: 6 → 13 → 36 → **46** (esta branch). | ⚠️ Stale/moving | Remover hardcodes do pitch; referenciar badge CI. |
 | **C9** | Welch t-test / Welch ANOVA / Cramér's V / Cohen's d / eta² | portfolio_pitch.md:75 · final_release_audit.md:129-131 | Todos em `statistics.py`; cobertos por `tests/test_statistics.py`. | ✅ Verdadeiro | — |
 | **C10** | Health Score 98 (demo) | progress_2026-08-06.md:48 | Demo retorna 98 (6 dimensões ponderadas, versionado). Sem breakdown na UI. | ✅ Verdadeiro (carece de contexto) | Fase 8 (UX): ScoreBreakdown. |
 | **C11** | Grupos degenerados / colunas booleanas tratados | (novo nesta branch) | `run_t_test` retorna `None` p/ grupo constante; `infer_type` classifica `boolean`; `detect_outliers` protege bool. | ✅ Verdadeiro (novo) | — |
 | **C12** | Erros estruturados + request_id; 413; extensão case-insensitive; non-CSV 400 | (novo nesta branch) | `structured_error` com `request_id`; `get_max_upload_bytes` (413); extensão case-insensitive aceita; não-CSV → 400. Testado em `tests/test_api.py`. | ✅ Verdadeiro (novo) | — |
 | **C13** | Veto a ML preditivo / não ranqueia candidatos | final_release_summary.md:33 · final_release_audit.md:142 | Presente na documentação de princípios; sem evidência de código que ranqueie/aprove automaticamente. | ✅ Verdadeiro (princípio) | — |
+| **C14** | "O ambiente backend é reproduível em CI." | (não reclamado) | Runner limpo e ambiente local divergem: `requirements.txt` usa só limites inferiores; `httpx` (TestClient) não declarado; `pytest` sem `PYTHONPATH` falha em importar `app`. | ❌/⚠️ | Critério para ✅: dependências controladas (`requirements-dev.txt` + `constraints.txt`), clean install, backend CI verde. Em andamento (ver C15). |
+| **C15** | "Ruff, testes e cobertura ≥80% passam no GitHub Actions." | (nível de evidência pública) | Workflow ainda falha neste SHA (`fafaa84`): backend quebra na *collection* por httpx ausente e `ModuleNotFoundError: app`. Frontend (Node 20/22) passa. | ❌ neste SHA | Só vira ✅ quando o workflow real estiver verde no novo SHA pós-rebase. Diferencia "CI configurado" de "CI passou". |
 
 ## Decisões de reconciliação
-- **CORS (C1):** O context pack original afirmava wildcard; o código sempre foi explícito
-  (env-driven). Não houve mudança de código — apenas esclarecimento. Nunca usar `*`+credentials.
+- **CORS (C1):** Versões anteriores usavam wildcard; o comportamento foi endurecido na
+  branch de qualidade (commit `8f97eeb`, Rodada 1+2: *"main.py: strict CORS allow_origins
+  (localhost+Vercel) instead of wildcard"*). O estado atual usa apenas origens explícitas
+  configuráveis por ambiente (`DATAFLOW_ALLOWED_ORIGINS`). O context pack estava
+  desatualizado em relação ao código local auditado — o caso vira: encontrou problema →
+  corrigiu → documentou. Nunca usar `*`+credentials.
 - **Bonferroni (C3/C4):** Autoridade única no backend desde Rodada 4; o frontend é
   consumidor com fallback. Docs de release V1.3 ainda descrevem o frontend como o
   calculador — impreciso, corrigido nesta Fase 1.
-- **PII (C5/C6):** Mascaramento tornou-se **backend-enforced** (defesa em profundidade) e
-  **demo-por-padrão**; não é "persistente em todos os modos" (`local`+raw desativa). A
-  política de CSV de exportação precisa de verificação separada (follow-up).
-- **Cobertura (C7):** Antes não imposta; agora portão CI de 80% (89.9% medido). Deixar o
-  CI gerar o número — **não hardcodar no CV**.
+- **PII (C5/C6):** Mascaramento **backend-enforced** (defesa em profundidade) e
+  **demo-por-padrão**; não é "persistente em todos os modos" (`local`+raw desativa).
+  O CSV de exportação agora é testado (`tests/test_export.py`): demo mascara, local+raw
+  expõe. O claim de "persistente" foi corrigido nos docs (Fase 1).
+- **Cobertura (C7):** Antes não imposta; agora portão CI de 80% **configurado** (89.9% medido
+  localmente). A execução remota ainda falha — ver C14/C15. Deixar o CI gerar o número —
+  **não hardcodar no CV**.
 - **Testes (C8):** Contagem é móvel; o CV/pitch deve referenciar o badge de cobertura do CI,
   não um número fixo.
+- **Reprodutibilidade (C14/C15):** CI *configurado* ≠ CI *verde*. Neste SHA o backend quebra
+  na *collection* (`httpx` ausente — só instalado à mão no ambiente local — e
+  `ModuleNotFoundError: app` porque o `pytest` sem `PYTHONPATH` não monta `sys.path`). Em
+  correção: `httpx` declarado em `requirements-dev.txt`, `constraints.txt` trava as versões
+  verificadas, e o CI roda `python -m pytest` com `PYTHONPATH=.`. C15 vira ✅ só quando o
+  workflow real passar no novo SHA pós-rebase.
 
 ## Como usar esta matriz
 Sempre que um doc afirmar algo sobre CORS, Levene/ANOVA, Bonferroni, PII/LGPD ou cobertura,

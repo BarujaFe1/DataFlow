@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.12"]
+        python-version: ["3.13"]
     defaults:
       run:
         working-directory: apps/api
@@ -25,18 +25,20 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
-          cache-dependency-path: apps/api/requirements.txt
+          cache-dependency-path: apps/api/requirements-dev.txt
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r requirements-dev.txt -c constraints.txt
 
       - name: Lint (ruff)
         run: ruff check .
 
       - name: Run tests with coverage
-        run: pytest --cov=app --cov-report=term-missing --cov-fail-under=80
+        env:
+          PYTHONPATH: .
+        run: python -m pytest --cov=app --cov-report=term-missing --cov-fail-under=80
 
   frontend:
     name: Frontend (Node ${{ matrix.node-version }})
@@ -51,7 +53,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
