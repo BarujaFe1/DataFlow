@@ -64,11 +64,13 @@ def get_allowed_origins() -> List[str]:
     if env:
         return [o.strip() for o in env.split(",") if o.strip()]
     # Safe, explicit defaults (never "*").
+    # Production frontend: https://dataflow-sand.vercel.app
+    # (Render backend: https://dataflow-glu1.onrender.com)
     return [
         "http://localhost:3000",
         "http://127.0.0.1:3000",
         "https://dataflow.vercel.app",
-        "https://dataflow-glu1.vercel.app",
+        "https://dataflow-sand.vercel.app",
     ]
 
 
