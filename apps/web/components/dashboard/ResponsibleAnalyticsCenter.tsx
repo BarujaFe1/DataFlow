@@ -37,7 +37,7 @@ export default function ResponsibleAnalyticsCenter({
   }, []);
 
   // Masking guarantee text driven by the backend privacy_mode.
-  const maskingGuarantee = useMemo(() => {
+  const maskingPolicy = useMemo(() => {
     switch (privacyMode) {
       case "raw":
         return {
@@ -55,7 +55,7 @@ export default function ResponsibleAnalyticsCenter({
         return {
           tone: "bg-success/10 border-success/20 text-success",
           icon: <Lock className="w-3.5 h-3.5 shrink-0" />,
-          text: "Modo Demo: mascaramento garantido no servidor. O CSV de exportação (GET /api/export) nunca contém PII bruta, por design."
+          text: "Modo Demo: os registros retornados e exportados passam pelo mascaramento configurado no backend (GET /api/export sempre mascara PII no modo demo)."
         };
     }
   }, [privacyMode, isPrivacyEnabled]);
@@ -214,13 +214,13 @@ export default function ResponsibleAnalyticsCenter({
       <div className="p-5 rounded-xl border border-success/15 bg-success/[0.02] flex flex-col gap-3">
         <div className="flex items-center gap-2">
           <EyeOff className="w-4 h-4 text-success shrink-0" />
-          <span className="text-xs font-bold text-success uppercase tracking-wider">Divulgação de Privacidade & Mascaramento (LGPD)</span>
+          <span className="text-xs font-bold text-success uppercase tracking-wider">Divulgação de Privacidade — Política de Mascaramento (LGPD)</span>
         </div>
 
-        {/* Live mode guarantee */}
-        <div className={`p-2.5 rounded-lg border flex items-start gap-2 text-[11px] leading-relaxed ${maskingGuarantee.tone}`}>
-          {maskingGuarantee.icon}
-          <span>{maskingGuarantee.text}</span>
+        {/* Live mode policy (configured behavior, not an absolute guarantee) */}
+        <div className={`p-2.5 rounded-lg border flex items-start gap-2 text-[11px] leading-relaxed ${maskingPolicy.tone}`}>
+          {maskingPolicy.icon}
+          <span>{maskingPolicy.text}</span>
         </div>
 
         {/* Demonstration of the transform applied to PII */}

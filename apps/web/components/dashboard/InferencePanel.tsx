@@ -305,8 +305,9 @@ export default function InferencePanel({ inference, sources = [] }: InferencePan
                     <div className="p-2.5 rounded-lg border border-warning/25 bg-warning/10 text-warning flex items-start gap-2 text-[10px] leading-relaxed">
                       <AlertTriangle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
                       <span>
-                        <strong>Amostra limitada:</strong> {smallSampleReason(raw)}. Interprete o resultado como sinal
-                        exploratório, não como conclusão definitiva. Recomenda-se nova coleta para confirmar.
+                        <strong>Amostra limitada — atenção na interpretação:</strong> {smallSampleReason(raw)}. Este é um
+                        alerta heurístico de transparência, não um critério universal de validade do teste. Consulte também
+                        as premissas específicas de cada teste e os avisos emitidos pelo backend.
                       </span>
                     </div>
                   );

@@ -167,8 +167,8 @@ export default function ExecutiveHero({ analysis, onGenerateReport, onReset, onS
               </p>
               {isSmallSample && (
                 <p className="text-[10px] text-warning leading-relaxed mt-1 font-medium">
-                  ⚠️ Amostra pequena ({metadata.rows} registros): confiança do score reduzida para {Math.round(confidence * 100)}%.
-                  Leia os resultados como sinal direcional, não como certificado absoluto de qualidade.
+                  ⚠️ Amostra pequena ({metadata.rows} registros): robustez da avaliação reduzida para {Math.round(confidence * 100)}%.
+                  Leia os resultados como sinal direcional — este é um indicador heurístico, não um certificado absoluto de qualidade.
                 </p>
               )}
             </div>

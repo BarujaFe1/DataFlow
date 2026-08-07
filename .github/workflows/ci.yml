@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, feat/dataflow-v1-hardening]
+    branches: [main, feat/dataflow-v1-hardening, feat/dataflow-ux-phase8]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -60,13 +60,19 @@ jobs:
           cache-dependency-path: apps/web/package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        # `npm install` (not `ci`) is used so the lockfile can be reconciled
+        # when devDependencies change; switch back to `npm ci` once the
+        # committed package-lock.json is refreshed.
+        run: npm install
 
       - name: Lint
         run: npm run lint
 
       - name: Typecheck
         run: npm run typecheck
+
+      - name: Unit tests (Vitest)
+        run: npm test
 
       - name: Build
         run: npm run build

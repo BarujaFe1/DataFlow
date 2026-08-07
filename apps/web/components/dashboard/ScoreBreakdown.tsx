@@ -79,12 +79,12 @@ export default function ScoreBreakdown({ score }: ScoreBreakdownProps) {
             }`}
             title={
               isSmallSample
-                ? `Amostra pequena (${Math.round(confidence * 100)}% de confiança): o score é uma heurística de triagem e não certificado de qualidade.`
-                : "Amostra suficiente (>=100 registros): confiança plena na heurística de triagem."
+                ? `Amostra pequena (${Math.round(confidence * 100)}% de robustez da avaliação): indicador heurístico de suporte baseado na quantidade e estrutura dos dados. Não representa probabilidade nem intervalo de confiança estatístico.`
+                : "Amostra com suporte de dados suficiente (>=100 registros): heurística de triagem com boa base. Não representa probabilidade nem intervalo de confiança estatístico."
             }
           >
             <Gauge className="w-3.5 h-3.5 shrink-0" />
-            <span>Confiança {Math.round(confidence * 100)}%</span>
+            <span>Robustez da avaliação {Math.round(confidence * 100)}%</span>
           </div>
         </div>
       </div>
@@ -144,8 +144,9 @@ export default function ScoreBreakdown({ score }: ScoreBreakdownProps) {
           {s.applicability || "Screening heuristic for tabular data readiness."}{" "}
           {isSmallSample && (
             <>
-              Com <strong className="text-warning">{Math.round(confidence * 100)}%</strong> de confiança (amostra &lt; 100
-              registros), leia o score como sinal direcional, não como certificado absoluto de qualidade.
+              Com <strong className="text-warning">{Math.round(confidence * 100)}%</strong> de robustez da avaliação (amostra
+              &lt; 100 registros), leia o score como sinal direcional — este é um indicador heurístico, não um
+              certificado absoluto de qualidade.
             </>
           )}
         </p>
