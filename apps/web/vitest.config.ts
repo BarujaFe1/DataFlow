@@ -18,4 +18,12 @@ export default defineConfig({
     setupFiles: ["./vitest.setup.ts"],
     include: ["**/*.test.{ts,tsx}"],
   },
+  // Tests do not import CSS, and the project's Tailwind v4 PostCSS plugin (loaded
+  // by Vite from postcss.config.mjs) is unnecessary here. Provide an empty inline
+  // PostCSS config so Vitest does not initialize Tailwind during the run.
+  css: {
+    postcss: {
+      plugins: [],
+    },
+  },
 });
