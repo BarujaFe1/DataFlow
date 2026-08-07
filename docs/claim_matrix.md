@@ -28,15 +28,15 @@ This matrix is the source of truth for Phase 1 (documentary correction).
 | **C4** | Bonferroni é calculado no **frontend** (`executiveConclusions.ts`) | final_release_audit.md:133 · upgrade_summary_v2.md:23/36/47 | Frontend **consome** `bonferroni_alpha`/`corrected_significance` do backend e só refaz o cálculo se ausentes (fallback, implementado em Rodada 4). Autoridade está no backend. | 🔄 Mudou | Corrigir docs → "backend-authoritative; frontend consome + fallback". |
 | **C5** | Mascaramento LGPD feito no **frontend** (`masking.ts`) | final_release_audit.md:98 | Backend mascara por padrão: `security.mask_records` (`mask_name`→`Candidato {ID}`, `mask_email`→`g***@domínio`) aplicado em `routes` via `should_mask_records()` (True salvo `local`+raw). `masking.ts` do frontend ainda existe como camada extra (defesa em profundidade). | 🔄 Mudou | Corrigir final_release_audit.md:98-101. |
 | **C6** | Mascaramento "persistente" / em "CSVs de exportação por padrão" | final_release_audit.md:101 · final_release_summary.md:34 · technical_methodology.md:119 | Backend mascara antes de exportar: `GET /api/export` serve `records_out` já mascarados no modo demo e só expõe raw em `local`+`DATAFLOW_ENABLE_RAW_RECORDS=true`. Verificado por `tests/test_export.py` (demo mascara; local+raw expõe; Content-Disposition `dataflow_export.csv`). | ✅ Verdadeiro (testado) | Corrigir claim de "persistente" (não vale p/ todos os modos); CSV de exportação agora testado. |
-| **C7** | Cobertura de testes ≥ 80% passa no CI | CI (`ci.yml`) impõe `pytest --cov=app --cov-fail-under=80`; medido local **89.9%**. | ⚠️ **Parcial** — gate configurado e 89,9% medido localmente; a execução remota do CI ainda falha durante a *collection* (httpx ausente + `ModuleNotFoundError: app`). | Registro de evidência nova; ver C15. |
+| **C7** | Cobertura de testes ≥ 80% passa no CI | CI (`ci.yml`) impõe `pytest --cov=app --cov-fail-under=80`; medido local **89,86%**. | ✅ **Verdadeiro** — gate de 80% configurado **e comprovado no GitHub Actions** no SHA `2ecb984`: `ruff` limpo, `48 passed`, cobertura **89,86%** (≥80% atingido). Local e remoto concordam. | Ver C15. |
 | **C8** | Contagem de testes hardcoded ("13 testes", "36 testes") | portfolio_pitch.md:120 · progress_2026-08-06.md (≤36) | Contagem móvel: 6 → 13 → 36 → **46** (esta branch). | ⚠️ Stale/moving | Remover hardcodes do pitch; referenciar badge CI. |
 | **C9** | Welch t-test / Welch ANOVA / Cramér's V / Cohen's d / eta² | portfolio_pitch.md:75 · final_release_audit.md:129-131 | Todos em `statistics.py`; cobertos por `tests/test_statistics.py`. | ✅ Verdadeiro | — |
 | **C10** | Health Score 98 (demo) | progress_2026-08-06.md:48 | Demo retorna 98 (6 dimensões ponderadas, versionado). Sem breakdown na UI. | ✅ Verdadeiro (carece de contexto) | Fase 8 (UX): ScoreBreakdown. |
 | **C11** | Grupos degenerados / colunas booleanas tratados | (novo nesta branch) | `run_t_test` retorna `None` p/ grupo constante; `infer_type` classifica `boolean`; `detect_outliers` protege bool. | ✅ Verdadeiro (novo) | — |
 | **C12** | Erros estruturados + request_id; 413; extensão case-insensitive; non-CSV 400 | (novo nesta branch) | `structured_error` com `request_id`; `get_max_upload_bytes` (413); extensão case-insensitive aceita; não-CSV → 400. Testado em `tests/test_api.py`. | ✅ Verdadeiro (novo) | — |
 | **C13** | Veto a ML preditivo / não ranqueia candidatos | final_release_summary.md:33 · final_release_audit.md:142 | Presente na documentação de princípios; sem evidência de código que ranqueie/aprove automaticamente. | ✅ Verdadeiro (princípio) | — |
-| **C14** | "O ambiente backend é reproduível em CI." | (não reclamado) | Runner limpo e ambiente local divergem: `requirements.txt` usa só limites inferiores; `httpx` (TestClient) não declarado; `pytest` sem `PYTHONPATH` falha em importar `app`. | ❌/⚠️ | Critério para ✅: dependências controladas (`requirements-dev.txt` + `constraints.txt`), clean install, backend CI verde. Em andamento (ver C15). |
-| **C15** | "Ruff, testes e cobertura ≥80% passam no GitHub Actions." | (nível de evidência pública) | Workflow ainda falha neste SHA (`fafaa84`): backend quebra na *collection* por httpx ausente e `ModuleNotFoundError: app`. Frontend (Node 20/22) passa. | ❌ neste SHA | Só vira ✅ quando o workflow real estiver verde no novo SHA pós-rebase. Diferencia "CI configurado" de "CI passou". |
+| **C14** | "O ambiente backend é reproduível em CI." | (não reclamado) | `requirements-dev.txt` (pytest/pytest-cov/ruff/httpx) + `constraints.txt` (versões fixas) instalam o mesmo conjunto em runner limpo e local; CI roda `python -m pytest` com `PYTHONPATH=.`. | ✅ **Verdadeiro** | Comprovado: backend verde no SHA `2ecb984` (48 passed, 89,86%), sem erro de httpx ou `ModuleNotFoundError: app`. |
+| **C15** | "Ruff, testes e cobertura ≥80% passam no GitHub Actions." | (nível de evidência pública) | Workflow **verde no SHA `2ecb984`**: backend (Python 3.13) `ruff` limpo + `48 passed` + cobertura `89,86%` ≥80%; frontend (Node 20/22) lint/typecheck/build passam. | ✅ **Verdadeiro** | "CI configurado" virou "CI passou" — evidência pública real, não aspirational. |
 
 ## Decisões de reconciliação
 - **CORS (C1):** Versões anteriores usavam wildcard; o comportamento foi endurecido na
@@ -52,17 +52,16 @@ This matrix is the source of truth for Phase 1 (documentary correction).
   **demo-por-padrão**; não é "persistente em todos os modos" (`local`+raw desativa).
   O CSV de exportação agora é testado (`tests/test_export.py`): demo mascara, local+raw
   expõe. O claim de "persistente" foi corrigido nos docs (Fase 1).
-- **Cobertura (C7):** Antes não imposta; agora portão CI de 80% **configurado** (89.9% medido
-  localmente). A execução remota ainda falha — ver C14/C15. Deixar o CI gerar o número —
-  **não hardcodar no CV**.
+- **Cobertura (C7):** Portão CI de 80% **configurado e comprovado** no GitHub Actions (SHA
+  `2ecb984`): `ruff` limpo, 48 passed, 89,86% de cobertura. Local (89,86%) e remoto concordam —
+  **não hardcodar no CV**; referenciar o badge de cobertura do CI.
 - **Testes (C8):** Contagem é móvel; o CV/pitch deve referenciar o badge de cobertura do CI,
   não um número fixo.
-- **Reprodutibilidade (C14/C15):** CI *configurado* ≠ CI *verde*. Neste SHA o backend quebra
-  na *collection* (`httpx` ausente — só instalado à mão no ambiente local — e
-  `ModuleNotFoundError: app` porque o `pytest` sem `PYTHONPATH` não monta `sys.path`). Em
-  correção: `httpx` declarado em `requirements-dev.txt`, `constraints.txt` trava as versões
-  verificadas, e o CI roda `python -m pytest` com `PYTHONPATH=.`. C15 vira ✅ só quando o
-  workflow real passar no novo SHA pós-rebase.
+- **Reprodutibilidade (C14/C15):** CI *configurado* ≠ CI *verde* — essa distinção guiou a
+  correção. `httpx` declarado em `requirements-dev.txt`, `constraints.txt` trava as versões
+  verificadas (instaladas também no runner limpo), e o CI roda `python -m pytest` com
+  `PYTHONPATH=.`. **C14 e C15 agora ✅**: workflow verde no SHA `2ecb984` (backend 48 passed,
+  89,86%; frontend Node 20/22). "CI configurado" virou "CI passou".
 
 ## Como usar esta matriz
 Sempre que um doc afirmar algo sobre CORS, Levene/ANOVA, Bonferroni, PII/LGPD ou cobertura,
