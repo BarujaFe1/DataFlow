@@ -129,6 +129,9 @@ def run_pipeline(
         request_id=request_id,
     )
 
+    if sec.should_mask_records():
+        quality_profile = sec.mask_quality_profile(quality_profile)
+
     quality_summary = QualitySummary(
         health_score=quality_profile["health_score"],
         summary=quality_profile["summary"],

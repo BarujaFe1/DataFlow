@@ -130,6 +130,61 @@ def test_local_raw_mode_keeps_pii(client, monkeypatch):
     assert any("***" not in rec.get("email", "") for rec in records if rec.get("email"))
 
 
+def test_analyze_masks_quality_top_values_in_masked_mode(client, monkeypatch):
+    """Quality top values must not bypass the response-level PII masking policy."""
+    name_canary = "Privacy Canary Name 9f3c"
+    email_canary = "privacy-canary-9f3c@example.test"
+    monkeypatch.setenv("DATAFLOW_PRIVACY_MODE", "demo")
+    monkeypatch.setenv("DATAFLOW_ENABLE_RAW_RECORDS", "false")
+
+    response = client.post(
+        "/api/analyze",
+        files={
+            "file": (
+                "canary.csv",
+                (
+                    "candidate_id,name,email\n"
+                    f"CAN-9F3C,{name_canary},{email_canary}\n"
+                ).encode(),
+                "text/csv",
+            )
+        },
+    )
+
+    assert response.status_code == 200
+    assert name_canary not in response.text
+    assert email_canary not in response.text
+
+
+def test_analyze_keeps_quality_top_values_in_explicit_local_raw_mode(client, monkeypatch):
+    """Explicit local raw mode keeps quality values aligned with raw records/export."""
+    name_canary = "Local Raw Canary Name 7a2d"
+    email_canary = "local-raw-canary-7a2d@example.test"
+    monkeypatch.setenv("DATAFLOW_PRIVACY_MODE", "local")
+    monkeypatch.setenv("DATAFLOW_ENABLE_RAW_RECORDS", "true")
+
+    response = client.post(
+        "/api/analyze",
+        files={
+            "file": (
+                "canary.csv",
+                (
+                    "candidate_id,name,email\n"
+                    f"CAN-7A2D,{name_canary},{email_canary}\n"
+                ).encode(),
+                "text/csv",
+            )
+        },
+    )
+
+    assert response.status_code == 200
+    assert name_canary in response.text
+    assert email_canary in response.text
+    quality_columns = {column["name"]: column for column in response.json()["quality"]["columns"]}
+    assert quality_columns["name"]["top_values"][0]["value"] == name_canary
+    assert quality_columns["email"]["top_values"][0]["value"] == email_canary
+
+
 # ---------------------------------------------------------------------------
 # Structured errors never leak tracebacks
 # ---------------------------------------------------------------------------
