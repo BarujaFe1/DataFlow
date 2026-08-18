@@ -39,6 +39,25 @@ import ScoreBreakdown from "@/components/dashboard/ScoreBreakdown";
 import IssuesPanel from "@/components/dashboard/IssuesPanel";
 import SidebarNav from "@/components/dashboard/SidebarNav";
 
+export function getPrivacyDisclosure(
+  privacyMode: string | undefined,
+  isPrivacyEnabled: boolean
+): string {
+  switch (privacyMode) {
+    case "raw":
+      return "Modo RAW ativo — dados completos (incl. PII) visíveis por escolha explícita documentada.";
+    case "local":
+      return isPrivacyEnabled
+        ? "Modo Local: nomes e e-mails são mascarados neste painel. A exportação pode conter registros brutos quando habilitados localmente."
+        : "Modo Local: mascaramento desativado neste painel — dados completos visíveis. A exportação pode conter registros brutos quando habilitados localmente.";
+    case "production":
+      return "Modo Produção: nomes e e-mails seguem a política de mascaramento configurada no backend.";
+    case "demo":
+      return "Modo Demo: nomes e e-mails são mascarados neste painel conforme a política configurada no backend.";
+    default:
+      return "Modo não identificado: siga a política de mascaramento configurada no backend; o estado de mascaramento não foi inferido.";
+  }
+}
 
 export default function Home() {
   const [activeAnalysis, setActiveAnalysis] = useState<AnalysisResponse | null>(null);
@@ -556,13 +575,7 @@ export default function Home() {
                 <Lock className="w-3.5 h-3.5 text-success shrink-0 mt-0.5" />
                 <span>
                   <strong className="text-success">Divulgação de Privacidade:</strong>{" "}
-                  {metadata.privacy_mode === "raw"
-                    ? "Modo RAW ativo — dados completos (incl. PII) visíveis por escolha explícita documentada."
-                    : metadata.privacy_mode === "local"
-                    ? isPrivacyEnabled
-                      ? "Modo Local: nomes e e-mails são mascarados neste painel. A exportação pode conter registros brutos quando habilitados localmente."
-                      : "Modo Local: mascaramento desativado neste painel — dados completos visíveis. A exportação pode conter registros brutos quando habilitados localmente."
-                    : "Modo Demo: nomes e e-mails são mascarados neste painel conforme a política configurada no backend."}
+                  {getPrivacyDisclosure(metadata.privacy_mode, isPrivacyEnabled)}
                 </span>
               </div>
               <DataTable 

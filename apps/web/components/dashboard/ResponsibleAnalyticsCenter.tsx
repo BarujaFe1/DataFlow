@@ -57,11 +57,17 @@ export default function ResponsibleAnalyticsCenter({
           icon: <Lock className="w-3.5 h-3.5 shrink-0" />,
           text: "Modo Produção: os registros retornados e exportados seguem a política de mascaramento configurada no backend."
         };
-      default:
+      case "demo":
         return {
           tone: "bg-success/10 border-success/20 text-success",
           icon: <Lock className="w-3.5 h-3.5 shrink-0" />,
           text: "Modo Demo: os registros retornados e exportados passam pelo mascaramento configurado no backend (GET /api/export sempre mascara PII no modo demo)."
+        };
+      default:
+        return {
+          tone: "bg-warning/10 border-warning/20 text-warning",
+          icon: <Info className="w-3.5 h-3.5 shrink-0" />,
+          text: "Modo não identificado: siga a política de mascaramento configurada no backend; o estado de mascaramento não foi inferido."
         };
     }
   }, [privacyMode, isPrivacyEnabled]);

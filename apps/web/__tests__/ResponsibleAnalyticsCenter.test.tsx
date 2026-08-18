@@ -75,6 +75,13 @@ describe("ResponsibleAnalyticsCenter — privacy disclosure", () => {
     expect(screen.queryByText(/sempre mascara/i)).not.toBeInTheDocument();
   });
 
+  it("does not infer masking state for an unknown backend mode", () => {
+    render(<ResponsibleAnalyticsCenter {...baseProps} privacyMode="preview" />);
+    expect(screen.getByText(/Modo não identificado/)).toBeInTheDocument();
+    expect(screen.getByText(/estado de mascaramento não foi inferido/)).toBeInTheDocument();
+    expect(screen.queryByText(/sempre mascara/i)).not.toBeInTheDocument();
+  });
+
   it("uses masking terminology instead of an LGPD state", () => {
     render(<ResponsibleAnalyticsCenter {...baseProps} privacyMode="demo" />);
     expect(
