@@ -136,19 +136,19 @@ export function generateExecutiveConclusions(
       
       recommendedAction = nominalSignificance
         ? "Auditar se o processo seletivo exige diploma para cargos onde habilidades práticas são suficientes, reduzindo potenciais vieses de barreira."
-        : "Manter o foco em testes técnicos objetivos e portfólio, garantindo igualdade de oportunidades.";
+        : "Manter o foco em testes técnicos objetivos e portfólio; reavaliar periodicamente possíveis barreiras no processo.";
     } else if (varsJoined.includes("source_channel") && varsJoined.includes("status")) {
       practicalInterpretation = nominalSignificance
         ? `Existe uma disparidade de atração: os canais de captação apresentam taxas de aprovação desiguais (p-valor = ${p.toFixed(4)}), sugerindo maior fit técnico em determinados portais.`
-        : `Com os dados disponíveis, o canal de origem não apresenta associação estatisticamente significativa com a aprovação final (p-valor = ${p.toFixed(4)}). Isso indica ausência de evidência de diferença entre canais nesta base — o que não prova que os canais sejam equivalentes; pode refletir poder estatístico insuficiente ou um recorte específico.`;
+        : `Com os dados disponíveis, o canal de origem não apresentou evidência estatística suficiente de associação com a aprovação final (p-valor = ${p.toFixed(4)}). O resultado é limitado a esta base e pode refletir poder estatístico insuficiente ou um recorte específico.`;
 
       recommendedAction = nominalSignificance
         ? "Concentrar esforços de mídia nos canais de maior taxa de aprovação relativa e calibrar os anúncios de canais menos eficientes."
-        : "Manter a diversificação da origem das candidaturas; reavaliar com amostra maior ou outro recorte antes de concluir sobre equivalência de canais.";
+        : "Manter a diversificação da origem das candidaturas; reavaliar com amostra maior ou outro recorte antes de tomar decisões sobre os canais.";
     } else if (varsJoined.includes("score_test") && varsJoined.includes("status")) {
       practicalInterpretation = nominalSignificance
         ? `Candidatos aprovados obtiveram notas significativamente diferentes nas avaliações técnicas (p-valor = ${p.toFixed(4)}). A magnitude prática (${magnitudeClass}) sugere forte diferenciação de performance.`
-        : `A nota do teste técnico é estatisticamente semelhante entre os grupos aprovados e não aprovados (p-valor = ${p.toFixed(4)}).`;
+        : `A nota do teste técnico não apresentou evidência estatística suficiente de diferença entre os grupos nesta base (p-valor = ${p.toFixed(4)}).`;
       
       recommendedAction = nominalSignificance
         ? "Manter o teste técnico como fase inicial objetiva de corte de competências."
@@ -235,14 +235,14 @@ export function generateExecutiveConclusions(
       );
     } else {
       executiveSummary.push(
-        "A escolaridade formal não demonstra associação estatística com a aprovação final, garantindo igualdade de oportunidades entre níveis de formação."
+        "A escolaridade formal não apresentou evidência estatística suficiente de associação com a aprovação final nesta base; o resultado não permite concluir sobre oportunidades entre níveis de formação."
       );
     }
   }
 
   // 4. Data Quality / Masking
   executiveSummary.push(
-    "A qualidade estrutural da base é satisfatória, com mascaramento de PII (nomes/e-mails) ativo no relatório público segundo a política de privacidade do projeto (responsible analytics), sem constituir certificação de conformidade regulatória."
+    "A qualidade estrutural da base é satisfatória. O relatório aplica mascaramento de PII (nomes/e-mails) conforme a política configurada no backend; esse mascaramento é apenas de apresentação."
   );
 
   return {

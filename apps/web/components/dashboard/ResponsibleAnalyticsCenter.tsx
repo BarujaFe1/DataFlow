@@ -36,7 +36,7 @@ export default function ResponsibleAnalyticsCenter({
     );
   }, []);
 
-  // Masking guarantee text driven by the backend privacy_mode.
+  // Presentation text follows the backend-provided masking mode.
   const maskingPolicy = useMemo(() => {
     switch (privacyMode) {
       case "raw":
@@ -49,7 +49,7 @@ export default function ResponsibleAnalyticsCenter({
         return {
           tone: isPrivacyEnabled ? "bg-success/10 border-success/20 text-success" : "bg-warning/10 border-warning/20 text-warning",
           icon: isPrivacyEnabled ? <Lock className="w-3.5 h-3.5 shrink-0" /> : <Unlock className="w-3.5 h-3.5 shrink-0" />,
-          text: `Modo Local: o mascaramento segue o toggle LGPD do cabeçalho (atualmente ${isPrivacyEnabled ? "ATIVO" : "INATIVO"}). O CSV de exportação do servidor sempre mascara PII.`
+          text: `Modo Local: o mascaramento de apresentação segue o controle do cabeçalho (atualmente ${isPrivacyEnabled ? "ATIVO" : "DESATIVADO"}). A exportação pode conter registros brutos quando habilitados localmente.`
         };
       default:
         return {
@@ -87,11 +87,11 @@ export default function ResponsibleAnalyticsCenter({
             <span>Responsible Analytics Center</span>
           </h3>
           <p className="text-xs text-text-secondary mt-1">
-            Governança de dados, conformidade LGPD e ética algorítmica integradas nativamente na ferramenta.
+            Governança de dados, mascaramento de apresentação e ética algorítmica integrados à ferramenta.
           </p>
         </div>
 
-        {/* Live LGPD state badge */}
+        {/* Live presentation-masking state badge */}
         <div className="flex items-center gap-2">
           <button
             onClick={onTogglePrivacy}
@@ -104,12 +104,12 @@ export default function ResponsibleAnalyticsCenter({
             {isPrivacyEnabled ? (
               <>
                 <Lock className="w-3.5 h-3.5 shrink-0" />
-                <span>Modo LGPD: Ativo (Mascarado)</span>
+                <span>Mascaramento: Ativo</span>
               </>
             ) : (
               <>
                 <Unlock className="w-3.5 h-3.5 shrink-0" />
-                <span>Modo LGPD: Inativo (Exposto)</span>
+                <span>Mascaramento: Desativado</span>
               </>
             )}
           </button>
@@ -150,11 +150,11 @@ export default function ResponsibleAnalyticsCenter({
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-text-primary uppercase tracking-wider block">Colunas Sensíveis Detectadas</span>
               <span className="text-[10px] font-mono text-text-muted bg-border-subtle px-2 py-0.5 rounded">
-                LGPD / PII
+                PII / dados sensíveis
               </span>
             </div>
             <p className="text-xs text-text-secondary leading-relaxed">
-              O motor de profiling identificou {sensitiveColumns.length} coluna(s) com dados de identificação pessoal ou sensíveis à LGPD:
+              O motor de profiling identificou {sensitiveColumns.length} coluna(s) com dados de identificação pessoal ou potencialmente sensíveis:
             </p>
             <div className="flex flex-wrap gap-1.5 mt-1">
               {sensitiveColumns.map(c => (
@@ -170,7 +170,7 @@ export default function ResponsibleAnalyticsCenter({
             {isPrivacyEnabled && (
               <span className="text-[9px] text-success font-medium flex items-center gap-1 mt-1 leading-normal">
                 <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
-                <span>Nomes e e-mails foram anonimizados no dashboard e no PDF de exportação.</span>
+                <span>Nomes e e-mails são mascarados nesta apresentação; isso não altera os registros de origem.</span>
               </span>
             )}
           </div>
@@ -210,11 +210,11 @@ export default function ResponsibleAnalyticsCenter({
 
       </div>
 
-      {/* Privacy Disclosure — masking guarantee driven by backend privacy_mode */}
+      {/* Privacy disclosure driven by backend privacy_mode */}
       <div className="p-5 rounded-xl border border-success/15 bg-success/[0.02] flex flex-col gap-3">
         <div className="flex items-center gap-2">
           <EyeOff className="w-4 h-4 text-success shrink-0" />
-          <span className="text-xs font-bold text-success uppercase tracking-wider">Divulgação de Privacidade — Política de Mascaramento (LGPD)</span>
+          <span className="text-xs font-bold text-success uppercase tracking-wider">Divulgação de Privacidade — Política de Mascaramento</span>
         </div>
 
         {/* Live mode policy (configured behavior, not an absolute guarantee) */}

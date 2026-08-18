@@ -59,13 +59,21 @@ describe("ResponsibleAnalyticsCenter — privacy disclosure", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders the masking policy disclosure header", () => {
+  it("describes the local export as potentially raw when raw records are enabled", () => {
+    render(<ResponsibleAnalyticsCenter {...baseProps} privacyMode="local" />);
+    expect(
+      screen.getByText(/pode conter registros brutos quando habilitados/)
+    ).toBeInTheDocument();
+  });
+
+  it("uses masking terminology instead of an LGPD state", () => {
     render(<ResponsibleAnalyticsCenter {...baseProps} privacyMode="demo" />);
     expect(
       screen.getByText(
-        /Divulgação de Privacidade — Política de Mascaramento \(LGPD\)/
+        /Divulgação de Privacidade — Política de Mascaramento/
       )
     ).toBeInTheDocument();
+    expect(screen.queryByText(/Modo LGPD/i)).not.toBeInTheDocument();
   });
 
   it("demonstrates the PII transform applied by the backend masking", () => {

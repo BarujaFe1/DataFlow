@@ -46,7 +46,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [view, setView] = useState<"landing" | "dashboard" | "report">("landing");
 
-  // Privacy & LGPD State
+  // Presentation masking state
   const [isPrivacyEnabled, setIsPrivacyEnabled] = useState(true);
 
   // File Upload State
@@ -71,7 +71,7 @@ export default function Home() {
   const handleLoadDemo = async () => {
     setIsLoading(true);
     setError(null);
-    setIsPrivacyEnabled(true); // Demo mode starts with privacy active by default
+    setIsPrivacyEnabled(true); // Demo mode starts with presentation masking active by default
     try {
       const data = await fetchDemoData();
       setActiveAnalysis(data);
@@ -164,7 +164,7 @@ export default function Home() {
     try {
       await fetchExportCsv();
     } catch (err: unknown) {
-      const errMsg = err instanceof Error ? err.message : "Erro ao exportar o CSV mascarado.";
+      const errMsg = err instanceof Error ? err.message : "Erro ao exportar o CSV.";
       setError(errMsg);
     }
   };
@@ -354,7 +354,7 @@ export default function Home() {
 
           <div className="flex flex-wrap items-center gap-3">
             
-            {/* LGPD/Privacy Toggle in Header */}
+            {/* Presentation masking toggle in header */}
             <button
               onClick={() => setIsPrivacyEnabled(!isPrivacyEnabled)}
               className={`flex items-center space-x-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border transition cursor-pointer ${
@@ -362,17 +362,17 @@ export default function Home() {
                   ? "bg-success/10 border-success/30 text-success hover:bg-success/15"
                   : "bg-surface border-border-subtle text-text-secondary hover:border-border-hover hover:text-text-primary"
               }`}
-              title={isPrivacyEnabled ? "LGPD Ativo: Nomes/e-mails mascarados" : "LGPD Inativo: Dados completos visíveis"}
+              title={isPrivacyEnabled ? "Mascaramento ativo: nomes e e-mails mascarados na apresentação" : "Mascaramento desativado: dados completos visíveis nesta apresentação"}
             >
               {isPrivacyEnabled ? (
                 <>
                   <Lock className="w-3.5 h-3.5 text-success shrink-0" />
-                  <span>LGPD Ativo</span>
+                  <span>Mascaramento ativo</span>
                 </>
               ) : (
                 <>
                   <Unlock className="w-3.5 h-3.5 text-warning shrink-0" />
-                  <span>LGPD Inativo</span>
+                  <span>Mascaramento desativado</span>
                 </>
               )}
             </button>
@@ -395,10 +395,10 @@ export default function Home() {
             <button
               onClick={handleExportCsv}
               className="flex items-center space-x-1.5 px-4 py-2 text-xs font-semibold text-text-primary bg-surface-elevated border border-border-subtle hover:border-border-hover rounded-lg transition cursor-pointer"
-              title="Baixar CSV sempre mascarado pelo servidor (LGPD)"
+              title="Baixar CSV conforme a política de mascaramento configurada no backend"
             >
               <Database className="w-3.5 h-3.5 text-success" />
-              <span>Baixar CSV (Mascarado)</span>
+              <span>Baixar CSV</span>
             </button>
             
             <button
@@ -558,9 +558,11 @@ export default function Home() {
                   <strong className="text-success">Divulgação de Privacidade:</strong>{" "}
                   {metadata.privacy_mode === "raw"
                     ? "Modo RAW ativo — dados completos (incl. PII) visíveis por escolha explícita documentada."
-                    : isPrivacyEnabled
-                    ? "Nomes e e-mails são mascarados neste painel (LGPD). O botão “Baixar CSV (Mascarado)” exporta sempre a versão anonimizada pelo servidor."
-                    : "LGPD inativo neste painel — dados completos visíveis localmente. O CSV de exportação do servidor permanece mascarado por design."}
+                    : metadata.privacy_mode === "local"
+                    ? isPrivacyEnabled
+                      ? "Modo Local: nomes e e-mails são mascarados neste painel. A exportação pode conter registros brutos quando habilitados localmente."
+                      : "Modo Local: mascaramento desativado neste painel — dados completos visíveis. A exportação pode conter registros brutos quando habilitados localmente."
+                    : "Modo Demo: nomes e e-mails são mascarados neste painel conforme a política configurada no backend."}
                 </span>
               </div>
               <DataTable 
