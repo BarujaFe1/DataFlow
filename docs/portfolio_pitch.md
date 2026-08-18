@@ -117,8 +117,8 @@ Após auditoria profunda do projeto, foram aplicadas as seguintes correções qu
 - `cleaner.parse_float` agora converte corretamente `"R$ 5.500,00"` → `5500.0`, `"1.234,56"` → `1234.56`, `"1.500"` → `1500` (BR thousand-sep heuristic), mantendo `"1.5"` → `1.5` (US decimal).
 
 ### Tests + CI
-- **Pytest dobrou**: 6 → **13 testes** (parser delimiter `;`, parse_float BR currency, chi-square, ANOVA+Levene, inference dedup, demo end-to-end smoke, etc.).
-- **CI workflow** (`.github/workflows/ci.yml`) roda backend pytest + frontend lint/typecheck/build em Python 3.12 + Node 20 & 22. Status verde no README reflete sem exigir deploy.
+- **Testes de backend** cobrem parsing de delimitador, moeda BR, qui-quadrado, ANOVA/Levene, deduplicação de inferência e o fluxo demonstrativo de ponta a ponta; a cobertura evolui com a suíte.
+- **CI workflow** (`.github/workflows/ci.yml`) executa lint e testes do backend e lint, typecheck, testes e build do frontend nas versões de Python e Node definidas na matriz versionada do workflow. O status do README reflete a CI, sem exigir deploy.
 - **`npm run typecheck`** finalmente existe (script `"tsc --noEmit"` adicionado ao `package.json`).
 
 ### Hygiene de repo
@@ -142,4 +142,4 @@ Após auditoria profunda do projeto, foram aplicadas as seguintes correções qu
 
 ### Resumo do resumo para entrevista
 
-> "O DataFlow V1.4 é um produto local-first com pipeline de dados defensável: Bonferroni centralizado no backend, mini-gráficos que refletem dados reais da API (não fabricados), Cochran e Levene de verdade implementados com warnings, parser numérico que entende moeda BR, 13 testes pytest incluindo smoke-test end-to-end, e CI workflow que roda Tudo a cada push. Mantive a honestidade estatística como prioridade, mesmo que isso signifique exibir um placeholder 'ver tabela de registros' em vez de um número bonito que não vem dos dados."
+> "O DataFlow V1.4 é um produto local-first com pipeline de dados defensável: Bonferroni centralizado no backend, mini-gráficos que refletem dados reais da API (não fabricados), Cochran e Levene implementados com warnings, parser numérico que entende moeda BR, testes que incluem o fluxo demonstrativo de ponta a ponta e CI que executa as verificações definidas no workflow. Mantive a honestidade estatística como prioridade, mesmo que isso signifique exibir um placeholder 'ver tabela de registros' em vez de um número bonito que não vem dos dados."
