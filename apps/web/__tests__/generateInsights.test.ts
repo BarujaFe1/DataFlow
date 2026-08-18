@@ -74,4 +74,26 @@ describe("generateStructuredInsights", () => {
       ])
     );
   });
+
+  it("does not promote nominal-only results after an explicit failed correction", () => {
+    const insights = generateStructuredInsights({
+      ...highHealthData,
+      inference: [{
+        test_name: "Teste t score_test",
+        test_type: "t_test",
+        variables: ["score_test", "final_status"],
+        statistic: 2.5,
+        p_value: 0.014,
+        significance: true,
+        corrected_significance: false,
+        interpretation: "",
+        limitations: "",
+      }],
+    });
+
+    const insight = insights.find((item) => item.type === "statistical_signal");
+    expect(insight?.title).toMatch(/inconclusivo|exploratória|sem evidência/i);
+    expect(insight?.description).not.toMatch(/diferencia significativamente|forte relevância/i);
+    expect(insight?.recommendedAction).not.toMatch(/filtro inicial objetivo/i);
+  });
 });

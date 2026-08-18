@@ -14,7 +14,8 @@ export interface WaterfallStep {
 export type WaterfallContractError =
   | "INVALID_SCORE"
   | "INVALID_PENALTY"
-  | "PENALTIES_EXCEED_SCORE_RANGE";
+  | "PENALTIES_EXCEED_SCORE_RANGE"
+  | "IMPOSSIBLE_RECONCILIATION_GAP";
 
 export type WaterfallResult =
   | { ok: true; steps: WaterfallStep[] }
@@ -23,6 +24,10 @@ export type WaterfallResult =
 // Below this absolute residual we treat the difference as float noise and do
 // not render a separate rounding step.
 const ROUNDING_EPSILON = 0.005;
+// Integer `overall` rounding (0.5) plus six underlying penalties which can
+// each be omitted after rounding to <= 0.01 approaches 0.09.  A 0.60 bound
+// leaves only a small floating-point epsilon above that backend-derived 0.59.
+const MAX_RECONCILIATION_GAP = 0.60;
 
 /**
  * Builds the cumulative waterfall sequence from the backend-authoritative
@@ -68,6 +73,9 @@ export function buildWaterfallResult(
   // into a penalty; it is shown as its own step so reviewers can see it is a
   // rounding artifact, not a missing deduction.
   const gap = score - cumulative; // + : penalties under-deduct ; - : over-deduct
+  if (Math.abs(gap) - MAX_RECONCILIATION_GAP > Number.EPSILON) {
+    return { ok: false, error: "IMPOSSIBLE_RECONCILIATION_GAP" };
+  }
   if (Math.abs(gap) > ROUNDING_EPSILON) {
     cumulative += gap;
     list.push({

@@ -57,7 +57,7 @@ export function buildReportModel(
   const { metadata, quality, kpis, inference, limitations } = data;
 
   // 1. Generate statistical conclusions and executive summary
-  const statsReport = generateExecutiveConclusions(inference);
+  const statsReport = generateExecutiveConclusions(inference, isPrivacyEnabled);
 
   // 2. Penalties Breakdown for health score
   // Driven by backend-authoritative weighted penalties. Independently rounded
@@ -148,7 +148,7 @@ export function buildReportModel(
         "Sinalização de e-mails em formato inválido",
         "Identificação de outliers em expectativa salarial",
         "Identificação de outliers em anos de experiência",
-        "Mascaramento de identificadores de dados pessoais (PII)",
+        ...(isPrivacyEnabled ? ["Mascaramento de identificadores de dados pessoais (PII) na apresentação"] : ["Mascaramento de apresentação de PII desativado; valores brutos podem estar visíveis"]),
       ],
     },
     funnel,

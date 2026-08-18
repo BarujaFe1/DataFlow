@@ -122,22 +122,20 @@ describe("Health Score waterfall — reconciliation (no silent gap-closer)", () 
     );
   });
 
-  it("preserves a negative independent-rounding residual as an explicit step", () => {
+  it("preserves a realistic negative independent-rounding residual as an explicit step", () => {
     const penalties = [
       { dimension: "completeness", label: "Ausência / Nulos", points: 1, rate: 0.01 },
       { dimension: "validity", label: "E-mails Inválidos", points: 1, rate: 0.01 },
     ];
 
-    const result = buildWaterfallResult(97, penalties);
+    const result = buildWaterfallResult(97.62, penalties);
     expect(result.ok).toBe(true);
     if (!result.ok) return;
 
     const rounding = result.steps.find((step) => step.type === "rounding");
-    expect(rounding).toMatchObject({
-      label: "Ajuste de arredondamento",
-      change: -1,
-      value: 97,
-    });
+    expect(rounding?.label).toBe("Ajuste de arredondamento");
+    expect(rounding?.change).toBeCloseTo(-0.38, 5);
+    expect(rounding?.value).toBeCloseTo(97.62, 5);
   });
 
   it.each([
@@ -154,6 +152,19 @@ describe("Health Score waterfall — reconciliation (no silent gap-closer)", () 
     expect(result.ok).toBe(false);
   });
 
+  it("rejects an impossible reconciliation gap instead of calling it rounding", () => {
+    expect(buildWaterfallResult(50, [])).toMatchObject({
+      ok: false,
+      error: "IMPOSSIBLE_RECONCILIATION_GAP",
+    });
+  });
+
+  it.each([0.58, 0.59])("accepts a backend-plausible residual of %s", (gap) => {
+    const result = buildWaterfallResult(100 - gap, []);
+    expect(result.ok).toBe(true);
+    if (result.ok) expect(result.steps.find((step) => step.type === "rounding")?.change).toBeCloseTo(-gap, 5);
+  });
+
   it("does NOT add a rounding step when penalties already reconcile", () => {
     const exact: QualityScore["penalties"] = [
       { dimension: "completeness", rate: 0.01, penalty_points: 1.0 },
@@ -168,10 +179,10 @@ describe("Health Score waterfall — reconciliation (no silent gap-closer)", () 
 
   it("invariant: the chart always closes at the headline score and the total change reconciles", () => {
     const fixtures: Array<[number, QualityScore["penalties"]]> = [
-      [71, residualFixture],
-      [85, [{ dimension: "completeness", rate: 0.05, penalty_points: 4.5 }]],
+      [98, residualFixture],
+      [95, [{ dimension: "completeness", rate: 0.05, penalty_points: 4.5 }]],
       [
-        63,
+        94,
         [
           { dimension: "completeness", rate: 0.1, penalty_points: 3.0 },
           { dimension: "validity", rate: 0.08, penalty_points: 2.0 },

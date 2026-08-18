@@ -48,8 +48,8 @@ export function getPrivacyDisclosure(
       return "Modo RAW ativo — dados completos (incl. PII) visíveis por escolha explícita documentada.";
     case "local":
       return isPrivacyEnabled
-        ? "Modo Local: nomes e e-mails são mascarados neste painel. A exportação pode conter registros brutos quando habilitados localmente."
-        : "Modo Local: mascaramento desativado neste painel — dados completos visíveis. A exportação pode conter registros brutos quando habilitados localmente.";
+        ? "Modo Local: nomes, e-mails e valores sensíveis do painel são mascarados nesta apresentação. A exportação pode conter registros brutos quando habilitados localmente."
+        : "Modo Local: mascaramento de apresentação desativado — valores brutos, inclusive PII, podem ficar visíveis neste painel e na exportação local quando habilitada.";
     case "production":
       return "Modo Produção: nomes e e-mails seguem a política de mascaramento configurada no backend.";
     case "demo":

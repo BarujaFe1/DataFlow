@@ -21,4 +21,26 @@ describe("generateExecutiveConclusions", () => {
       "A escolaridade formal não apresentou evidência estatística suficiente de associação com a aprovação final nesta base; o resultado não permite concluir sobre oportunidades entre níveis de formação."
     );
   });
+
+  it("treats nominal-only technical evidence as exploratory after an explicit failed correction", () => {
+    const report = generateExecutiveConclusions([{
+      ...nonSignificantEducation,
+      test_name: "Teste t score_test x final_status",
+      variables: ["score_test", "final_status"],
+      p_value: 0.014,
+      significance: true,
+      corrected_significance: false,
+    }]);
+
+    expect(report.conclusions[0].practicalInterpretation).toMatch(/exploratório|inconclusivo/i);
+    expect(report.conclusions[0].practicalInterpretation).not.toMatch(/significativamente diferentes|forte diferenciação/i);
+    expect(report.conclusions[0].recommendedAction).not.toMatch(/manter o teste técnico como fase inicial/i);
+  });
+
+  it("does not claim report masking when presentation masking is disabled", () => {
+    const summary = generateExecutiveConclusions([], false).executiveSummary.join(" ");
+    expect(summary).toMatch(/PII pode.*visível|não.*mascarad/i);
+    expect(summary).not.toMatch(/relatório aplica mascaramento/i);
+    expect(generateExecutiveConclusions([], true).executiveSummary.join(" ")).toMatch(/mascaramento de PII/i);
+  });
 });

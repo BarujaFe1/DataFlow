@@ -13,6 +13,12 @@ interface ReportViewProps {
   isPrivacyEnabled?: boolean;
 }
 
+export function getReportMaskingChecklist(maskingEnabled: boolean): [string, string] {
+  return maskingEnabled
+    ? ["Nome: Mascarado", "Email: Mascarado"]
+    : ["Nome: PII pode estar visível", "Email: PII pode estar visível"];
+}
+
 // Wrapper for A4 portrait pages
 const PrintPage = ({ children, pageNumber }: { children: React.ReactNode; pageNumber: number }) => {
   return (
@@ -111,6 +117,7 @@ export default function ReportView({ data, onBack, isPrivacyEnabled = true }: Re
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }).format(val);
   };
+  const [nameMaskingLabel, emailMaskingLabel] = getReportMaskingChecklist(report.cleaningAudit.maskingEnabled);
 
   const getHealthLabel = (score: number) => {
     if (score >= 85) return "Excelente";
@@ -216,13 +223,13 @@ export default function ReportView({ data, onBack, isPrivacyEnabled = true }: Re
               <div>
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] text-text-muted uppercase font-mono block">Saúde Geral do Dataset</span>
-                  <span className="text-[10px] text-cyan-400 font-extrabold uppercase bg-cyan-950/40 border border-cyan-800/40 px-2 py-0.5 rounded-full">Mascaramento PII</span>
+                  <span className="text-[10px] text-cyan-400 font-extrabold uppercase bg-cyan-950/40 border border-cyan-800/40 px-2 py-0.5 rounded-full">{report.cleaningAudit.maskingEnabled ? "Mascaramento PII" : "PII visível"}</span>
                 </div>
                 <span className="text-lg font-bold text-text-primary block mt-1">
                   Qualidade {getHealthLabel(report.healthScore)}
                 </span>
                 <p className="text-xs text-text-secondary mt-1.5 max-w-md leading-relaxed">
-                  Conformidade estrutural boa com saneamento local de PII ativo. Contém dados de caráter analítico agregador.
+                  {report.cleaningAudit.maskingEnabled ? "Qualidade estrutural e mascaramento de apresentação configurados." : "Qualidade estrutural avaliada; o mascaramento de apresentação está desativado e PII pode estar visível."}
                 </p>
               </div>
             </div>
@@ -471,7 +478,7 @@ export default function ReportView({ data, onBack, isPrivacyEnabled = true }: Re
                     <strong>Mascaramento Ativo:</strong> {report.cleaningAudit.maskingEnabled ? "SIM (Nível de Apresentação)" : "NÃO"}.
                   </p>
                   <p>
-                    Seguindo a política de privacidade do projeto (responsible analytics), os campos contendo nomes completos de candidatos e endereços eletrônicos originais recebem <strong>mascaramento de PII para fins de apresentação</strong> no relatório. Trata-se de ofuscação de identificadores para visualização, não de pseudonimização na acepção da ANPD (re-identificação apenas via informação adicional mantida separadamente), não de anonimização irreversível nem de certificação de conformidade regulatória.
+                    {report.cleaningAudit.maskingEnabled ? <>Os campos contendo nomes completos de candidatos e endereços eletrônicos originais recebem <strong>mascaramento de PII para fins de apresentação</strong> no relatório. Trata-se de ofuscação de identificadores para visualização, não de anonimização irreversível nem de certificação de conformidade regulatória.</> : <>O mascaramento de apresentação está desativado: nomes, e-mails e outros valores brutos podem estar visíveis neste relatório. Não há alegação de proteção ou mascaramento de PII nesta configuração.</>}
                   </p>
                   <p className="font-mono text-[10px] text-accent flex items-center gap-1.5 mt-1">
                     <Lock className="w-3.5 h-3.5 shrink-0" />
@@ -676,13 +683,13 @@ export default function ReportView({ data, onBack, isPrivacyEnabled = true }: Re
               <span className="font-bold text-text-primary block mb-2.5 uppercase text-[10px] tracking-wider">Filtro de Variáveis Sensíveis Auditadas</span>
               
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-mono">
-                <div className="flex items-center space-x-2 text-success">
+                <div className={`flex items-center space-x-2 ${report.cleaningAudit.maskingEnabled ? "text-success" : "text-warning"}`}>
                   <span className="w-4 h-4 rounded border border-success flex items-center justify-center text-[9px] font-bold">✓</span>
-                  <span>Nome: Mascarado</span>
+                  <span>{nameMaskingLabel}</span>
                 </div>
-                <div className="flex items-center space-x-2 text-success">
+                <div className={`flex items-center space-x-2 ${report.cleaningAudit.maskingEnabled ? "text-success" : "text-warning"}`}>
                   <span className="w-4 h-4 rounded border border-success flex items-center justify-center text-[9px] font-bold">✓</span>
-                  <span>Email: Mascarado</span>
+                  <span>{emailMaskingLabel}</span>
                 </div>
                 <div className="flex items-center space-x-2 text-success">
                   <span className="w-4 h-4 rounded border border-success flex items-center justify-center text-[9px] font-bold">✓</span>

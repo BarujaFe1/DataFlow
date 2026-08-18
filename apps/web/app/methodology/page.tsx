@@ -220,7 +220,7 @@ export default function MethodologyPage() {
           </h2>
           
           <p className="text-xs text-text-secondary leading-relaxed">
-            Seguindo a política de privacidade do projeto (responsible analytics, postura LGPD-aware), nenhuma identificação pessoal (PII) é exposta por padrão no cockpit ou no PDF do relatório. Os valores são <strong>mascarados/pseudonimizados para apresentação</strong> (não anonimização irreversível nem certificação de conformidade regulatória):
+            Seguindo a política de privacidade do projeto (responsible analytics, postura LGPD-aware), nenhuma identificação pessoal (PII) é exposta por padrão no cockpit ou no PDF do relatório. Os valores são <strong>mascarados para apresentação</strong> (não anonimização irreversível nem certificação de conformidade regulatória):
             <br />• <strong>Nomes:</strong> Mapeados dinamicamente para &quot;Candidato CANXXXX&quot;, em que `CANXXXX` é o ID técnico individual unívoco.
             <br />• <strong>E-mails:</strong> Ocultados exibindo apenas a primeira letra (ex: `g***@example.com`).
           </p>

@@ -67,7 +67,8 @@ export function getMagnitudeClass(val: number, testName: string): "Negligenciáv
 }
 
 export function generateExecutiveConclusions(
-  inferenceResults: InferenceResult[]
+  inferenceResults: InferenceResult[],
+  isPresentationMaskingEnabled = true
 ): ExecutiveConclusionsReport {
   const NOMINAL_ALPHA = 0.05;
   const totalTests = inferenceResults.length || 6;
@@ -130,35 +131,35 @@ export function generateExecutiveConclusions(
     const varsJoined = test.variables.join("-").toLowerCase();
 
     if (varsJoined.includes("education_level") && varsJoined.includes("status")) {
-      practicalInterpretation = nominalSignificance
+      practicalInterpretation = correctedSignificance
         ? "Sinal estatístico exploratório entre escolaridade e status final requer investigação de processo, possíveis diferenças de composição amostral ou viés estrutural. Não deve ser usado como critério de decisão individual."
         : "Não há evidências de associação relevante entre escolaridade formal e aprovação final na base avaliada.";
       
-      recommendedAction = nominalSignificance
+      recommendedAction = correctedSignificance
         ? "Auditar se o processo seletivo exige diploma para cargos onde habilidades práticas são suficientes, reduzindo potenciais vieses de barreira."
         : "Manter o foco em testes técnicos objetivos e portfólio; reavaliar periodicamente possíveis barreiras no processo.";
     } else if (varsJoined.includes("source_channel") && varsJoined.includes("status")) {
-      practicalInterpretation = nominalSignificance
+      practicalInterpretation = correctedSignificance
         ? `Existe uma disparidade de atração: os canais de captação apresentam taxas de aprovação desiguais (p-valor = ${p.toFixed(4)}), sugerindo maior fit técnico em determinados portais.`
         : `Com os dados disponíveis, o canal de origem não apresentou evidência estatística suficiente de associação com a aprovação final (p-valor = ${p.toFixed(4)}). O resultado é limitado a esta base e pode refletir poder estatístico insuficiente ou um recorte específico.`;
 
-      recommendedAction = nominalSignificance
+      recommendedAction = correctedSignificance
         ? "Concentrar esforços de mídia nos canais de maior taxa de aprovação relativa e calibrar os anúncios de canais menos eficientes."
         : "Manter a diversificação da origem das candidaturas; reavaliar com amostra maior ou outro recorte antes de tomar decisões sobre os canais.";
     } else if (varsJoined.includes("score_test") && varsJoined.includes("status")) {
-      practicalInterpretation = nominalSignificance
+      practicalInterpretation = correctedSignificance
         ? `Candidatos aprovados obtiveram notas significativamente diferentes nas avaliações técnicas (p-valor = ${p.toFixed(4)}). A magnitude prática (${magnitudeClass}) sugere forte diferenciação de performance.`
-        : `A nota do teste técnico não apresentou evidência estatística suficiente de diferença entre os grupos nesta base (p-valor = ${p.toFixed(4)}).`;
+        : `O sinal nominal do teste técnico é exploratório e inconclusivo após a correção; não há evidência estatística suficiente de diferença entre os grupos nesta base (p-valor = ${p.toFixed(4)}).`;
       
-      recommendedAction = nominalSignificance
+      recommendedAction = correctedSignificance
         ? "Manter o teste técnico como fase inicial objetiva de corte de competências."
         : "Reavaliar o conteúdo do teste técnico; ele pode não estar medindo as competências reais valorizadas nas etapas finais.";
     } else if (varsJoined.includes("score_interview") && varsJoined.includes("status")) {
-      practicalInterpretation = nominalSignificance
+      practicalInterpretation = correctedSignificance
         ? `A nota de entrevista possui correlação forte com a aprovação final (p-valor = ${p.toFixed(4)}), indicando forte poder discriminatório.`
         : `Não foi encontrada diferença estatisticamente significativa nas notas de entrevista entre candidatos aprovados e demais (p-valor = ${p.toFixed(4)}).`;
       
-      recommendedAction = nominalSignificance
+      recommendedAction = correctedSignificance
         ? "Documentar a régua e estruturar as entrevistas para mitigar subjetividade entre entrevistadores."
         : "Implementar entrevistas baseadas em competências estruturadas e calibrações de nota para diminuir a subjetividade.";
     }
@@ -199,11 +200,11 @@ export function generateExecutiveConclusions(
   const interviewT = conclusions.find((c) => c.variables.includes("score_interview") && c.variables.includes("final_status"));
 
   if (testT && interviewT) {
-    if (!testT.nominalSignificance && !interviewT.nominalSignificance) {
+    if (!testT.correctedSignificance && !interviewT.correctedSignificance) {
       executiveSummary.push(
         `Os testes de Welch não identificaram diferença estatisticamente significativa nas médias de teste e entrevista entre aprovados e demais candidatos no nível de 95% de confiança (score_test p=${testT.pValue.toFixed(4)}, score_interview p=${interviewT.pValue.toFixed(4)}). Isso sugere que o resultado final pode depender de variáveis não capturadas no dataset ou de critérios qualitativos do processo.`
       );
-    } else if (testT.nominalSignificance && interviewT.nominalSignificance) {
+    } else if (testT.correctedSignificance && interviewT.correctedSignificance) {
       executiveSummary.push(
         `Os testes de Welch apontam diferença de médias altamente significativa tanto nos testes técnicos (p=${testT.pValue.toFixed(4)}) quanto nas entrevistas (p=${interviewT.pValue.toFixed(4)}), validando estatisticamente ambas as etapas como filtros de fit.`
       );
@@ -214,7 +215,7 @@ export function generateExecutiveConclusions(
           `A entrevista apresenta evidência limítrofe (p=${interviewT.pValue.toFixed(4)}), mas não suficiente para rejeitar a hipótese nula em α=0.05. O resultado deve ser tratado como tendência exploratória, não como conclusão definitiva.`
         );
       }
-      if (testT.nominalSignificance) {
+      if (testT.correctedSignificance) {
         executiveSummary.push(
           `Foi encontrada evidência estatística em score_test (p=${testT.pValue.toFixed(4)}), mas a interpretação deve considerar o tamanho do efeito e múltiplas comparações.`
         );
@@ -241,8 +242,9 @@ export function generateExecutiveConclusions(
   }
 
   // 4. Data Quality / Masking
-  executiveSummary.push(
-    "A qualidade estrutural da base é satisfatória. O relatório aplica mascaramento de PII (nomes/e-mails) conforme a política configurada no backend; esse mascaramento é apenas de apresentação."
+  executiveSummary.push(isPresentationMaskingEnabled
+    ? "A qualidade estrutural da base é satisfatória. O relatório aplica mascaramento de PII (nomes/e-mails) conforme a política configurada no backend; esse mascaramento é apenas de apresentação."
+    : "A qualidade estrutural da base é satisfatória. O mascaramento de apresentação está desativado; PII pode estar visível no relatório e não há alegação de dados mascarados."
   );
 
   return {

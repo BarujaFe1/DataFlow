@@ -80,4 +80,10 @@ describe("HealthScoreWaterfall", () => {
     expect(screen.getByText(/indisponível/i)).toBeInTheDocument();
     expect(screen.queryByText("Score Final")).not.toBeInTheDocument();
   });
+
+  it("does not render a plausible final score for an impossible reconciliation gap", () => {
+    render(<HealthScoreWaterfall score={50} penalties={[]} />);
+    expect(screen.getByText(/indisponível/i)).toBeInTheDocument();
+    expect(screen.queryByText("Score Final")).not.toBeInTheDocument();
+  });
 });

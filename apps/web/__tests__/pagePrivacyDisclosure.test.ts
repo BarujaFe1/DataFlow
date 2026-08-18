@@ -13,4 +13,12 @@ describe("page privacy disclosure", () => {
       "Modo Produção: nomes e e-mails seguem a política de mascaramento configurada no backend."
     );
   });
+
+  it("warns that local raw presentation may expose raw values when masking is disabled", () => {
+    const getPrivacyDisclosure = (pageModule as { getPrivacyDisclosure?: PrivacyDisclosure })
+      .getPrivacyDisclosure;
+
+    expect(getPrivacyDisclosure?.("local", false)).toMatch(/valores brutos.*visíveis/i);
+    expect(getPrivacyDisclosure?.("local", false)).not.toMatch(/mascarad/i);
+  });
 });

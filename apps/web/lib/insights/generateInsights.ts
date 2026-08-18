@@ -93,23 +93,24 @@ export function generateStructuredInsights(data: AnalysisResponse): StructuredIn
   if (inference && inference.length > 0) {
     inference.forEach((test: InferenceResult, idx: number) => {
       const id = `inference-insight-${idx}`;
+      const decisionSignificance = test.corrected_significance ?? test.significance;
       
       // Qui-Quadrado de Escolaridade
       if (test.test_name.includes("education_level") && test.test_name.includes("Qui-Quadrado")) {
         insights.push({
           id,
           type: "statistical_signal",
-          title: test.significance 
+          title: decisionSignificance
             ? "Escolaridade correlacionada com aprovação"
             : "Sem evidência estatística suficiente sobre escolaridade",
-          description: test.significance
+          description: decisionSignificance
             ? "O teste qui-quadrado de associação encontrou relevância estatística entre o nível educacional e o status final do candidato. Isso sugere disparidade de resultados entre perfis de escolaridade."
             : "Não há evidência estatística suficiente nesta base de associação entre nível educacional e aprovação final.",
           metric: `p = ${test.p_value.toFixed(4)}`,
-          severity: test.significance ? "medium" : "low",
+          severity: decisionSignificance ? "medium" : "low",
           confidence: test.p_value < 0.01 ? "high" : "moderate",
           relatedSection: "statistics",
-          recommendedAction: test.significance
+          recommendedAction: decisionSignificance
             ? "Investigar se as exigências de cargos estão alinhadas às competências práticas ou se há vieses estruturais desfavorecendo candidatos sem graduação."
             : "Manter foco em testes técnicos práticos e monitorar o processo em novas amostras antes de concluir sobre barreiras de entrada."
         });
@@ -120,17 +121,17 @@ export function generateStructuredInsights(data: AnalysisResponse): StructuredIn
         insights.push({
           id,
           type: "statistical_signal",
-          title: test.significance
+          title: decisionSignificance
             ? "Canais de origem com conversões desiguais"
             : "Sem diferença significativa entre canais",
-          description: test.significance
+          description: decisionSignificance
             ? "Há uma diferença estatisticamente significativa na taxa de aprovação com base no canal de origem do candidato. Determinados portais geram leads com maior fit cultural/técnico."
             : "Não há evidência estatística suficiente de associação entre o canal de origem e a taxa de aprovação final nesta base (V de Cramer pequeno). O resultado pode refletir poder estatístico insuficiente ou um recorte específico.",
           metric: `p = ${test.p_value.toFixed(4)} (V de Cramer = ${test.effect_size?.toFixed(2) || "N/A"})`,
-          severity: test.significance ? "medium" : "low",
+          severity: decisionSignificance ? "medium" : "low",
           confidence: "moderate",
           relatedSection: "statistics",
-          recommendedAction: test.significance
+          recommendedAction: decisionSignificance
             ? "Dobrar a aposta nos canais de maior conversão e auditar a qualidade de conteúdo/triagem nos canais de baixa conversão."
             : "Manter a diversificação dos canais e reavaliar com mais dados antes de alterar a distribuição de vagas."
         });
@@ -141,17 +142,17 @@ export function generateStructuredInsights(data: AnalysisResponse): StructuredIn
         insights.push({
           id,
           type: "statistical_signal",
-          title: test.significance
+          title: decisionSignificance
             ? "Testes técnicos preditivos da aprovação"
             : "Sem evidência estatística suficiente nas notas técnicas",
-          description: test.significance
+          description: decisionSignificance
             ? `A nota média no teste técnico diferencia significativamente candidatos aprovados dos demais. O tamanho do efeito (Cohen's d = ${test.effect_size?.toFixed(2)}) indica forte relevância prática.`
             : "A nota do teste técnico não apresentou diferença estatisticamente significativa entre aprovados e não aprovados no funil final.",
           metric: `t = ${test.statistic.toFixed(2)} (p = ${test.p_value.toFixed(4)})`,
-          severity: test.significance ? "medium" : "high",
+          severity: decisionSignificance ? "medium" : "high",
           confidence: "high",
           relatedSection: "statistics",
-          recommendedAction: test.significance
+          recommendedAction: decisionSignificance
             ? "Manter o teste técnico como filtro inicial objetivo para o processo de seleção."
             : "Reavaliar o conteúdo do teste técnico ou o peso que os entrevistadores dão a essa nota na decisão final."
         });
@@ -162,17 +163,17 @@ export function generateStructuredInsights(data: AnalysisResponse): StructuredIn
         insights.push({
           id,
           type: "statistical_signal",
-          title: test.significance
+          title: decisionSignificance
             ? "Entrevistas alinhadas com o resultado final"
             : "Sem evidência estatística suficiente nas entrevistas",
-          description: test.significance
+          description: decisionSignificance
             ? `As avaliações de entrevista apresentam forte poder discriminatório. Candidatos com notas altas de entrevista de fato avançam, justificando o método.`
             : "As notas de entrevista não possuem correlação estatística clara com o status final dos candidatos.",
           metric: `t = ${test.statistic.toFixed(2)} (p = ${test.p_value.toFixed(4)})`,
-          severity: test.significance ? "medium" : "high",
+          severity: decisionSignificance ? "medium" : "high",
           confidence: "high",
           relatedSection: "statistics",
-          recommendedAction: test.significance
+          recommendedAction: decisionSignificance
             ? "Documentar os critérios de avaliação de entrevistas para promover consistência e treinar novos avaliadores."
             : "Instituir entrevistas estruturadas e calibrações de nota para diminuir a subjetividade dos avaliadores."
         });
