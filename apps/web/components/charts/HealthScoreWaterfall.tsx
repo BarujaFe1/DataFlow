@@ -35,6 +35,7 @@ export default function HealthScoreWaterfall({ score, penalties, isPrintMode = f
   const rowHeight = (svgHeight - 20) / steps.length;
 
   const scaleValue = (val: number) => (val / 100) * chartWidth;
+  const formatStepChange = (change: number) => `${change > 0 ? "+" : ""}${change.toFixed(2)}`;
 
   return (
     <div className={`w-full ${isPrintMode ? "" : "glass-card p-5 bg-surface/30 border border-border-subtle rounded-2xl"} flex flex-col`}>
@@ -159,7 +160,7 @@ export default function HealthScoreWaterfall({ score, penalties, isPrintMode = f
                     ? `${score}`
                     : step.change === 0
                     ? "0"
-                    : `${step.change > 0 ? "+" : ""}${step.change}`}
+                    : formatStepChange(step.change)}
                 </text>
               </g>
             );

@@ -53,6 +53,22 @@ describe("HealthScoreWaterfall", () => {
     expect(screen.queryByText("Ajuste de arredondamento")).not.toBeInTheDocument();
   });
 
+  it("formats a positive rounding residual to two decimals without floating-point artifacts", () => {
+    render(
+      <HealthScoreWaterfall
+        score={98}
+        penalties={[
+          { dimension: "completeness", label: "Ausência / Nulos", points: 1.2, rate: 0.012 },
+          { dimension: "uniqueness", label: "Duplicidades", points: 0.6, rate: 0.004 },
+          { dimension: "validity", label: "E-mails Inválidos", points: 0.58, rate: 0.0024 },
+        ]}
+      />
+    );
+
+    expect(screen.getByText("+0.38")).toBeInTheDocument();
+    expect(screen.queryByText("+0.37999999999999545")).not.toBeInTheDocument();
+  });
+
   it("renders an unavailable state instead of a plausible chart for an invalid backend contract", () => {
     render(
       <HealthScoreWaterfall
