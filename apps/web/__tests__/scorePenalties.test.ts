@@ -34,14 +34,28 @@ describe("buildScorePenalties", () => {
     expect(result[0].dimension).toBe("validity");
   });
 
-  it("drops non-positive penalty_points (the `> 0.01` guard removes them before mapping)", () => {
+  it("drops a valid zero penalty at the backend threshold", () => {
     const score = makeScore([
-      { dimension: "completeness", rate: 0, penalty_points: -0.3 },
       { dimension: "validity", rate: 0, penalty_points: 0 },
     ]);
-    // Negative/zero penalties are filtered out by `> 0.01`, so they never reach
-    // the Math.max(0, …) clamp — the result has no entry for these dimensions.
-    expect(buildScorePenalties(score)).toHaveLength(0);
+    expect(buildScorePenalties(score)).toEqual([]);
+  });
+
+  it.each([
+    ["negative", -0.3],
+    ["NaN", Number.NaN],
+    ["negative infinity", Number.NEGATIVE_INFINITY],
+  ])("preserves an invalid %s penalty for waterfall contract validation", (_caseName, penaltyPoints) => {
+    const penalties = buildScorePenalties(makeScore([
+      { dimension: "completeness", rate: 0, penalty_points: penaltyPoints },
+    ]));
+
+    expect(penalties).toHaveLength(1);
+    expect(penalties[0].points).toBe(penaltyPoints);
+    expect(buildWaterfallResult(98, penalties)).toMatchObject({
+      ok: false,
+      error: "INVALID_PENALTY",
+    });
   });
 
   it("maps the plausibility dimension to 'Valores Implausíveis' (NO 'Outliers')", () => {

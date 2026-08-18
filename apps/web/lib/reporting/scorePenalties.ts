@@ -4,7 +4,7 @@ import type { QualityScore } from "@/types/analysis";
 export interface ScorePenalty {
   dimension: string; // backend dimension key (completeness, uniqueness, ...)
   label: string; // PT-BR display label
-  points: number; // positive penalty points (weighted, 0..100)
+  points: number; // backend penalty points; invalid values reach contract validation
   rate: number; // underlying rate (missing rate, dup rate, ...)
 }
 
@@ -38,11 +38,14 @@ const DIMENSION_LABELS: Record<string, string> = {
 export function buildScorePenalties(score?: QualityScore): ScorePenalty[] {
   if (!score || !Array.isArray(score.penalties)) return [];
   return score.penalties
-    .filter((p) => p.penalty_points > 0.01)
+    // Valid values at or below the backend display threshold remain omitted.
+    // Invalid values must reach the waterfall validator; filtering or clamping
+    // them here would turn a bad backend contract into a plausible chart.
+    .filter((p) => !Number.isFinite(p.penalty_points) || p.penalty_points < 0 || p.penalty_points > 0.01)
     .map((p) => ({
       dimension: p.dimension,
       label: DIMENSION_LABELS[p.dimension] ?? p.dimension,
-      points: Math.max(0, p.penalty_points),
+      points: p.penalty_points,
       rate: p.rate,
     }));
 }
