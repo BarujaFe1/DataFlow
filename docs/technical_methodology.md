@@ -39,21 +39,20 @@ O pipeline realiza as seguintes etapas de limpeza automática na API:
 ---
 
 ## 3. Algoritmo do Health Score (Nota de Integridade)
-O cálculo do Health Score parte de **100** e sofre deduções conforme a gravidade das inconsistências da base:
+O Health Score v2 é uma heurística versionada de 0 a 100 para apoiar o diagnóstico de qualidade; não é certificação, probabilidade ou garantia. O backend calcula uma média ponderada de seis dimensões:
 
-$$\text{Health Score} = \max\left(0, \min\left(100, 100 - \sum \text{Penalidades}\right)\right)$$
+$$\text{Health Score} = \sum_i (\text{ScoreDimensão}_i \times \text{Peso}_i) \times 100, \quad \sum_i \text{Peso}_i = 1$$
 
-### Penalidades Aplicadas:
-1. **Incompletude (Nulos):**
-   $$\text{Penalidade} = \text{floor}\left(\frac{\text{Células Ausentes}}{\text{Total de Células}} \times 25\right)$$
-   *Representa a perda de preenchimento do grid. Limite máximo: -25 pontos.*
-2. **Duplicidade (Registros Redundantes):**
-   $$\text{Penalidade} = \min\left(15, \text{floor}\left(\frac{\text{Candidatos Duplicados}}{\text{Total de Registros}} \times 50\right) + 2\right)$$
-   *Aplica dedução mínima de -2 pontos por qualquer redundância. Limite máximo: -15 pontos.*
-3. **Colunas Vazias:** Deduz **-10** pontos por coluna totalmente sem preenchimento (limite -20).
-4. **Colunas Constantes:** Deduz **-5** pontos por coluna de variância nula (limite -15).
-5. **Formato de E-mail:** Deduz **-10** pontos se e-mails inválidos forem detectados pela regra Regex.
-6. **Outliers:** Deduz **-5** pontos se existirem valores contínuos discrepantes identificados pela regra IQR.
+| Dimensão | Peso | Sinal observado |
+|---|---:|---|
+| Completude | 30% | células ausentes |
+| Unicidade | 15% | registros duplicados |
+| Validade | 25% | formato de e-mail inválido |
+| Consistência | 10% | falhas de parsing numérico |
+| Plausibilidade | 10% | valores impossíveis, como valores negativos nos campos definidos pelo contrato |
+| Esquema | 10% | colunas integralmente vazias |
+
+Para cada dimensão, a penalidade exposta pelo backend é `(1 − score_da_dimensão) × peso × 100`. O `overall` é arredondado para inteiro e cada `penalty_points` é arredondado independentemente para duas casas; por isso, a soma das penalidades só reconcilia aproximadamente com `100 − overall`. O relatório preserva as penalidades recebidas e, quando necessário, mostra um **Ajuste de arredondamento** explícito em vez de alterar uma penalidade.
 
 ---
 
@@ -64,7 +63,7 @@ $$\text{IQR} = Q3 - Q1$$
 $$\text{Limite Inferior} = Q1 - 1.5 \times \text{IQR}$$
 $$\text{Limite Superior} = Q3 + 1.5 \times \text{IQR}$$
 
-Registros cujos valores ultrapassam esses limites são destacados como anomalias de preenchimento na interface.
+Registros cujos valores ultrapassam esses limites são destacados como anomalias de preenchimento na interface. Eles não geram penalidade automática no Health Score.
 
 ---
 
@@ -113,7 +112,7 @@ Qualquer teste cujo p-valor nominal seja maior que $0.0083$ não é classificado
 ---
 
 ## 8. Governança e Mascaramento de Identificadores (PII)
-A conformidade com a LGPD baseia-se na anonimização das variáveis no frontend:
-* **Nome do Candidato:** Ocultado e substituído de forma irreversível na tela por `"Candidato CANXXXX"`, onde `CANXXXX` é o `candidate_id` técnico.
-* **E-mail:** Ofuscado mantendo apenas o primeiro caractere visível antes do domínio (ex: `g***@domain.com`).
-* **Segurança de CSV:** Os dados mascarados são aplicados nas exportações CSV padrão para evitar vazamento acidental de dados pessoais sob custódia corporativa.
+O produto aplica mascaramento de apresentação conforme a política configurada pelo backend; isso não constitui anonimização, pseudonimização na acepção legal, certificação de conformidade ou garantia de prevenção de vazamentos.
+* **Nome do Candidato:** em modos mascarados, a interface apresenta um identificador mascarado, como `"Candidato CANXXXX"`.
+* **E-mail:** em modos mascarados, a interface pode mostrar apenas parte do endereço, como `g***@domain.com`.
+* **Exportação:** demo e produção seguem a política de mascaramento configurada no backend. Em modo local com dados brutos explicitamente habilitados, a exportação pode conter dados brutos; quem opera o ambiente é responsável por controles adequados.

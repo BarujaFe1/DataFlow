@@ -1,6 +1,7 @@
 import { AnalysisResponse } from "@/types/analysis";
 import { generateExecutiveConclusions, DetailedConclusion } from "../analytics/executiveConclusions";
 import { COLUMN_DICTIONARY, DictionaryEntry } from "../masking";
+import { buildScorePenalties, ScorePenalty } from "./scorePenalties";
 
 export interface ReportModel {
   metadata: {
@@ -21,14 +22,7 @@ export interface ReportModel {
     topSourceChannel: string;
   };
   healthScore: number;
-  qualityPenalties: {
-    missingPenalty: number;
-    dupPenalty: number;
-    emptyPenalty: number;
-    constPenalty: number;
-    emailPenalty: number;
-    outlierPenalty: number;
-  };
+  qualityPenalties: ScorePenalty[];
   cleaningAudit: {
     totalRows: number;
     validRows: number;
@@ -63,34 +57,13 @@ export function buildReportModel(
   const { metadata, quality, kpis, inference, limitations } = data;
 
   // 1. Generate statistical conclusions and executive summary
-  const statsReport = generateExecutiveConclusions(inference);
+  const statsReport = generateExecutiveConclusions(inference, isPrivacyEnabled);
 
   // 2. Penalties Breakdown for health score
-  const totalCells = metadata.rows * quality.columns.length;
-  const missingCells = quality.columns.reduce((sum, c) => sum + c.missing_count, 0);
-  const overallMissingRate = totalCells > 0 ? missingCells / totalCells : 0;
-  const missingPenalty = Math.floor(overallMissingRate * 25);
-
+  // Driven by backend-authoritative weighted penalties. Independently rounded
+  // values reconcile only approximately with the headline score.
+  const scorePenalties = buildScorePenalties(quality.score);
   const duplicateCount = kpis.duplicate_count || 0;
-  const duplicateRate = kpis.total_candidates > 0 ? duplicateCount / kpis.total_candidates : 0;
-  const dupPenalty = duplicateRate > 0 ? Math.min(15, Math.floor(duplicateRate * 50) + 2) : 0;
-
-  let emptyCols = 0;
-  let constCols = 0;
-  let invalidEmailCols = 0;
-  let outlierCols = 0;
-
-  quality.columns.forEach((c) => {
-    if (c.flags.includes("Coluna totalmente vazia")) emptyCols++;
-    if (c.flags.includes("Coluna constante (mesmo valor em todas as linhas)")) constCols++;
-    if (c.flags.some((f) => f.includes("E-mails inválidos"))) invalidEmailCols++;
-    if (c.flags.some((f) => f.toLowerCase().includes("outlier"))) outlierCols++;
-  });
-
-  const emptyPenalty = Math.min(20, emptyCols * 10);
-  const constPenalty = Math.min(15, constCols * 5);
-  const emailPenalty = invalidEmailCols > 0 ? 10 : 0;
-  const outlierPenalty = outlierCols > 0 ? 5 : 0;
 
   // 3. Funnel breakdown
   const funnel = (data.charts.funnel || []).map((f) => ({
@@ -164,14 +137,7 @@ export function buildReportModel(
       topSourceChannel: kpis.top_source_channel || "Gupy",
     },
     healthScore: quality.health_score,
-    qualityPenalties: {
-      missingPenalty,
-      dupPenalty,
-      emptyPenalty,
-      constPenalty,
-      emailPenalty,
-      outlierPenalty,
-    },
+    qualityPenalties: scorePenalties,
     cleaningAudit: {
       totalRows: kpis.total_candidates,
       validRows: kpis.valid_candidates,
@@ -182,7 +148,7 @@ export function buildReportModel(
         "Sinalização de e-mails em formato inválido",
         "Identificação de outliers em expectativa salarial",
         "Identificação de outliers em anos de experiência",
-        "Mascaramento de identificadores de dados pessoais (PII)",
+        ...(isPrivacyEnabled ? ["Mascaramento de identificadores de dados pessoais (PII) na apresentação"] : ["Mascaramento de apresentação de PII desativado; valores brutos podem estar visíveis"]),
       ],
     },
     funnel,

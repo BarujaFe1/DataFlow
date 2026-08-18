@@ -52,6 +52,34 @@ def mask_records(records: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     return [mask_record(r) for r in records]
 
 
+def mask_quality_profile(quality_profile: Dict[str, Any]) -> Dict[str, Any]:
+    """Return a copy whose canonical PII column values are presentation-masked."""
+    sanitized = dict(quality_profile)
+    sanitized["columns"] = [
+        _mask_quality_column_top_values(column)
+        for column in quality_profile.get("columns", [])
+    ]
+    return sanitized
+
+
+def _mask_quality_column_top_values(column: Dict[str, Any]) -> Dict[str, Any]:
+    """Mask a profile column's top values only when its name is canonical PII."""
+    sanitized = dict(column)
+    column_name = column.get("name")
+    top_values = column.get("top_values")
+    if column_name not in {"name", "email"} or not isinstance(top_values, list):
+        return sanitized
+
+    masker = mask_name if column_name == "name" else mask_email
+    sanitized["top_values"] = [
+        {**top_value, "value": masker(top_value.get("value"))}
+        if isinstance(top_value, dict) and "value" in top_value
+        else top_value
+        for top_value in top_values
+    ]
+    return sanitized
+
+
 # ---------------------------------------------------------------------------
 # Configuration (all optional; safe defaults)
 # ---------------------------------------------------------------------------

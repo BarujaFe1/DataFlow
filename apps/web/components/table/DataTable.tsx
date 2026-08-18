@@ -59,6 +59,19 @@ interface ColumnProfileType {
   }[];
 }
 
+type DrawerTopValue = { value: string; count: number; rate: number };
+
+export function maskTopValuesForPresentation(columnName: string, values: DrawerTopValue[], enabled: boolean): DrawerTopValue[] {
+  if (!enabled || (columnName !== "name" && columnName !== "email")) return values;
+  return values.map((item) => ({ ...item, value: columnName === "name" ? maskName(item.value, "S/ID") : maskEmail(item.value) }));
+}
+
+export function getDrawerScoreImpact(missingRate: number, flags: string[]): string {
+  if (flags.some((flag) => flag.includes("Outliers"))) return "Anomalia identificada para revisão; outliers IQR não recebem penalidade no Health Score.";
+  if (missingRate > 0 || flags.length > 0) return "Esta condição contribui para a dimensão de qualidade e a penalidade ponderada autoritativa do backend; não há alocação confiável por coluna.";
+  return "Sem impacto direto.";
+}
+
 interface InferenceTestType {
   test_name: string;
   variables: string[];
@@ -558,20 +571,7 @@ export default function DataTable({
     });
 
     // Score deduction details
-    let scoreImpact = "Sem impacto direto.";
-    if (profile) {
-      if (profile.missing_rate > 0) {
-        scoreImpact = `Dedução de -${Math.floor(profile.missing_rate * 25)} pts no Health Score geral devido à incompletude.`;
-      }
-      if (profile.flags && profile.flags.length > 0) {
-        const flagAlerts = profile.flags.join(", ");
-        if (flagAlerts.includes("E-mails inválidos")) {
-          scoreImpact = "Dedução fixa de -10 pts no Health Score devido a formatos inválidos de e-mail.";
-        } else if (flagAlerts.includes("Outliers")) {
-          scoreImpact = "Dedução fixa de -5 pts no Health Score geral devido a valores extremos fora dos limites operacionais.";
-        }
-      }
-    }
+    const scoreImpact = getDrawerScoreImpact(profile?.missing_rate ?? 0, profile?.flags ?? []);
 
     return {
       name: colName,
@@ -583,7 +583,7 @@ export default function DataTable({
       isSensitive,
       flags: profile?.flags || [],
       stats: profile?.stats,
-      topValues: profile?.top_values || [],
+      topValues: maskTopValuesForPresentation(colName, profile?.top_values || [], isPrivacyEnabled),
       examples,
       relatedTests,
       scoreImpact,
@@ -596,7 +596,7 @@ export default function DataTable({
           })
         : ["Manter monitoramento de integridade e auditoria de rotina."]
     };
-  }, [activeDrawerColumn, columnsProfile, inference, data, viewMode]);
+  }, [activeDrawerColumn, columnsProfile, inference, data, viewMode, isPrivacyEnabled]);
 
   return (
     <div className="glass-card p-6 w-full flex flex-col gap-6 relative">

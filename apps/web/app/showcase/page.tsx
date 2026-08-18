@@ -29,7 +29,7 @@ export default function ShowcasePage() {
 
   const elevatorPitch = "O DataFlow é uma plataforma de analytics engineering que audita e higieniza bases de dados seletivas brutas em segundos. Ele gera um Health Score explicável, roda testes de hipóteses inferenciais em SciPy (ANOVA, Welch t-test, Qui-quadrado), audita riscos éticos de seleção via LGPD e compila tudo em um relatório executivo PDF altamente profissional de 9 páginas para tomada de decisão.";
 
-  const readmeSummary = "DataFlow is a high-performance analytics engineering monorepo designed to profile, sanitize, and validate tabular recruiting datasets. Built with Next.js 15 and FastAPI (Python), it performs automatic data quality profiling, checks structural duplicates and invalid records, runs inferential statistical hypothesis tests using SciPy, and generates board-ready PDF reports with native LGPD privacy masking.";
+  const readmeSummary = "DataFlow is a high-performance analytics engineering monorepo designed to profile, sanitize, and validate tabular recruiting datasets. Built with Next.js 15 and FastAPI (Python), it performs automatic data quality profiling, checks structural duplicates and invalid records, runs inferential statistical hypothesis tests using SciPy, and generates board-ready PDF reports with PII privacy masking (LGPD-aware, presentation-level — not a compliance certification).";
 
   const linkedinPost = `🚀 Acabo de construir o DataFlow, uma ferramenta de Analytics Engineering e Responsible Analytics! 🛠️📊
 
@@ -181,7 +181,7 @@ Um projeto de portfólio completo que une engenharia de software de ponta e rigo
             <div className="p-4 bg-surface rounded-xl border border-border-subtle flex flex-col gap-2">
               <span className="font-bold text-text-primary text-[11px] block">Pitch Curto (30 Segundos - RH/Gestor)</span>
               <p className="text-text-secondary">
-                &quot;O DataFlow é uma aplicação de analytics engineering que automatiza a governança e o diagnóstico estatístico de bases brutas de recrutamento. Ele identifica duplicatas, mascaras dados pessoais para LGPD, roda testes de hipóteses de processo em SciPy (evitando decisões enviesadas) e gera relatórios executivos em PDF com quebras de página perfeitas.&quot;
+                &quot;O DataFlow é uma aplicação de analytics engineering que automatiza a governança e o diagnóstico estatístico de bases brutas de recrutamento. Ele identifica duplicatas, mascara dados pessoais (PII) segundo a política de privacidade do projeto, roda testes de hipóteses de processo em SciPy (evitando decisões enviesadas) e gera relatórios executivos em PDF com quebras de página perfeitas.&quot;
               </p>
             </div>
 

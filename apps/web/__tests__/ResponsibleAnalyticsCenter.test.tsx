@@ -41,14 +41,13 @@ const baseProps = {
 };
 
 describe("ResponsibleAnalyticsCenter — privacy disclosure", () => {
-  it("uses configured-policy wording (no 'garantido') for demo mode", () => {
+  it("uses configured-policy wording without absolute masking claims for demo mode", () => {
     render(<ResponsibleAnalyticsCenter {...baseProps} privacyMode="demo" />);
     expect(screen.getByText(/Modo Demo/)).toBeInTheDocument();
     expect(
-      screen.getByText(/mascaramento configurado no backend/)
+      screen.getByText(/política de mascaramento configurada no backend/)
     ).toBeInTheDocument();
-    // The component must never claim an absolute "garantia" of masking.
-    expect(screen.queryByText(/garantido/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/garantido|sempre/i)).not.toBeInTheDocument();
   });
 
   it("discloses the exposed (raw) behavior for raw mode", () => {
@@ -59,13 +58,37 @@ describe("ResponsibleAnalyticsCenter — privacy disclosure", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders the masking policy disclosure header", () => {
+  it("describes the local export as potentially raw when raw records are enabled", () => {
+    render(<ResponsibleAnalyticsCenter {...baseProps} privacyMode="local" />);
+    expect(
+      screen.getByText(/pode conter registros brutos quando habilitados/)
+    ).toBeInTheDocument();
+  });
+
+  it("uses configured-policy wording for production mode without presenting it as demo", () => {
+    render(<ResponsibleAnalyticsCenter {...baseProps} privacyMode="production" />);
+    expect(screen.getByText(/Modo Produção/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/política de mascaramento configurada no backend/)
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/sempre mascara/i)).not.toBeInTheDocument();
+  });
+
+  it("does not infer masking state for an unknown backend mode", () => {
+    render(<ResponsibleAnalyticsCenter {...baseProps} privacyMode="preview" />);
+    expect(screen.getByText(/Modo não identificado/)).toBeInTheDocument();
+    expect(screen.getByText(/estado de mascaramento não foi inferido/)).toBeInTheDocument();
+    expect(screen.queryByText(/sempre mascara/i)).not.toBeInTheDocument();
+  });
+
+  it("uses masking terminology instead of an LGPD state", () => {
     render(<ResponsibleAnalyticsCenter {...baseProps} privacyMode="demo" />);
     expect(
       screen.getByText(
-        /Divulgação de Privacidade — Política de Mascaramento \(LGPD\)/
+        /Divulgação de Privacidade — Política de Mascaramento/
       )
     ).toBeInTheDocument();
+    expect(screen.queryByText(/Modo LGPD/i)).not.toBeInTheDocument();
   });
 
   it("demonstrates the PII transform applied by the backend masking", () => {

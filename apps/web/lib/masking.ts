@@ -39,7 +39,7 @@ export const COLUMN_DICTIONARY: Record<string, DictionaryEntry> = {
   name: {
     name: "Nome Completo",
     type: "Identificador Pessoal (Texto)",
-    description: "Nome do candidato. Mascarado no painel e no PDF para garantir conformidade com a LGPD."
+    description: "Nome do candidato. Mascarado no painel e no PDF segundo a política de privacidade do projeto (mascaramento de apresentação, não anonimização irreversível)."
   },
   email: {
     name: "E-mail de Contato",
@@ -99,7 +99,7 @@ export const COLUMN_DICTIONARY: Record<string, DictionaryEntry> = {
   salary_expectation: {
     name: "Expectativa Salarial",
     type: "Métrica Econômica (Numérico)",
-    description: "Pretensão salarial informada (em Reais). Tratado sob custódia e proteção LGPD."
+    description: "Pretensão salarial informada (em Reais). Tratada sob a política de privacidade do projeto; o CSV de exportação do servidor mascara PII por design."
   },
   availability: {
     name: "Disponibilidade",

@@ -1,54 +1,48 @@
 "use client";
 
 import React, { useMemo } from "react";
-
-interface PenaltiesBreakdown {
-  missingPenalty: number;
-  dupPenalty: number;
-  emptyPenalty: number;
-  constPenalty: number;
-  emailPenalty: number;
-  outlierPenalty: number;
-}
+import type { ScorePenalty } from "@/lib/reporting/scorePenalties";
+import { buildWaterfallResult, type WaterfallStep } from "@/lib/reporting/waterfall";
 
 interface HealthScoreWaterfallProps {
   score: number;
-  penalties: PenaltiesBreakdown;
+  penalties: ScorePenalty[];
   isPrintMode?: boolean;
 }
 
 export default function HealthScoreWaterfall({ score, penalties, isPrintMode = false }: HealthScoreWaterfallProps) {
-  const steps = useMemo(() => {
-    const list = [
-      { label: "Ref. Inicial", value: 100, change: 0, type: "start" },
-      { label: "Ausência/Nulos", value: 100 - penalties.missingPenalty, change: -penalties.missingPenalty, type: "penalty" },
-      { label: "Duplicidades", value: 100 - penalties.missingPenalty - penalties.dupPenalty, change: -penalties.dupPenalty, type: "penalty" },
-      { label: "Colunas Vazias", value: 100 - penalties.missingPenalty - penalties.dupPenalty - penalties.emptyPenalty, change: -penalties.emptyPenalty, type: "penalty" },
-      { label: "Cols. Constantes", value: 100 - penalties.missingPenalty - penalties.dupPenalty - penalties.emptyPenalty - penalties.constPenalty, change: -penalties.constPenalty, type: "penalty" },
-      { label: "E-mails Inválidos", value: 100 - penalties.missingPenalty - penalties.dupPenalty - penalties.emptyPenalty - penalties.constPenalty - penalties.emailPenalty, change: -penalties.emailPenalty, type: "penalty" },
-      { label: "Outliers Detectados", value: score, change: -penalties.outlierPenalty, type: "penalty" },
-      { label: "Score Final", value: score, change: 0, type: "end" }
-    ];
-    return list;
-  }, [score, penalties]);
+  const result = useMemo(
+    () => buildWaterfallResult(score, penalties),
+    [score, penalties]
+  );
+
+  if (!result.ok) {
+    return (
+      <div className={`w-full ${isPrintMode ? "" : "glass-card p-5 bg-surface/30 border border-border-subtle rounded-2xl"} flex flex-col`}>
+        <p className="text-xs font-semibold text-warning">Decomposição do Health Score indisponível</p>
+        <p className="mt-1 text-[11px] text-text-muted">O backend retornou um contrato de pontuação inválido ({result.error}).</p>
+      </div>
+    );
+  }
+
+  const steps: WaterfallStep[] = result.steps;
 
   const svgHeight = 240;
   const svgWidth = 500;
-  const paddingLeft = 110;
+  const paddingLeft = 130;
   const paddingRight = 40;
   const chartWidth = svgWidth - paddingLeft - paddingRight;
   const rowHeight = (svgHeight - 20) / steps.length;
 
-  const scaleValue = (val: number) => {
-    return (val / 100) * chartWidth;
-  };
+  const scaleValue = (val: number) => (val / 100) * chartWidth;
+  const formatStepChange = (change: number) => `${change > 0 ? "+" : ""}${change.toFixed(2)}`;
 
   return (
     <div className={`w-full ${isPrintMode ? "" : "glass-card p-5 bg-surface/30 border border-border-subtle rounded-2xl"} flex flex-col`}>
       {!isPrintMode && (
         <div className="mb-4">
           <h4 className="text-xs font-bold text-text-primary uppercase tracking-wider">Decomposição do Health Score (Waterfall)</h4>
-          <span className="text-[11px] text-text-muted">Visualização das deduções acumuladas sobre a qualidade</span>
+          <span className="text-[11px] text-text-muted">Deduções acumuladas sobre a qualidade (fonte: motor de pontuação do backend)</span>
         </div>
       )}
 
@@ -85,59 +79,60 @@ export default function HealthScoreWaterfall({ score, penalties, isPrintMode = f
           {steps.map((step, idx) => {
             const y = idx * rowHeight + 2;
             const barHeight = rowHeight - 6;
-            
+
             let x = paddingLeft;
             let barWidth = 0;
-            let fill = "#8ab4ff"; // starting blue
+            let fill = "#8ab4ff";
 
             if (step.type === "start") {
               barWidth = scaleValue(100);
-              fill = "rgba(138, 180, 255, 0.45)"; // initial ref blue
+              fill = "rgba(138, 180, 255, 0.45)";
             } else if (step.type === "end") {
               barWidth = scaleValue(score);
               fill = score >= 85 ? "rgba(126, 231, 135, 0.5)" : score >= 70 ? "rgba(242, 204, 96, 0.45)" : "rgba(255, 123, 114, 0.45)";
-            } else {
-              // Deductions
+            } else if (step.type === "rounding") {
+              // Transparent rounding residual — surfaced as its own muted step,
+              // never folded silently into a penalty.
               const prevValue = steps[idx - 1].value;
               const currentVal = step.change;
-              
+              x = paddingLeft + scaleValue(prevValue + currentVal);
+              barWidth = Math.max(1.5, scaleValue(Math.abs(currentVal)));
+              fill = "rgba(148, 163, 184, 0.55)"; // muted slate
+            } else {
+              const prevValue = steps[idx - 1].value;
+              const currentVal = step.change;
+
               if (currentVal === 0) {
-                // No deduction
                 x = paddingLeft + scaleValue(prevValue);
-                barWidth = 2; // thin indicator
+                barWidth = 2;
                 fill = "#71717a";
               } else {
-                // Has deduction
-                x = paddingLeft + scaleValue(prevValue + currentVal); // starts at lower value
+                x = paddingLeft + scaleValue(prevValue + currentVal);
                 barWidth = scaleValue(Math.abs(currentVal));
-                
-                // Color based on penalty size
                 const absVal = Math.abs(currentVal);
                 if (absVal >= 10) {
-                  fill = "rgba(239, 68, 68, 0.5)"; // severe deduction
+                  fill = "rgba(239, 68, 68, 0.5)";
                 } else if (absVal >= 5) {
-                  fill = "rgba(242, 204, 96, 0.5)"; // moderate deduction
+                  fill = "rgba(242, 204, 96, 0.5)";
                 } else {
-                  fill = "rgba(239, 68, 68, 0.3)"; // minor deduction
+                  fill = "rgba(239, 68, 68, 0.3)";
                 }
               }
             }
 
             return (
               <g key={idx} className="group">
-                {/* Step Label */}
                 <text
                   x={paddingLeft - 8}
                   y={y + barHeight / 2 + 3}
                   fontSize="8.5"
-                  fill={step.type === "end" ? "#ffffff" : "#a1a1aa"}
+                  fill={step.type === "end" ? "#ffffff" : step.type === "rounding" ? "#94a3b8" : "#a1a1aa"}
                   fontWeight={step.type === "end" ? "bold" : "normal"}
                   textAnchor="end"
                 >
                   {step.label}
                 </text>
 
-                {/* Waterfall segment bar */}
                 <rect
                   x={x}
                   y={y}
@@ -150,14 +145,13 @@ export default function HealthScoreWaterfall({ score, penalties, isPrintMode = f
                   className="transition-all duration-300 hover:fill-opacity-130"
                 />
 
-                {/* Bar Value text */}
                 <text
-                  x={step.type === "penalty" && step.change !== 0 ? x - 4 : x + barWidth + 4}
+                  x={(step.type === "penalty" || step.type === "rounding") && step.change !== 0 ? x - 4 : x + barWidth + 4}
                   y={y + barHeight / 2 + 3}
                   fontSize="8"
-                  fill={step.type === "penalty" && step.change !== 0 ? "#ff7b72" : step.type === "end" ? "#7ee787" : "#ffffff"}
+                  fill={step.type === "rounding" ? "#94a3b8" : step.type === "penalty" && step.change !== 0 ? "#ff7b72" : step.type === "end" ? "#7ee787" : "#ffffff"}
                   fontWeight={step.type === "end" ? "bold" : "normal"}
-                  textAnchor={step.type === "penalty" && step.change !== 0 ? "end" : "start"}
+                  textAnchor={(step.type === "penalty" || step.type === "rounding") && step.change !== 0 ? "end" : "start"}
                   className="font-mono"
                 >
                   {step.type === "start"
@@ -166,7 +160,7 @@ export default function HealthScoreWaterfall({ score, penalties, isPrintMode = f
                     ? `${score}`
                     : step.change === 0
                     ? "0"
-                    : `${step.change}`}
+                    : formatStepChange(step.change)}
                 </text>
               </g>
             );

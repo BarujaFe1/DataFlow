@@ -66,24 +66,26 @@ export default function MethodologyPage() {
           </h2>
           
           <p className="text-xs text-text-secondary leading-relaxed">
-            O <strong>Health Score</strong> é um indicador sintético que varia de <strong>0 a 100</strong>, concebido para quantificar a confiabilidade geral do dataset tabular para auditoria. Ele parte da pontuação máxima <strong>100</strong> e sofre deduções com base nos seguintes eixos de qualidade de dados:
+            O <strong>Health Score v2</strong> é uma heurística versionada de <strong>0 a 100</strong> para diagnóstico de qualidade do dataset. Não é probabilidade, intervalo de confiança, certificação ou garantia.
           </p>
 
           <div className="bg-surface/50 border border-border-subtle p-5 rounded-xl flex flex-col gap-4">
             <div className="text-xs font-mono bg-background p-3 rounded-lg border border-border-subtle text-center text-text-primary font-bold">
-              Score = 100 - Penalidade(Nulos) - Penalidade(Duplicados) - Penalidade(Vazias) - Penalidade(Constantes) - Penalidade(Emails) - Penalidade(Outliers)
+              Score = &Sigma; (ScoreDimens&atilde;o&#x1D62; &times; Peso&#x1D62;) &times; 100, com &Sigma; Pesos = 1.0
             </div>
+
+            <p className="text-xs text-text-secondary leading-relaxed">
+              O score combina <strong>seis dimensões de qualidade</strong> por meio de uma média ponderada: <strong>Completude</strong> (nulos), <strong>Unicidade</strong> (duplicados), <strong>Validade</strong> (e-mails inválidos), <strong>Consistência</strong> (falhas de parsing numérico), <strong>Plausibilidade</strong> (valores impossíveis) e <strong>Esquema</strong> (colunas vazias). Outliers por IQR são anomalias reportadas, com penalidade zero no Health Score.
+            </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
               <div className="space-y-1.5">
-                <p><strong>• Incompletude (Nulos):</strong> Dedução proporcional à taxa geral de células nulas sobre o total do grid, com limite máximo de <strong>-25</strong> pontos.</p>
-                <p><strong>• Redundância (Duplicados):</strong> Dedução mínima de <strong>-2</strong> pontos por qualquer duplicata, escalando dinamicamente até o limite de <strong>-15</strong> pontos.</p>
-                <p><strong>• Colunas Completamente Vazias:</strong> Penalidade de <strong>-10</strong> pontos por coluna identificada sem qualquer registro preenchido (max <strong>-20</strong>).</p>
+                <p><strong>• Penalidade por dimensão:</strong> Penalidade&#x1D62; = (1 &minus; ScoreDimens&atilde;o&#x1D62;) &times; Peso&#x1D62; &times; 100.</p>
+                <p><strong>• Reconciliação:</strong> <code>overall</code> e <code>penalty_points</code> são arredondados independentemente; a soma das penalidades é aproximada e o residual aparece explicitamente no gráfico.</p>
               </div>
               <div className="space-y-1.5">
-                <p><strong>• Colunas de Valor Constante:</strong> Penalidade de <strong>-5</strong> pontos por coluna cuja variância seja nula (max <strong>-15</strong>).</p>
-                <p><strong>• Formatos de E-mail Inválidos:</strong> Penalidade fixa de <strong>-10</strong> pontos se e-mails fora do padrão Regex {"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"} forem detectados.</p>
-                <p><strong>• Outliers Numéricos:</strong> Penalidade fixa de <strong>-5</strong> pontos se existirem colunas numéricas com valores discrepantes.</p>
+                <p><strong>• Waterfall do relatório:</strong> preserva as penalidades do backend e exibe o ajuste de arredondamento, positivo ou negativo, quando necessário.</p>
+                <p><strong>• Pequenas amostras:</strong> a robustez é uma heurística de suporte baseada na quantidade e estrutura dos dados; não representa probabilidade, intervalo de confiança ou garantia.</p>
               </div>
             </div>
           </div>
@@ -218,7 +220,7 @@ export default function MethodologyPage() {
           </h2>
           
           <p className="text-xs text-text-secondary leading-relaxed">
-            Em conformidade com a LGPD, nenhuma identificação pessoal (PII) é exposta por padrão no cockpit ou no PDF do relatório. As máscaras de dados garantem anonimização:
+            Seguindo a política de privacidade do projeto (responsible analytics, postura LGPD-aware), nenhuma identificação pessoal (PII) é exposta por padrão no cockpit ou no PDF do relatório. Os valores são <strong>mascarados para apresentação</strong> (não anonimização irreversível nem certificação de conformidade regulatória):
             <br />• <strong>Nomes:</strong> Mapeados dinamicamente para &quot;Candidato CANXXXX&quot;, em que `CANXXXX` é o ID técnico individual unívoco.
             <br />• <strong>E-mails:</strong> Ocultados exibindo apenas a primeira letra (ex: `g***@example.com`).
           </p>
@@ -236,7 +238,7 @@ export default function MethodologyPage() {
               O DataFlow é um projeto de <strong>Auditoria de Processos e Dados</strong>. Ele <strong>NÃO</strong> faz classificação individual de talentos, ranqueamento, scoring de candidatos ou previsões automáticas de sucesso de admissão (regras proibidas em conformidade ética).
             </p>
             <p className="font-bold text-text-primary">
-              Mensagem central: &quot;O DataFlow transforma dados tabulares imperfeitos em diagnósticos executivos confiáveis para calibragem de processo, garantindo que decisões finais sempre requeiram intervenção humana estruturada.&quot;
+              Mensagem central: &quot;O DataFlow transforma dados tabulares imperfeitos em diagnósticos executivos para calibragem de processo; decisões finais requerem intervenção humana estruturada.&quot;
             </p>
           </div>
         </section>
