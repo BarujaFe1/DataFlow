@@ -41,14 +41,13 @@ const baseProps = {
 };
 
 describe("ResponsibleAnalyticsCenter — privacy disclosure", () => {
-  it("uses configured-policy wording (no 'garantido') for demo mode", () => {
+  it("uses configured-policy wording without absolute masking claims for demo mode", () => {
     render(<ResponsibleAnalyticsCenter {...baseProps} privacyMode="demo" />);
     expect(screen.getByText(/Modo Demo/)).toBeInTheDocument();
     expect(
-      screen.getByText(/mascaramento configurado no backend/)
+      screen.getByText(/política de mascaramento configurada no backend/)
     ).toBeInTheDocument();
-    // The component must never claim an absolute "garantia" of masking.
-    expect(screen.queryByText(/garantido/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/garantido|sempre/i)).not.toBeInTheDocument();
   });
 
   it("discloses the exposed (raw) behavior for raw mode", () => {
