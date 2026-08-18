@@ -66,6 +66,15 @@ describe("ResponsibleAnalyticsCenter — privacy disclosure", () => {
     ).toBeInTheDocument();
   });
 
+  it("uses configured-policy wording for production mode without presenting it as demo", () => {
+    render(<ResponsibleAnalyticsCenter {...baseProps} privacyMode="production" />);
+    expect(screen.getByText(/Modo Produção/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/política de mascaramento configurada no backend/)
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/sempre mascara/i)).not.toBeInTheDocument();
+  });
+
   it("uses masking terminology instead of an LGPD state", () => {
     render(<ResponsibleAnalyticsCenter {...baseProps} privacyMode="demo" />);
     expect(

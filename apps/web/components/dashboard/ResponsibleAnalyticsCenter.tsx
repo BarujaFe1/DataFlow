@@ -51,6 +51,12 @@ export default function ResponsibleAnalyticsCenter({
           icon: isPrivacyEnabled ? <Lock className="w-3.5 h-3.5 shrink-0" /> : <Unlock className="w-3.5 h-3.5 shrink-0" />,
           text: `Modo Local: o mascaramento de apresentação segue o controle do cabeçalho (atualmente ${isPrivacyEnabled ? "ATIVO" : "DESATIVADO"}). A exportação pode conter registros brutos quando habilitados localmente.`
         };
+      case "production":
+        return {
+          tone: "bg-success/10 border-success/20 text-success",
+          icon: <Lock className="w-3.5 h-3.5 shrink-0" />,
+          text: "Modo Produção: os registros retornados e exportados seguem a política de mascaramento configurada no backend."
+        };
       default:
         return {
           tone: "bg-success/10 border-success/20 text-success",

@@ -28,4 +28,50 @@ describe("generateStructuredInsights", () => {
     );
     expect(healthInsight.description).not.toMatch(/garante|confiabilidade/i);
   });
+
+  it("uses insufficient-evidence titles for non-significant education, test-score, and interview results", () => {
+    const insights = generateStructuredInsights({
+      ...highHealthData,
+      inference: [
+        {
+          test_name: "Qui-Quadrado education_level",
+          test_type: "chi_square",
+          variables: ["education_level", "final_status"],
+          statistic: 1,
+          p_value: 0.4,
+          significance: false,
+          interpretation: "",
+          limitations: "",
+        },
+        {
+          test_name: "Teste t score_test",
+          test_type: "t_test",
+          variables: ["score_test", "final_status"],
+          statistic: 1,
+          p_value: 0.4,
+          significance: false,
+          interpretation: "",
+          limitations: "",
+        },
+        {
+          test_name: "Teste t score_interview",
+          test_type: "t_test",
+          variables: ["score_interview", "final_status"],
+          statistic: 1,
+          p_value: 0.4,
+          significance: false,
+          interpretation: "",
+          limitations: "",
+        },
+      ],
+    });
+
+    expect(insights.map((insight) => insight.title)).toEqual(
+      expect.arrayContaining([
+        "Sem evidência estatística suficiente sobre escolaridade",
+        "Sem evidência estatística suficiente nas notas técnicas",
+        "Sem evidência estatística suficiente nas entrevistas",
+      ])
+    );
+  });
 });

@@ -101,7 +101,7 @@ export function generateStructuredInsights(data: AnalysisResponse): StructuredIn
           type: "statistical_signal",
           title: test.significance 
             ? "Escolaridade correlacionada com aprovação"
-            : "Escolaridade neutra no processo seletivo",
+            : "Sem evidência estatística suficiente sobre escolaridade",
           description: test.significance
             ? "O teste qui-quadrado de associação encontrou relevância estatística entre o nível educacional e o status final do candidato. Isso sugere disparidade de resultados entre perfis de escolaridade."
             : "Não há evidência estatística suficiente nesta base de associação entre nível educacional e aprovação final.",
@@ -143,7 +143,7 @@ export function generateStructuredInsights(data: AnalysisResponse): StructuredIn
           type: "statistical_signal",
           title: test.significance
             ? "Testes técnicos preditivos da aprovação"
-            : "Baixa diferenciação pelas notas técnicas",
+            : "Sem evidência estatística suficiente nas notas técnicas",
           description: test.significance
             ? `A nota média no teste técnico diferencia significativamente candidatos aprovados dos demais. O tamanho do efeito (Cohen's d = ${test.effect_size?.toFixed(2)}) indica forte relevância prática.`
             : "A nota do teste técnico não apresentou diferença estatisticamente significativa entre aprovados e não aprovados no funil final.",
@@ -164,7 +164,7 @@ export function generateStructuredInsights(data: AnalysisResponse): StructuredIn
           type: "statistical_signal",
           title: test.significance
             ? "Entrevistas alinhadas com o resultado final"
-            : "Entrevistas não correlacionadas com aprovação",
+            : "Sem evidência estatística suficiente nas entrevistas",
           description: test.significance
             ? `As avaliações de entrevista apresentam forte poder discriminatório. Candidatos com notas altas de entrevista de fato avançam, justificando o método.`
             : "As notas de entrevista não possuem correlação estatística clara com o status final dos candidatos.",
