@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react";
 import type { ScorePenalty } from "@/lib/reporting/scorePenalties";
-import { buildWaterfallSteps, type WaterfallStep } from "@/lib/reporting/waterfall";
+import { buildWaterfallResult, type WaterfallStep } from "@/lib/reporting/waterfall";
 
 interface HealthScoreWaterfallProps {
   score: number;
@@ -11,10 +11,21 @@ interface HealthScoreWaterfallProps {
 }
 
 export default function HealthScoreWaterfall({ score, penalties, isPrintMode = false }: HealthScoreWaterfallProps) {
-  const steps = useMemo(
-    () => buildWaterfallSteps(score, penalties) as WaterfallStep[],
+  const result = useMemo(
+    () => buildWaterfallResult(score, penalties),
     [score, penalties]
   );
+
+  if (!result.ok) {
+    return (
+      <div className={`w-full ${isPrintMode ? "" : "glass-card p-5 bg-surface/30 border border-border-subtle rounded-2xl"} flex flex-col`}>
+        <p className="text-xs font-semibold text-warning">Decomposição do Health Score indisponível</p>
+        <p className="mt-1 text-[11px] text-text-muted">O backend retornou um contrato de pontuação inválido ({result.error}).</p>
+      </div>
+    );
+  }
+
+  const steps: WaterfallStep[] = result.steps;
 
   const svgHeight = 240;
   const svgWidth = 500;

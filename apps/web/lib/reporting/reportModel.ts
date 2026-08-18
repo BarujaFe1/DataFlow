@@ -60,8 +60,8 @@ export function buildReportModel(
   const statsReport = generateExecutiveConclusions(inference);
 
   // 2. Penalties Breakdown for health score
-  // Driven by the backend-authoritative weighted penalties so the waterfall
-  // reconciles with healthScore (100 - sum(penalty_points) === overall).
+  // Driven by backend-authoritative weighted penalties. Independently rounded
+  // values reconcile only approximately with the headline score.
   const scorePenalties = buildScorePenalties(quality.score);
   const duplicateCount = kpis.duplicate_count || 0;
 

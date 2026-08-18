@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { buildScorePenalties } from "@/lib/reporting/scorePenalties";
-import { buildWaterfallSteps } from "@/lib/reporting/waterfall";
+import { buildWaterfallResult, buildWaterfallSteps } from "@/lib/reporting/waterfall";
 import type { QualityScore } from "@/types/analysis";
 
 // Minimal valid QualityScore; only `penalties` matters for buildScorePenalties.
@@ -106,6 +106,38 @@ describe("Health Score waterfall — reconciliation (no silent gap-closer)", () 
     expect(steps.filter((s) => s.type === "penalty")).toHaveLength(
       penalties.length
     );
+  });
+
+  it("preserves a negative independent-rounding residual as an explicit step", () => {
+    const penalties = [
+      { dimension: "completeness", label: "Ausência / Nulos", points: 1, rate: 0.01 },
+      { dimension: "validity", label: "E-mails Inválidos", points: 1, rate: 0.01 },
+    ];
+
+    const result = buildWaterfallResult(97, penalties);
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+
+    const rounding = result.steps.find((step) => step.type === "rounding");
+    expect(rounding).toMatchObject({
+      label: "Ajuste de arredondamento",
+      change: -1,
+      value: 97,
+    });
+  });
+
+  it.each([
+    ["NaN score", Number.NaN, []],
+    ["infinite score", Number.POSITIVE_INFINITY, []],
+    ["score below zero", -1, []],
+    ["score above 100", 101, []],
+    ["NaN penalty", 99, [{ dimension: "x", label: "X", points: Number.NaN, rate: 0 }]],
+    ["infinite penalty", 99, [{ dimension: "x", label: "X", points: Number.POSITIVE_INFINITY, rate: 0 }]],
+    ["negative penalty", 99, [{ dimension: "x", label: "X", points: -1, rate: 0 }]],
+    ["penalties taking cumulative below zero", 0, [{ dimension: "x", label: "X", points: 101, rate: 0 }]],
+  ])("flags an invalid backend contract for %s", (_caseName, score, penalties) => {
+    const result = buildWaterfallResult(score, penalties);
+    expect(result.ok).toBe(false);
   });
 
   it("does NOT add a rounding step when penalties already reconcile", () => {

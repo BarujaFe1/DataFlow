@@ -568,7 +568,7 @@ export default function DataTable({
         if (flagAlerts.includes("E-mails inválidos")) {
           scoreImpact = "Dedução fixa de -10 pts no Health Score devido a formatos inválidos de e-mail.";
         } else if (flagAlerts.includes("Outliers")) {
-          scoreImpact = "Dedução fixa de -5 pts no Health Score geral devido a valores extremos fora dos limites operacionais.";
+          scoreImpact = "Anomalia identificada para revisão; não há dedução direta no Health Score.";
         }
       }
     }

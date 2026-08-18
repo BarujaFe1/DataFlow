@@ -52,4 +52,16 @@ describe("HealthScoreWaterfall", () => {
     expect(screen.getByText("Score Final")).toBeInTheDocument();
     expect(screen.queryByText("Ajuste de arredondamento")).not.toBeInTheDocument();
   });
+
+  it("renders an unavailable state instead of a plausible chart for an invalid backend contract", () => {
+    render(
+      <HealthScoreWaterfall
+        score={98}
+        penalties={[{ dimension: "validity", label: "E-mails Inválidos", points: -1, rate: 0 }]}
+      />
+    );
+
+    expect(screen.getByText(/indisponível/i)).toBeInTheDocument();
+    expect(screen.queryByText("Score Final")).not.toBeInTheDocument();
+  });
 });

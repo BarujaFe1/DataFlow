@@ -353,7 +353,7 @@ export default function ReportView({ data, onBack, isPrivacyEnabled = true }: Re
             </div>
 
             <p className="text-xs text-text-secondary leading-relaxed">
-              O Health Score da base é reduzido cumulativamente de acordo com a identificação de nulos, duplicados e anomalias de formato. O gráfico abaixo ilustra visualmente as penalidades aplicadas a partir de 100 pontos:
+              O Health Score v2 é uma heurística versionada de 0 a 100. O gráfico preserva as penalidades autoritativas do backend e mostra separadamente o residual de arredondamento, pois <code>overall</code> e <code>penalty_points</code> são arredondados de forma independente.
             </p>
 
             {/* Waterfall Visual component */}
@@ -749,7 +749,7 @@ export default function ReportView({ data, onBack, isPrivacyEnabled = true }: Re
               <div>
                 <span className="font-bold text-text-primary block mb-0.5 uppercase tracking-wider text-[10px]">Cálculo do Score de Qualidade (Health Score)</span>
                 <p className="text-[10px] font-mono leading-relaxed bg-surface/50 p-2 border border-border-subtle rounded-lg">
-                  Score = 100 - Penalidade(Nulos) - Penalidade(Duplicados) - Penalidade(Colunas Vazias) - Penalidade(Constantes) - Penalidade(E-mails Inválidos) - Penalidade(Outliers)
+                  Score = &Sigma; (ScoreDimensãoᵢ × Pesoᵢ) × 100, com &Sigma; Pesos = 1.0. Penalidades e overall podem deixar um residual por arredondamento independente.
                 </p>
               </div>
 

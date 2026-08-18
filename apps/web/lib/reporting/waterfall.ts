@@ -11,6 +11,15 @@ export interface WaterfallStep {
   type: "start" | "penalty" | "rounding" | "end";
 }
 
+export type WaterfallContractError =
+  | "INVALID_SCORE"
+  | "INVALID_PENALTY"
+  | "PENALTIES_EXCEED_SCORE_RANGE";
+
+export type WaterfallResult =
+  | { ok: true; steps: WaterfallStep[] }
+  | { ok: false; error: WaterfallContractError };
+
 // Below this absolute residual we treat the difference as float noise and do
 // not render a separate rounding step.
 const ROUNDING_EPSILON = 0.005;
@@ -30,20 +39,29 @@ const ROUNDING_EPSILON = 0.005;
  * This makes the chart self-reconciling on the headline score while keeping the
  * rounding residual transparent rather than hidden inside the last penalty.
  */
-export function buildWaterfallSteps(
+export function buildWaterfallResult(
   score: number,
   penalties: ScorePenalty[]
-): WaterfallStep[] {
+): WaterfallResult {
+  if (!Number.isFinite(score) || score < 0 || score > 100) {
+    return { ok: false, error: "INVALID_SCORE" };
+  }
+
   const list: WaterfallStep[] = [
     { label: "Ref. Inicial (100)", value: 100, change: 0, type: "start" },
   ];
 
   let cumulative = 100;
   for (const p of penalties) {
-    // Never deduct more than what remains before the final score.
-    const pts = Math.min(cumulative, Math.max(0, p.points));
-    cumulative -= pts;
-    list.push({ label: p.label, value: cumulative, change: -pts, type: "penalty" });
+    if (!Number.isFinite(p.points) || p.points < 0) {
+      return { ok: false, error: "INVALID_PENALTY" };
+    }
+    const next = cumulative - p.points;
+    if (next < 0) {
+      return { ok: false, error: "PENALTIES_EXCEED_SCORE_RANGE" };
+    }
+    cumulative = next;
+    list.push({ label: p.label, value: cumulative, change: -p.points, type: "penalty" });
   }
 
   // Explicit, transparent rounding adjustment. We do NOT fold this residual
@@ -61,5 +79,20 @@ export function buildWaterfallSteps(
   }
 
   list.push({ label: "Score Final", value: score, change: 0, type: "end" });
-  return list;
+  return { ok: true, steps: list };
+}
+
+/**
+ * Backward-compatible valid-contract helper. UI consumers that can render an
+ * unavailable state should use `buildWaterfallResult`.
+ */
+export function buildWaterfallSteps(
+  score: number,
+  penalties: ScorePenalty[]
+): WaterfallStep[] {
+  const result = buildWaterfallResult(score, penalties);
+  if (!result.ok) {
+    throw new Error(`Invalid Health Score backend contract: ${result.error}`);
+  }
+  return result.steps;
 }
