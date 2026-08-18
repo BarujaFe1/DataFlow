@@ -8,7 +8,11 @@
 
 ---
 
-## VERDICT: 🟢 GO — released (CORS blocker fixed & verified 2026-08-07 UTC)
+## Current verification status (2026-08-17)
+
+This file preserves the dated 2026-08-07 release record below as historical evidence; it is not a claim about the current branch or Production state. For the current `fix/dataflow-plan-application` work, **browser evidence, a rendered PDF artifact, the exact Production deployment SHA, and the Production runtime are not yet verified**. No push, remote CI run, or Production deployment was authorized for this task. Local Node 24 build evidence does not verify those remote gates.
+
+## Historical verdict: 🟢 GO — released (CORS blocker fixed & verified 2026-08-07 UTC)
 
 All build/CI/backend gates are green, and the production bundle is confirmed to be the
 Fase 8 build with the correct backend URL. **However, a P0 CORS blocker** prevents the
